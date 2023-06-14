@@ -52,9 +52,9 @@ def plot_robot_arm(transforms):
     ax.scatter(end_effector_pos[0], end_effector_pos[1], end_effector_pos[2], c='k', marker='o')
     
     # Set plot limits and labels
-    ax.set_xlim([-0.5, 0.5])
-    ax.set_ylim([-0.5, 0.5])
-    ax.set_zlim([0, 0.5])
+    ax.set_xlim([-1, 1])
+    ax.set_ylim([-1, 1])
+    ax.set_zlim([0, 1])
     ax.set_xlabel('X')
     ax.set_ylabel('Y')
     ax.set_zlabel('Z')
@@ -118,6 +118,7 @@ def calculateA(q, n):
                   [0.0, np.sin(alpha[0, n]), np.cos(alpha[0, n]), d[0, n]], [0.0, 0.0, 0.0, 1.0]])
     return A
     
-qjaco1 = np.array([[261.74, 171.01, 67.6, 152.93, 37.12, 6.91]])
+# qjaco1 = np.array([[261.74, 171.01, 67.6, 152.93, 37.12, 6.91]])
+qjaco1 = np.array([[270, 180, 180, 0, 0, 0]])
 jacoFK(qjaco1)
 plot_robot_arm(transformation_matrices)

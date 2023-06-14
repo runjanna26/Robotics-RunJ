@@ -42,36 +42,47 @@ def dh_to_transformation_matrices(dh_parameters):
 
     return transformation_matrices
 
-def plot_robot_arm(transformation_matrices):
-    """
-    Plot the robot arm using the transformation matrices.
-    :param transformation_matrices: List of 4x4 transformation matrices for each frame
-    """
+def plot_robot_arm(transforms):
+    # Extract the joint positions from the transformation matrices
+    joint_positions = [T[:3, 3] for T in transforms]
+    
+    # Extract the end effector position from the last transformation matrix
+    end_effector_pos = transforms[-1][:3, 3]
+    
+    # Create a 3D plot
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
 
-    # Base coordinates
-    base_coords = np.array([0, 0, 0, 1])
-    print(base_coords)
-    # Plot each link and joint of the robot arm
-    for matrix in transformation_matrices:
-        link_coords = np.matmul(matrix, base_coords)
-        print(link_coords)
-        x = [base_coords[0], link_coords[0]]
-        y = [base_coords[1], link_coords[1]]
-        z = [base_coords[2], link_coords[2]]
-        ax.plot(x, y, z, 'b')
-        ax.plot( 0.10323798, -0.409084,    0.70513714,'o')
-        # Plot joint marker
-        ax.plot([link_coords[0]], [link_coords[1]], [link_coords[2]], 'ro')
-        
-        base_coords = link_coords
-
-    ax.plot(0, 0, 0, 'go')
+    # Plot the base
+    base_pos = [0,0,0]
+    ax.scatter(base_pos[0], base_pos[1], base_pos[2], c='b', marker='o')
+    
+    # Plot the links
+    ax.plot([base_pos[0], joint_positions[0][0]],
+            [base_pos[1], joint_positions[0][1]],
+            [base_pos[2], joint_positions[0][2]], 'b')
+    # Plot the links
+    for i in range(len(joint_positions)-1):
+        ax.plot([joint_positions[i][0], joint_positions[i+1][0]],
+                [joint_positions[i][1], joint_positions[i+1][1]],
+                [joint_positions[i][2], joint_positions[i+1][2]], 'b')
+    
+    # Plot the joints
+    for joint_pos in joint_positions:
+        ax.scatter(joint_pos[0], joint_pos[1], joint_pos[2], c='r', marker='o')
+    
+    # Plot the end effector
+    ax.scatter(end_effector_pos[0], end_effector_pos[1], end_effector_pos[2], c='k', marker='o')
+    
+    # Set plot limits and labels
+    ax.set_xlim([-0.5, 0.5])
+    ax.set_ylim([-0.5, 0.5])
+    ax.set_zlim([0, 0.5])
     ax.set_xlabel('X')
     ax.set_ylabel('Y')
     ax.set_zlabel('Z')
-    ax.set_title('Robot Arm')
+    
+    # Display the plot
     plt.show()
 
 ## DH variable [Solution 1]
@@ -129,7 +140,7 @@ dh_parameters = [
 
 # Convert DH parameters to transformation matrix
 transformation_matrix = dh_to_transformation_matrices(dh_parameters)
-
+# print('Transformation matrices: ',transformation_matrix)
 # Print the resulting transformation matrix
-print(transformation_matrix[5][0:3,3])
+print('End-effector position (x,y,z): ',transformation_matrix[5][0:3,3])
 plot_robot_arm(transformation_matrix)

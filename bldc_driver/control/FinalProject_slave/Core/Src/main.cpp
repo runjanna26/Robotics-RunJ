@@ -26,8 +26,9 @@
 #include "math.h"
 #include "string.h"
 #include "HelloRunJ.h"
+#include "simpleFOC.h"
+simpleFOC simpleFOC;
 
-HelloRunJ runx;
 
 /* USER CODE END Includes */
 
@@ -39,27 +40,7 @@ HelloRunJ runx;
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 
-//Define for calculation
-#define _2_SQRT3 1.15470053838
-#define _SQRT3 1.73205080757
-#define _1_SQRT3 0.57735026919
-#define _SQRT3_2 0.86602540378
-#define _SQRT2 1.41421356237
-#define _120_D2R 2.09439510239
-#define _PI 3.14159265359
-#define _PI_2 1.57079632679
-#define _PI_3 1.0471975512
-#define _2PI 6.28318530718
-#define _3PI_2 4.71238898038
-#define _PI_6 0.52359877559
-#define _sign(a) ( ( (a) < 0 )  ?  -1   : ( (a) > 0 ) ) // Check it later
-#define _sqrt(a) (_sqrtApprox(a))
-#define _round(x) ((x)>=0?(long)((x)+0.5):(long)((x)-0.5))
-#define _constrain(amt,low,high) ((amt)<(low)?(low):((amt)>(high)?(high):(amt)))
-#define _isset(a) ( (a) != (NOT_SET) )
-#define NOT_SET -12345.0
 
-#define DEF_ANGLE_REGISTER 0x3FFF
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -82,31 +63,7 @@ UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
 
-//===Magnetic Sensor===//
-struct MagneticSensorSPIConfig_s {
-	int bit_resolution;
-	int angle_registers;
-	int data_start_bit;
-	int command_rw_bit;
-	int command_parity_bit;
-};
-struct MagneticSensorSPIConfig_s AS5048A_SPI = { .bit_resolution = 14,
-		.angle_registers = 0x3FFF, .data_start_bit = 13, .command_rw_bit = 14,
-		.command_parity_bit = 15 };
-float cpr; // Maximum range of the magnetic sensor
-int bit_resolution; 	//!< the number of bites of angle data
-int command_parity_bit; //!< the bit where parity flag is stored in command
-int command_rw_bit; 	//!< the bit where read/write flag is stored in command
-int data_start_bit; 	//!< the the position of first bit
-int angle_register; 	//!< SPI angle register to read
 
-float angle_prev = 0; // result of last call to getSensorAngle(), used for full rotations and velocity
-long angle_prev_ts = 0; // timestamp of last call to getAngle, used for velocity
-float vel_angle_prev = 0; // angle at last call to getVelocity, used for velocity
-long vel_angle_prev_ts = 0; 	// last velocity calculation timestamp
-int32_t full_rotations = 0; 	// full rotation tracking
-int32_t vel_full_rotations = 0; // previous full rotation value for velocity calculation
-float getVelocity;
 
 //===Current Sensor===
 struct DQCurrent_s // dq current structure
@@ -154,13 +111,13 @@ struct DQVoltage_s voltage;      //!< current d and q voltage set to the motor
 struct DQCurrent_s current;      //!< current d and q current measure
 
 //Low pass filter
-struct LPF // LPF struct
-{
-	float x;							//!< (INPUT)
-	unsigned long timestamp_prev;  	//!< Last execution timestamp
-	float y_prev; 		//!< filtered value in previous execution step (OUTPUT)
-	float Tf;
-} LPF_angle_s, LPF_velocity_s, LPF_current_q_s, LPF_current_d_s;
+//struct LPF // LPF struct
+//{
+//	float x;							//!< (INPUT)
+//	unsigned long timestamp_prev;  	//!< Last execution timestamp
+//	float y_prev; 		//!< filtered value in previous execution step (OUTPUT)
+//	float Tf;
+//} LPF_current_q_s, LPF_current_d_s;
 
 //PID
 struct PID {
@@ -191,10 +148,7 @@ float voltage_limit; 			//!< Voltage limitting variable - global limit
 float current_limit; 			//!< Current limitting variable - global limit
 float velocity_limit; 			//!< Velocity limitting variable - global limit
 
-//Position sensor variable
-float sensor_offset = 0; //!< user defined sensor zero offset
-float zero_electric_angle = NOT_SET; //!< absolute zero electric angle - if available
-int sensor_direction = NOT_SET; //!< if sensor_direction == Direction::CCW then direction will be flipped to CW
+
 enum Direction {
 	CW = 1,  //clockwise
 	CCW = -1, // counter clockwise
@@ -262,26 +216,8 @@ float _normalizeAngle(float angle);				//checked
 float _sqrtApprox(float number);				//checked
 
 //Megnetic Sensor SPI function
-void MagneticSensorSPI_init(struct MagneticSensorSPIConfig_s config); //checked
-uint8_t spiCalcEvenParity(uint16_t value);							//checked
-uint16_t read(uint16_t angle_register);								//checked
-int getRawCount();													//checked
-float getAngle();													//checked
-float getvelocity();  					 							//checked
 
-void Sensor_init();
-void updateSensor();												//checked
-float getMechanicalAngle();											//checked
-float getAngle();													//checked
-int32_t getFullRotations();												//
 
-// Electrical angle calculation
-float _electricalAngle(float shaft_angle, int pole_pairs);
-float electricalAngle();
-// shaft angle calculation
-float shaftAngle();
-// shaft velocity calculation
-float shaftVelocity();
 
 //PWM function
 void writeDutyCycle3PWM(float dc_a, float dc_b, float dc_c);  //checked
@@ -381,6 +317,7 @@ uint16_t value[3];
 float pp_check;
 
 unsigned long t1 = 0, ts, t2 = 0, t3, t4 = 0, t5 = 0;
+float loop_freq = 0;
 uint8_t MSG[35] = { '\0' };
 float Command_setpoint = 30.0;
 
@@ -393,10 +330,7 @@ float Command_setpoint = 30.0;
 int main(void)
 {
 	/* USER CODE BEGIN 1 */
-	runx.setSomeVariable(10); // Use setter method to set the value
 
-	// Set a breakpoint here to check the value
-	int value = runx.getSomeVariable();
 	/* USER CODE END 1 */
 
 	/* MCU Configuration--------------------------------------------------------*/
@@ -446,37 +380,23 @@ int main(void)
 	//Control system configuration
 
 //====Motor====
-	LPF_current_d_s.y_prev = 0.0;
-	LPF_current_d_s.Tf = 0.001;
-	PID_current_d_s.P = 1.0;  //1.0
-	PID_current_d_s.I = 0.0; //713.0
-	PID_current_d_s.D = 0.0;
-	PID_current_d_s.output_ramp = 1000.0;
-	PID_current_d_s.limit = voltage_limit;
+//	LPF_current_d_s.y_prev = 0.0;
+//	LPF_current_d_s.Tf = 0.001;
+//	PID_current_d_s.P = 1.0;  //1.0
+//	PID_current_d_s.I = 0.0; //713.0
+//	PID_current_d_s.D = 0.0;
+//	PID_current_d_s.output_ramp = 1000.0;
+//	PID_current_d_s.limit = voltage_limit;
+//
+//	LPF_current_q_s.y_prev = 0.0;
+//	LPF_current_q_s.Tf = 0.001;
+//	PID_current_q_s.P = 1.0;  // 1.0
+//	PID_current_q_s.I = 0.0; //10.0
+//	PID_current_q_s.D = 0.0;
+//	PID_current_q_s.output_ramp = 1000.0;
+//	PID_current_q_s.limit = voltage_limit;
 
-	LPF_current_q_s.y_prev = 0.0;
-	LPF_current_q_s.Tf = 0.001;
-	PID_current_q_s.P = 1.0;  // 1.0
-	PID_current_q_s.I = 0.0; //10.0
-	PID_current_q_s.D = 0.0;
-	PID_current_q_s.output_ramp = 1000.0;
-	PID_current_q_s.limit = voltage_limit;
 
-	LPF_velocity_s.y_prev = 0.0;
-	LPF_velocity_s.Tf = 0.01;
-	PID_velocity_s.P = 0.5;   // P > 0.5 oscillate
-	PID_velocity_s.I = 55.0;  // I > 55 under-overshoot
-	PID_velocity_s.D = 0.0;
-	PID_velocity_s.output_ramp = 1000;
-	PID_velocity_s.limit = current_limit;  // current_limit
-
-	LPF_angle_s.y_prev = 0.0;
-	LPF_angle_s.Tf = 0.01;
-	PID_angle_s.P = 50.0;
-	PID_angle_s.I = 0.0;
-	PID_angle_s.D = 0.2;
-	PID_angle_s.output_ramp = 0;
-	PID_angle_s.limit = velocity_limit;
 
 	PID_haptic_s.P = 40.0;
 	PID_haptic_s.I = 0.1;
@@ -486,13 +406,13 @@ int main(void)
 	passivity_gain = 0.2f;
 
 	//SPI SETUP
-	MagneticSensorSPI_init(AS5048A_SPI);
+	simpleFOC.MagneticSensorSPI_init();
 	//POSITION SENSOR SETUP
-	Sensor_init();
+	simpleFOC.Sensor_init();
 
 	//CURRENT SENSE SETUP
 	HAL_ADC_Start_DMA(&hadc1, adcResultDMA, 3);
-	initCurrentsense(CurrentSense_resistance, CurrentSense_gain);
+//	initCurrentsense(CurrentSense_resistance, CurrentSense_gain);
 //  calibrateOffsets();
 
 	//PWM SETUP
@@ -504,8 +424,8 @@ int main(void)
 //	  HAL_GPIO_WritePin(EN_GPIO_Port, EN_Pin, GPIO_PIN_RESET);  // Disable
 
 	//FOC SETUP
-	zero_electric_angle = 0.397302926;
-	initFOC(zero_electric_angle, CW); //M1 3.85949397
+//	zero_electric_angle = 0.397302926;
+//	initFOC(zero_electric_angle, CW); //M1 3.85949397
 	//1.98957574+1.98957574+1.98420465
 //	initFOC(zero_electric_angle, UNKNOWN); //Not yet calibrate find the best init value
 
@@ -551,7 +471,7 @@ int main(void)
 //	  HAL_UART_Transmit(&huart1, MSG, sizeof(MSG), 100);
 
 		//Position sensor testing
-	    updateSensor();
+	    simpleFOC.updateSensor();
 //	    getvelocity;
 //		electrical_angle = getAngle();
 //		shaft_angle = shaftAngle();
@@ -588,8 +508,8 @@ int main(void)
 //	  HAL_UART_Transmit(&huart1, MSG, sizeof(MSG), 100);			  	// 181us
 
 //		Position control
-	  	loopFOC(); 														//1190us --> 495 us
-	  	move_angle(0.0f); 												//161 us --> 112 us
+//	  	loopFOC(); 														//1190us --> 495 us
+//	  	move_angle(0.0f); 												//161 us --> 112 us
 //		sprintf(MSG, "%.3f,%.3f \n",Command_setpoint,shaft_angle);
 //		HAL_UART_Transmit(&huart1, MSG, sizeof(MSG), 100);
 
@@ -648,8 +568,9 @@ int main(void)
 //				loopFOC(); 			//1190us --> 495 us
 //			}
 //		}
-//		t5 = micros() - t4;
-//		t4 = micros();
+		t5 = micros() - t4;
+		t4 = micros();
+		loop_freq = 1.0 / (t5 * 1e-6);
 
 	}
 	/* USER CODE END 3 */
@@ -1265,16 +1186,9 @@ float _cos(float a) {
 	return _sin(a_sin);
 }
 
-//normalizing radian angle to [0,2PI]
-float _normalizeAngle(float angle) {
-	float a = fmod(angle, _2PI);
-	return a >= 0 ? a : (a + _2PI);      //always project from 0 degree
-}
 
-// Electrical angle calculation
-float _electricalAngle(float shaft_angle, int pole_pairs) {
-	return (shaft_angle * pole_pairs);
-}
+
+
 
 // square root approximation function using
 // https://reprap.org/forum/read.php?147,219210
@@ -1295,166 +1209,7 @@ float _sqrtApprox(float number) {
 	return number * y;
 }
 
-// initialize SPI for Magnetic Sensor
-void MagneticSensorSPI_init(struct MagneticSensorSPIConfig_s config) {
-	// angle read register of the magnetic sensor
-	angle_register =
-			config.angle_registers ?
-					config.angle_registers : DEF_ANGLE_REGISTER;
-	// register maximum value (counts per revolution)
-	cpr = pow(2, config.bit_resolution);
-	bit_resolution = config.bit_resolution;
 
-	command_parity_bit = config.command_parity_bit; // for backwards compatibility
-	command_rw_bit = config.command_rw_bit; // for backwards compatibility
-	data_start_bit = config.data_start_bit; // for backwards compatibility
-
-	HAL_GPIO_WritePin(SPI1_NSS_GPIO_Port, SPI1_NSS_Pin, GPIO_PIN_SET);
-}
-
-/**
- * Utility function used to calculate even parity of word
- */
-uint8_t spiCalcEvenParity(uint16_t value) {
-	uint8_t cnt = 0;
-	uint8_t i;
-
-	for (i = 0; i < 16; i++) {
-		if (value & 0x1)
-			cnt++;
-		value >>= 1;
-	}
-	return cnt & 0x1;
-}
-
-/*
- * Read a register from the sensor
- * Takes the address of the register as a 16 bit word
- * Returns the value of the register
- */
-uint16_t read(uint16_t angle_register) {
-	uint16_t register_value;
-	uint16_t command = angle_register;
-
-	if (command_rw_bit > 0) {
-		command = angle_register | (1 << command_rw_bit);
-	}
-	if (command_parity_bit > 0) {
-		//Add a parity bit on the the MSB
-		command |=
-				((uint16_t) spiCalcEvenParity(command) << command_parity_bit);
-	}
-
-	//SPI - begin transaction
-
-	//Send the command
-	//  spi->transfer16(command);
-	HAL_GPIO_WritePin(SPI1_NSS_GPIO_Port, SPI1_NSS_Pin, GPIO_PIN_RESET);
-	HAL_SPI_TransmitReceive(&hspi1, (uint8_t*) &command,
-			(uint8_t*) &register_value,
-			sizeof(register_value) / sizeof(uint16_t), 100);
-	HAL_GPIO_WritePin(SPI1_NSS_GPIO_Port, SPI1_NSS_Pin, GPIO_PIN_SET);
-
-//  delay_us(1);
-
-	command = 0x0000;
-	//Now read the response (NO_OPERATION_COMMAND = 0x0000)
-	//  uint16_t register_value = spi->transfer16(0x00);
-	HAL_GPIO_WritePin(SPI1_NSS_GPIO_Port, SPI1_NSS_Pin, GPIO_PIN_RESET);
-	HAL_SPI_TransmitReceive(&hspi1, (uint8_t*) &command,
-			(uint8_t*) &register_value,
-			sizeof(register_value) / sizeof(uint16_t), 100);
-	HAL_GPIO_WritePin(SPI1_NSS_GPIO_Port, SPI1_NSS_Pin, GPIO_PIN_SET);
-
-	//SPI - end transaction
-
-	register_value = register_value >> (1 + data_start_bit - bit_resolution); //this should shift data to the rightmost bits of the word
-	uint16_t data_mask = 0xFFFF >> (16 - bit_resolution);
-	temp = register_value & data_mask;
-	return register_value & data_mask; // Return the data, stripping the non data (e.g parity) bits
-}
-
-// function reading the raw counter of the magnetic sensor
-int getRawCount() {
-	return (int) read(angle_register);
-}
-
-//  Shaft angle calculation
-//  angle is in radians [rad]
-float getSensorAngle() {
-	return (getRawCount() / (float) cpr) * _2PI;
-}
-
-void Sensor_init() {
-	// initialize all the internal variables of Sensor to ensure a "smooth" startup (without a 'jump' from zero)
-	getSensorAngle(); // call once
-
-	vel_angle_prev = getSensorAngle(); // call again
-	vel_angle_prev_ts = micros();
-	HAL_Delay(1);
-	getSensorAngle(); // call once
-
-	angle_prev = getSensorAngle(); // call again
-	angle_prev_ts = micros();
-}
-
-void updateSensor() {
-	float val = getSensorAngle();
-	angle_prev_ts = micros();
-	float d_angle = val - angle_prev;
-	// if overflow happened track it as full rotation
-	if (abs(d_angle) > (0.8f * _2PI))
-		full_rotations += (d_angle > 0) ? -1 : 1;
-	angle_prev = val;
-}
-
-float getMechanicalAngle() {
-	return angle_prev;
-}
-
-float getAngle() {
-	return (float) full_rotations * _2PI + angle_prev;
-}
-
-int32_t getFullRotations() {
-	return full_rotations;
-}
-
-float getvelocity() {
-	// calculate sample time
-	float Ts = (angle_prev_ts - vel_angle_prev_ts) * 1e-6;
-	// quick fix for strange cases (micros overflow)
-	if (Ts <= 0)
-		Ts = 1e-3f;
-	// velocity calculation
-	float vel = ((float) (full_rotations - vel_full_rotations) * _2PI
-			+ (angle_prev - vel_angle_prev)) / Ts;
-	// save variables for future pass
-	vel_angle_prev = angle_prev;
-	vel_full_rotations = full_rotations;
-	vel_angle_prev_ts = angle_prev_ts;
-	return vel;
-}
-
-// shaft angle calculation
-float shaftAngle() {
-	LPF_angle_s.x = getAngle();
-	LPF_angle_s = LowPassFilter(LPF_angle_s);
-	return sensor_direction * LPF_angle_s.y_prev - sensor_offset;
-}
-// shaft velocity calculation
-float shaftVelocity() {
-	LPF_velocity_s.x = getvelocity();
-	LPF_velocity_s = LowPassFilter(LPF_velocity_s);
-	return sensor_direction * LPF_velocity_s.y_prev;
-}
-
-//Conversion shaft angle to elec angle
-float electricalAngle() {
-	return _normalizeAngle(
-			(float) (sensor_direction * pole_pairs) * getMechanicalAngle()
-					- zero_electric_angle);
-}
 
 //Write PWM fsw = 25kHzfloat Ts
 void writeDutyCycle3PWM(float dc_a, float dc_b, float dc_c) {
@@ -1559,142 +1314,142 @@ int needsSearch() {
 }
 // Encoder alignment the absolute zero angle
 // - to the index
-int absoluteZeroSearch() {
-	// search the absolute zero with small velocity
-	float limit_vel = velocity_limit;
-	float limit_volt = voltage_limit;
-	velocity_limit = velocity_index_search;
-	voltage_limit = voltage_sensor_align;
-	shaft_angle = 0;
-	while (needsSearch() && shaft_angle < _2PI) {
-		angleOpenloop(1.5 * _2PI);
-		// call important for some sensors not to loose count
-		// not needed for the search
-		getAngle();
-	}
-	setPhaseVoltage(0, 0, 0);
-
-	// re-init the limits
-	velocity_limit = limit_vel;
-	voltage_limit = limit_volt;
-	return !needsSearch();
-}
-// Encoder alignment to electrical 0 angle
-int alignSensor() {
-	int exit_flag = 1; //success
-	// if unknown natural direction
-	if (!_isset(sensor_direction)) //sensor_direction == -12345.0
-			{
-		// check if sensor needs zero search
-		if (needsSearch()) //needSearch == 0 because use Magnetic sensor
-			exit_flag = absoluteZeroSearch(); // o
-		if (!exit_flag)
-			return exit_flag;
-
-		// find natural direction
-		// move one electrical revolution forward
-		for (int i = 0; i <= 500; i++) {
-			float angle = _3PI_2 + _2PI * i / 500.0;
-			setPhaseVoltage(voltage_sensor_align, 0, angle);
-			HAL_Delay(2);
-		}
-		updateSensor();
-		// take and angle in the middle
-		float mid_angle = getAngle();
-		// move one electrical revolution backwards
-		for (int i = 500; i >= 0; i--) {
-			float angle = _3PI_2 + _2PI * i / 500.0;
-			setPhaseVoltage(voltage_sensor_align, 0, angle);
-			HAL_Delay(2);
-		}
-		updateSensor();
-		float end_angle = getAngle();
-		setPhaseVoltage(0, 0, 0);
-		HAL_Delay(200);
-		// determine the direction the sensor moved
-		if (mid_angle == end_angle) {
-			return 0; // failed calibration
-		} else if (mid_angle < end_angle) {
-			sensor_direction = CCW;
-		} else {
-			sensor_direction = CW;
-		}
-		// check pole pair number
-
-		float moved = fabs(mid_angle - end_angle);
-		if (fabs(moved * pole_pairs - _2PI) > 0.5) { // 0.5 is arbitrary number it can be lower or higher!
-			pp_check = _2PI / moved;
-		}
-	}
-
-	// zero electric angle not known
-	if (!_isset(zero_electric_angle)) {
-		// align the electrical phases of the motor and sensor
-		// set angle -90(270 = 3PI/2) degrees
-		setPhaseVoltage(voltage_sensor_align, 0, _3PI_2);
-		HAL_Delay(700);
-		zero_electric_angle = _normalizeAngle(_electricalAngle(sensor_direction * getAngle(), pole_pairs));
-		HAL_Delay(20);
-		// stop everything
-		setPhaseVoltage(0, 0, 0);
-		HAL_Delay(200);
-	}
-	return exit_flag;
-}
+//int absoluteZeroSearch() {
+//	// search the absolute zero with small velocity
+//	float limit_vel = velocity_limit;
+//	float limit_volt = voltage_limit;
+//	velocity_limit = velocity_index_search;
+//	voltage_limit = voltage_sensor_align;
+//	shaft_angle = 0;
+//	while (needsSearch() && shaft_angle < _2PI) {
+//		angleOpenloop(1.5 * _2PI);
+//		// call important for some sensors not to loose count
+//		// not needed for the search
+//		getAngle();
+//	}
+//	setPhaseVoltage(0, 0, 0);
+//
+//	// re-init the limits
+//	velocity_limit = limit_vel;
+//	voltage_limit = limit_volt;
+//	return !needsSearch();
+//}
+//// Encoder alignment to electrical 0 angle
+//int alignSensor() {
+//	int exit_flag = 1; //success
+//	// if unknown natural direction
+//	if (!_isset(sensor_direction)) //sensor_direction == -12345.0
+//			{
+//		// check if sensor needs zero search
+//		if (needsSearch()) //needSearch == 0 because use Magnetic sensor
+//			exit_flag = absoluteZeroSearch(); // o
+//		if (!exit_flag)
+//			return exit_flag;
+//
+//		// find natural direction
+//		// move one electrical revolution forward
+//		for (int i = 0; i <= 500; i++) {
+//			float angle = _3PI_2 + _2PI * i / 500.0;
+//			setPhaseVoltage(voltage_sensor_align, 0, angle);
+//			HAL_Delay(2);
+//		}
+//		updateSensor();
+//		// take and angle in the middle
+//		float mid_angle = getAngle();
+//		// move one electrical revolution backwards
+//		for (int i = 500; i >= 0; i--) {
+//			float angle = _3PI_2 + _2PI * i / 500.0;
+//			setPhaseVoltage(voltage_sensor_align, 0, angle);
+//			HAL_Delay(2);
+//		}
+//		updateSensor();
+//		float end_angle = getAngle();
+//		setPhaseVoltage(0, 0, 0);
+//		HAL_Delay(200);
+//		// determine the direction the sensor moved
+//		if (mid_angle == end_angle) {
+//			return 0; // failed calibration
+//		} else if (mid_angle < end_angle) {
+//			sensor_direction = CCW;
+//		} else {
+//			sensor_direction = CW;
+//		}
+//		// check pole pair number
+//
+//		float moved = fabs(mid_angle - end_angle);
+//		if (fabs(moved * pole_pairs - _2PI) > 0.5) { // 0.5 is arbitrary number it can be lower or higher!
+//			pp_check = _2PI / moved;
+//		}
+//	}
+//
+//	// zero electric angle not known
+//	if (!_isset(zero_electric_angle)) {
+//		// align the electrical phases of the motor and sensor
+//		// set angle -90(270 = 3PI/2) degrees
+//		setPhaseVoltage(voltage_sensor_align, 0, _3PI_2);
+//		HAL_Delay(700);
+//		zero_electric_angle = _normalizeAngle(_electricalAngle(sensor_direction * getAngle(), pole_pairs));
+//		HAL_Delay(20);
+//		// stop everything
+//		setPhaseVoltage(0, 0, 0);
+//		HAL_Delay(200);
+//	}
+//	return exit_flag;
+//}
 
 // zero_electric_offset , _sensor_direction : from Run code "find_sensor_offset_and_direction"
 // sensor : Encoder , Hall sensor , Magnetic encoder
-int initFOC(float zero_electric_offset, enum Direction _sensor_direction) {
-	int exit_flag = 1;
-	// align motor if necessary
-	// alignment necessary for encoders.
-	if (_isset(zero_electric_offset)) {
-		// absolute zero offset provided - no need to align
-		zero_electric_angle = zero_electric_offset;
-		// set the sensor direction - default CW
-		sensor_direction = _sensor_direction;
-	}
-	// sensor and motor alignment - can be skipped
-	// by setting motor.sensor_direction and motor.zero_electric_angle
-	exit_flag *= alignSensor();
-	// added the shaft_angle update
-	shaft_angle = getAngle();
-	HAL_Delay(500);
+//int initFOC(float zero_electric_offset, enum Direction _sensor_direction) {
+//	int exit_flag = 1;
+//	// align motor if necessary
+//	// alignment necessary for encoders.
+//	if (_isset(zero_electric_offset)) {
+//		// absolute zero offset provided - no need to align
+//		zero_electric_angle = zero_electric_offset;
+//		// set the sensor direction - default CW
+//		sensor_direction = _sensor_direction;
+//	}
+//	// sensor and motor alignment - can be skipped
+//	// by setting motor.sensor_direction and motor.zero_electric_angle
+//	exit_flag *= alignSensor();
+//	// added the shaft_angle update
+//	shaft_angle = getAngle();
+//	HAL_Delay(500);
+//
+//	return exit_flag;
+//}
 
-	return exit_flag;
-}
-
-void loopFOC() {
-	updateSensor();
-	// shaft angle/velocity need the update() to be called first
-	// get shaft angle
-	shaft_angle = shaftAngle();
-	// electrical angle - need shaftAngle to be called first
-	electrical_angle = electricalAngle();
-
-	// Chosen TorqueControlType::foc_current
-	// read dq currents
-	current = getFOCCurrents(electrical_angle);
-	LPF_current_q_s.x = current.q;
-	LPF_current_q_s = LowPassFilter(LPF_current_q_s);
-	current.q = LPF_current_q_s.y_prev;   // filter values
-
-	LPF_current_d_s.x = current.d;
-	LPF_current_d_s = LowPassFilter(LPF_current_d_s);
-	current.d = LPF_current_d_s.y_prev;   // filter values
-
-	// calculate the phase voltages
-	PID_current_q_s.error = current_sp - current.q;
-	PID_current_q_s = PID(PID_current_q_s);
-	voltage.q = PID_current_q_s.output_prev;
-
-	PID_current_d_s.error = 0 - current.d;
-	PID_current_d_s = PID(PID_current_d_s);
-	voltage.d = PID_current_d_s.output_prev;
-
-	// set the phase voltage - FOC heart function :)
-	setPhaseVoltage(voltage.q, voltage.d, electrical_angle);
-}
+//void loopFOC() {
+//	updateSensor();
+//	// shaft angle/velocity need the update() to be called first
+//	// get shaft angle
+//	shaft_angle = shaftAngle();
+//	// electrical angle - need shaftAngle to be called first
+//	electrical_angle = electricalAngle();
+//
+//	// Chosen TorqueControlType::foc_current
+//	// read dq currents
+//	current = getFOCCurrents(electrical_angle);
+//	LPF_current_q_s.x = current.q;
+//	LPF_current_q_s = LowPassFilter(LPF_current_q_s);
+//	current.q = LPF_current_q_s.y_prev;   // filter values
+//
+//	LPF_current_d_s.x = current.d;
+//	LPF_current_d_s = LowPassFilter(LPF_current_d_s);
+//	current.d = LPF_current_d_s.y_prev;   // filter values
+//
+//	// calculate the phase voltages
+//	PID_current_q_s.error = current_sp - current.q;
+//	PID_current_q_s = PID(PID_current_q_s);
+//	voltage.q = PID_current_q_s.output_prev;
+//
+//	PID_current_d_s.error = 0 - current.d;
+//	PID_current_d_s = PID(PID_current_d_s);
+//	voltage.d = PID_current_d_s.output_prev;
+//
+//	// set the phase voltage - FOC heart function :)
+//	setPhaseVoltage(voltage.q, voltage.d, electrical_angle);
+//}
 
 //Low-Pass Filter
 struct LPF LowPassFilter(struct LPF LPF) {
@@ -1773,72 +1528,72 @@ struct PID PID(struct PID PID) {
 // It runs either angle, velocity or torque loop
 // - needs to be called iteratively it is asynchronous function
 // - if target is not set it uses motor.target value
-void move_velocity(float new_target) {
-	// get angular velocity
-	shaft_velocity = shaftVelocity(); // read value even if motor is disabled to keep the monitoring updated
+//void move_velocity(float new_target) {
+//	// get angular velocity
+//	shaft_velocity = shaftVelocity(); // read value even if motor is disabled to keep the monitoring updated
+//
+//	if (_isset(new_target))
+//		target = new_target;
+//
+//	// velocity set point
+//	shaft_velocity_sp = target;
+//
+//	// calculate the torque command
+//	PID_velocity_s.error = shaft_velocity_sp - shaft_velocity;
+//	PID_velocity_s = PID(PID_velocity_s);
+//	current_sp = PID_velocity_s.output_prev;
+//	// if current/foc_current torque control
+//	// if torque controlled through voltage control
+////  voltage.q = current_sp*phase_resistance;
+////  voltage.d = 0;
+//
+//}
 
-	if (_isset(new_target))
-		target = new_target;
+//void move_angle(float new_target)
+//{
+//  // get angular velocity
+//  shaft_velocity = shaftVelocity(); // read value even if motor is disabled to keep the monitoring updated
+//
+//  // downsampling (optional)
+//  // if(motion_cnt++ < motion_downsample) return;
+//  // motion_cnt = 0;
+//  // set internal target variable
+//  if(_isset(new_target))
+//	  target = new_target;
+//
+//  // angle set point
+//  shaft_angle_sp = target;
+//  // calculate velocity set point
+//  PID_angle_s.error = shaft_angle_sp - shaft_angle;
+//  PID_angle_s = PID(PID_angle_s);
+//  shaft_velocity_sp = PID_angle_s.output_prev;
+//  // calculate the torque command
+//  PID_velocity_s.error = shaft_velocity_sp - shaft_velocity ;
+//  PID_velocity_s = PID(PID_velocity_s);
+//  current_sp = PID_velocity_s.output_prev;
+//
+////  voltage.q = current_sp*phase_resistance;
+////  voltage.d = 0;
+//}
 
-	// velocity set point
-	shaft_velocity_sp = target;
-
-	// calculate the torque command
-	PID_velocity_s.error = shaft_velocity_sp - shaft_velocity;
-	PID_velocity_s = PID(PID_velocity_s);
-	current_sp = PID_velocity_s.output_prev;
-	// if current/foc_current torque control
-	// if torque controlled through voltage control
-//  voltage.q = current_sp*phase_resistance;
-//  voltage.d = 0;
-
-}
-
-void move_angle(float new_target)
-{
-  // get angular velocity
-  shaft_velocity = shaftVelocity(); // read value even if motor is disabled to keep the monitoring updated
-
-  // downsampling (optional)
-  // if(motion_cnt++ < motion_downsample) return;
-  // motion_cnt = 0;
-  // set internal target variable
-  if(_isset(new_target))
-	  target = new_target;
-
-  // angle set point
-  shaft_angle_sp = target;
-  // calculate velocity set point
-  PID_angle_s.error = shaft_angle_sp - shaft_angle;
-  PID_angle_s = PID(PID_angle_s);
-  shaft_velocity_sp = PID_angle_s.output_prev;
-  // calculate the torque command
-  PID_velocity_s.error = shaft_velocity_sp - shaft_velocity ;
-  PID_velocity_s = PID(PID_velocity_s);
-  current_sp = PID_velocity_s.output_prev;
-
-//  voltage.q = current_sp*phase_resistance;
-//  voltage.d = 0;
-}
-
-void move_haptic(float new_target, float passivity_gain)
-{
-	// get angular velocity
-	  shaft_velocity = shaftVelocity(); // read value even if motor is disabled to keep the monitoring updated
-
-	  // downsampling (optional)
-	  // if(motion_cnt++ < motion_downsample) return;
-	  // motion_cnt = 0;
-	  // set internal target variable
-	  if(_isset(new_target))
-		  target = new_target;
-	  // angle set point
-	  shaft_angle_sp = target;
-	  // calculate velocity set point
-	  PID_haptic_s.error = shaft_angle_sp - shaft_angle;
-	  PID_haptic_s = PID(PID_haptic_s);
-	  current_sp = PID_haptic_s.output_prev + (shaft_velocity * passivity_gain);
-}
+//void move_haptic(float new_target, float passivity_gain)
+//{
+//	// get angular velocity
+//	  shaft_velocity = shaftVelocity(); // read value even if motor is disabled to keep the monitoring updated
+//
+//	  // downsampling (optional)
+//	  // if(motion_cnt++ < motion_downsample) return;
+//	  // motion_cnt = 0;
+//	  // set internal target variable
+//	  if(_isset(new_target))
+//		  target = new_target;
+//	  // angle set point
+//	  shaft_angle_sp = target;
+//	  // calculate velocity set point
+//	  PID_haptic_s.error = shaft_angle_sp - shaft_angle;
+//	  PID_haptic_s = PID(PID_haptic_s);
+//	  current_sp = PID_haptic_s.output_prev + (shaft_velocity * passivity_gain);
+//}
 
 void move_torque(float new_target) {
 //      if(!_isset(phase_resistance))
@@ -1852,32 +1607,32 @@ void move_torque(float new_target) {
 // Function (iterative) generating open loop movement for target velocity
 // - target_velocity - rad/s
 // it uses voltage_limit variable
-float velocityOpenloop(float target_velocity) {
-	// get current timestamp
-	unsigned long now_us = micros();
-	// calculate the sample time from last call
-	float Ts = (now_us - open_loop_timestamp) * 1e-6;
-	// quick fix for strange cases (micros overflow + timestamp not defined)
-	if (Ts <= 0 || Ts > 0.5)
-		Ts = 1e-3;
-
-	// calculate the necessary angle to achieve target velocity
-	shaft_angle = _normalizeAngle(shaft_angle + target_velocity * Ts);
-	// for display purposes
-	shaft_velocity = target_velocity;
-
-	// use voltage limit or current limit
-	float Uq = voltage_limit;  //24V
-//  if(_isset(phase_resistance)) Uq =  current_limit*phase_resistance;
-//  voltage_sensor_align
-	// set the maximal allowed voltage (voltage_limit) with the necessary angle
-	setPhaseVoltage(Uq, 0, _electricalAngle(shaft_angle, pole_pairs));
-
-	// save timestamp for next call
-	open_loop_timestamp = now_us;
-
-	return Uq;
-}
+//float velocityOpenloop(float target_velocity) {
+//	// get current timestamp
+//	unsigned long now_us = micros();
+//	// calculate the sample time from last call
+//	float Ts = (now_us - open_loop_timestamp) * 1e-6;
+//	// quick fix for strange cases (micros overflow + timestamp not defined)
+//	if (Ts <= 0 || Ts > 0.5)
+//		Ts = 1e-3;
+//
+//	// calculate the necessary angle to achieve target velocity
+//	shaft_angle = _normalizeAngle(shaft_angle + target_velocity * Ts);
+//	// for display purposes
+//	shaft_velocity = target_velocity;
+//
+//	// use voltage limit or current limit
+//	float Uq = voltage_limit;  //24V
+////  if(_isset(phase_resistance)) Uq =  current_limit*phase_resistance;
+////  voltage_sensor_align
+//	// set the maximal allowed voltage (voltage_limit) with the necessary angle
+//	setPhaseVoltage(Uq, 0, _electricalAngle(shaft_angle, pole_pairs));
+//
+//	// save timestamp for next call
+//	open_loop_timestamp = now_us;
+//
+//	return Uq;
+//}
 
 void move_velocity_openloop(float target) {
 	shaft_velocity_sp = target;
@@ -1888,36 +1643,36 @@ void move_velocity_openloop(float target) {
 // Function (iterative) generating open loop movement towards the target angle
 // - target_angle - rad
 // it uses voltage_limit and velocity_limit variables
-float angleOpenloop(float target_angle) {
-	unsigned long now_us = micros();
-	// calculate the sample time from last call
-	float Ts = (now_us - open_loop_timestamp) * 1e-6;
-	// quick fix for strange cases (micros overflow + timestamp not defined)
-	if (Ts <= 0 || Ts > 0.5)
-		Ts = 1e-3;
-
-	// calculate the necessary angle to move from current position towards target angle
-	// with maximal velocity (velocity_limit)
-	if (abs(target_angle - shaft_angle) > abs(velocity_limit * Ts)) {
-		shaft_angle += _sign(target_angle - shaft_angle) * abs(velocity_limit)
-				* Ts;
-		shaft_velocity = velocity_limit;
-	} else {
-		shaft_angle = target_angle;
-		shaft_velocity = 0;
-	}
-
-	// use voltage limit or current limit
-	float Uq = voltage_limit;
-//  if(_isset(phase_resistance))
-//	  Uq =  current_limit*phase_resistance;
-
-	// set the maximal allowed voltage (voltage_limit) with the necessary angle
-	setPhaseVoltage(Uq, 0, _electricalAngle(shaft_angle, pole_pairs));
-
-	open_loop_timestamp = now_us;
-	return Uq;
-}
+//float angleOpenloop(float target_angle) {
+//	unsigned long now_us = micros();
+//	// calculate the sample time from last call
+//	float Ts = (now_us - open_loop_timestamp) * 1e-6;
+//	// quick fix for strange cases (micros overflow + timestamp not defined)
+//	if (Ts <= 0 || Ts > 0.5)
+//		Ts = 1e-3;
+//
+//	// calculate the necessary angle to move from current position towards target angle
+//	// with maximal velocity (velocity_limit)
+//	if (abs(target_angle - shaft_angle) > abs(velocity_limit * Ts)) {
+//		shaft_angle += _sign(target_angle - shaft_angle) * abs(velocity_limit)
+//				* Ts;
+//		shaft_velocity = velocity_limit;
+//	} else {
+//		shaft_angle = target_angle;
+//		shaft_velocity = 0;
+//	}
+//
+//	// use voltage limit or current limit
+//	float Uq = voltage_limit;
+////  if(_isset(phase_resistance))
+////	  Uq =  current_limit*phase_resistance;
+//
+//	// set the maximal allowed voltage (voltage_limit) with the necessary angle
+//	setPhaseVoltage(Uq, 0, _electricalAngle(shaft_angle, pole_pairs));
+//
+//	open_loop_timestamp = now_us;
+//	return Uq;
+//}
 
 /* USER CODE END 4 */
 

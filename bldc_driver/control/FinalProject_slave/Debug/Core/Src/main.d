@@ -28,7 +28,8 @@ Core/Src/main.o: ../Core/Src/main.cpp ../Core/Inc/main.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h \
- /Users/runj/Documents/GitHub/Robotics-RunJ/bldc_driver/control/FinalProject_slave/Core/Libs/HelloRunJ.h
+ /Users/runj/Documents/GitHub/Robotics-RunJ/bldc_driver/control/FinalProject_slave/Core/Libs/HelloRunJ.h \
+ /Users/runj/Documents/GitHub/Robotics-RunJ/bldc_driver/control/FinalProject_slave/Core/Libs/simpleFOC.h
 ../Core/Inc/main.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h:
 ../Core/Inc/stm32f1xx_hal_conf.h:
@@ -60,3 +61,4 @@ Core/Src/main.o: ../Core/Src/main.cpp ../Core/Inc/main.h \
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h:
 /Users/runj/Documents/GitHub/Robotics-RunJ/bldc_driver/control/FinalProject_slave/Core/Libs/HelloRunJ.h:
+/Users/runj/Documents/GitHub/Robotics-RunJ/bldc_driver/control/FinalProject_slave/Core/Libs/simpleFOC.h:

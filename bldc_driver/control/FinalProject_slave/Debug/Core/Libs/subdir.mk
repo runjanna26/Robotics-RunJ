@@ -5,13 +5,16 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
-../Core/Libs/HelloRunJ.cpp 
+../Core/Libs/HelloRunJ.cpp \
+../Core/Libs/simpleFOC.cpp 
 
 OBJS += \
-./Core/Libs/HelloRunJ.o 
+./Core/Libs/HelloRunJ.o \
+./Core/Libs/simpleFOC.o 
 
 CPP_DEPS += \
-./Core/Libs/HelloRunJ.d 
+./Core/Libs/HelloRunJ.d \
+./Core/Libs/simpleFOC.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
@@ -21,7 +24,7 @@ Core/Libs/%.o Core/Libs/%.su Core/Libs/%.cyclo: ../Core/Libs/%.cpp Core/Libs/sub
 clean: clean-Core-2f-Libs
 
 clean-Core-2f-Libs:
-	-$(RM) ./Core/Libs/HelloRunJ.cyclo ./Core/Libs/HelloRunJ.d ./Core/Libs/HelloRunJ.o ./Core/Libs/HelloRunJ.su
+	-$(RM) ./Core/Libs/HelloRunJ.cyclo ./Core/Libs/HelloRunJ.d ./Core/Libs/HelloRunJ.o ./Core/Libs/HelloRunJ.su ./Core/Libs/simpleFOC.cyclo ./Core/Libs/simpleFOC.d ./Core/Libs/simpleFOC.o ./Core/Libs/simpleFOC.su
 
 .PHONY: clean-Core-2f-Libs
 

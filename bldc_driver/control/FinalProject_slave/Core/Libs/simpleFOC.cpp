@@ -8,232 +8,283 @@
 #include <simpleFOC.h>
 #include "stm32f1xx_hal.h"  // Include the HAL header for your specific MCU
 
-struct MagneticSensorSPIConfig_s AS5048A_SPI = {
-	    .bit_resolution = 14,
-	    .angle_registers = 0x3FFF,
-	    .data_start_bit = 13,
-	    .command_rw_bit = 14,
-	    .command_parity_bit = 15
-};
 
-struct LPF LPF_angle_s = {
-		.y_prev = 0.0,
-		.Tf = 0.01,
-};
 
-struct LPF LPF_velocity_s = {
-		.y_prev = 0.0,
-		.Tf = 0.01,
-};
-
-simpleFOC::simpleFOC() {
+simpleFOC::simpleFOC() 
+{
 
 }
 
-simpleFOC::~simpleFOC() {
+simpleFOC::~simpleFOC() 
+{
 	// TODO Auto-generated destructor stub
 }
 
-// initialize SPI for Magnetic Sensor
-void simpleFOC::MagneticSensorSPI_init() {
-	struct MagneticSensorSPIConfig_s config = AS5048A_SPI;
-	// angle read register of the magnetic sensor
-	angle_register = config.angle_registers ? config.angle_registers : DEF_ANGLE_REGISTER;
-	// register maximum value (counts per revolution)
-	cpr = pow(2, config.bit_resolution);
-	bit_resolution = config.bit_resolution;
-
-	command_parity_bit = config.command_parity_bit; // for backwards compatibility
-	command_rw_bit = config.command_rw_bit; // for backwards compatibility
-	data_start_bit = config.data_start_bit; // for backwards compatibility
-
-	HAL_GPIO_WritePin(SPI1_NSS_GPIO_Port, SPI1_NSS_Pin, GPIO_PIN_SET);
+void simpleFOC::simpleFOC_init()
+{
+	Encoder.MagneticSensorSPI_init();
+	Encoder.Sensor_init();
+	CurrentSensor.initCurrentsense(CurrentSense_resistance, CurrentSense_gain);
+	CurrentSensor.calibrateOffsets();
+	// Encoder.zero_electric_angle = 100.0;
 }
 
-void simpleFOC::Sensor_init(){
-	// initialize all the internal variables of Sensor to ensure a "smooth" startup (without a 'jump' from zero)
-	getSensorAngle(); // call once
+// returns 0 if it does need search for absolute zero
+// 0 - magnetic sensor (& encoder with index which is found)
+// 1 - encoder with index (with index not found yet)
+int simpleFOC::needsSearch() 
+{
+	return 0;
+}
 
-	vel_angle_prev = getSensorAngle(); // call again
-	vel_angle_prev_ts = micros();
-	HAL_Delay(1);
-	getSensorAngle(); // call once
+// Encoder alignment the absolute zero angle
+// - to the index
+int simpleFOC::absoluteZeroSearch() 
+{
+	// search the absolute zero with small velocity
+	float limit_vel = velocity_limit;
+	float limit_volt = voltage_limit;
+	velocity_limit = velocity_index_search;
+	voltage_limit = voltage_sensor_align;
+	shaft_angle = 0;
+	while (needsSearch() && shaft_angle < _2PI) 
+	{
+		angleOpenloop(1.5 * _2PI);
+		// call important for some sensors not to loose count
+		// not needed for the search
+		Encoder.get_full_rotation_angle();
+	}
+	driver.setPhaseVoltage(0, 0, 0);
 
-	angle_prev = getSensorAngle(); // call again
-	angle_prev_ts = micros();
+	// re-init the limits
+	velocity_limit = limit_vel;
+	voltage_limit = limit_volt;
+	return !needsSearch();
+}
+
+// Encoder alignment to electrical 0 angle
+int simpleFOC::alignSensor() 
+{
+	int exit_flag = 1; //success
+	// if unknown natural direction
+	if (!_isset(Encoder.sensor_direction)) //sensor_direction == -12345.0
+			{
+		// check if sensor needs zero search
+		if (needsSearch()) //needSearch == 0 because use Magnetic sensor
+			exit_flag = absoluteZeroSearch(); // o
+		if (!exit_flag)
+			return exit_flag;
+
+		// find natural direction
+		// move one electrical revolution forward
+		for (int i = 0; i <= 500; i++) 
+		{
+			float angle = _3PI_2 + _2PI * i / 500.0;
+			driver.setPhaseVoltage(voltage_sensor_align, 0, angle);
+			HAL_Delay(2);
+		}
+		Encoder.updateSensor();
+		// take and angle in the middle
+		float mid_angle = Encoder.get_full_rotation_angle();
+		// move one electrical revolution backwards
+		for (int i = 500; i >= 0; i--) 
+		{
+			float angle = _3PI_2 + _2PI * i / 500.0;
+			driver.setPhaseVoltage(voltage_sensor_align, 0, angle);
+			HAL_Delay(2);
+		}
+		Encoder.updateSensor();
+		float end_angle = Encoder.get_full_rotation_angle();
+		driver.setPhaseVoltage(0, 0, 0);
+		HAL_Delay(200);
+		// determine the direction the sensor moved
+		if (mid_angle == end_angle) 
+		{
+			return 0; // failed calibration
+		} else if (mid_angle < end_angle) 
+		{
+			Encoder.sensor_direction = CCW;
+		} else {
+			Encoder.sensor_direction = CW;
+		}
+		// check pole pair number
+
+		float moved = fabs(mid_angle - end_angle);
+		if (fabs(moved * pole_pairs - _2PI) > 0.5) 
+		{ // 0.5 is arbitrary number it can be lower or higher!
+			pp_check = _2PI / moved;
+		}
+	}
+
+	// zero electric angle not known
+	if (!_isset(Encoder.zero_electric_angle))
+	{
+		// align the electrical phases of the motor and sensor
+		// set angle -90(270 = 3PI/2) degrees
+		driver.setPhaseVoltage(voltage_sensor_align, 0, _3PI_2);
+		HAL_Delay(700);
+		Encoder.zero_electric_angle = _normalizeAngle(_electricalAngle(Encoder.sensor_direction * Encoder.get_full_rotation_angle(), pole_pairs));
+		HAL_Delay(20);
+		// stop everything
+		driver.setPhaseVoltage(0, 0, 0);
+		HAL_Delay(200);
+	}
+	return exit_flag;
+}
+
+// zero_electric_offset , _sensor_direction : from Run code "find_sensor_offset_and_direction"
+// sensor : Encoder , Hall sensor , Magnetic encoder
+int simpleFOC::initFOC(float zero_electric_offset, enum Direction _sensor_direction) 
+{
+	int exit_flag = 1;
+	// align motor if necessary
+	// alignment necessary for encoders.
+	if (_isset(zero_electric_offset)) 
+	{
+		// absolute zero offset provided - no need to align
+		Encoder.zero_electric_angle = zero_electric_offset;
+		// set the sensor direction - default CW
+		Encoder.sensor_direction = _sensor_direction;
+	}
+	// sensor and motor alignment - can be skipped
+	// by setting motor.sensor_direction and motor.Encoder.zero_electric_angle
+	exit_flag *= alignSensor();
+	// added the shaft_angle update
+	shaft_angle = Encoder.get_full_rotation_angle();
+	HAL_Delay(500);
+
+	return exit_flag;
+}
+
+
+
+void simpleFOC::loopFOC() 
+{
+	Encoder.updateSensor();
+	// shaft angle/velocity need the update() to be called first
+	// get shaft angle
+	shaft_angle = Encoder.getShaftAngle();
+	// electrical angle - need shaftAngle to be called first
+	electrical_angle = Encoder.electricalAngle();
+
+	// read dq currents
+	current = CurrentSensor.getFOCCurrents(electrical_angle);
+	current.q = LPF_current_q(current.q);   // filter values
+	current.d = LPF_current_d(current.d);   // filter values
+
+	// calculate the phase voltages
+	voltage.q = PID_current_q(current_sp - current.q);
+	voltage.d = PID_current_d(0 - current.d);
+
+	// set the phase voltage - FOC heart function :)
+	driver.setPhaseVoltage(voltage.q, voltage.d, electrical_angle);
+}
+
+void simpleFOC::move_angle(float new_target)
+{
+	// get angular velocity
+	shaft_velocity = Encoder.getShaftVelocity(); // read value even if motor is disabled to keep the monitoring updated
+
+	// downsampling (optional)
+	// if(motion_cnt++ < motion_downsample) return;
+	// motion_cnt = 0;
+	// set internal target variable
+	if(_isset(new_target))
+		  target = new_target;
+
+	// angle set point
+	shaft_angle_sp = target;
+	// calculate velocity set point
+	shaft_velocity_sp = PID_position(shaft_angle_sp - shaft_angle);
+	// calculate the torque command
+	current_sp = PID_velocity(shaft_velocity_sp - shaft_velocity);
+
+	voltage.q = current_sp*phase_resistance;
+	voltage.d = 0;
+}
+
+
+// Function (iterative) generating open loop movement for target velocity
+// - target_velocity - rad/s
+// it uses voltage_limit variable
+float simpleFOC::velocityOpenloop(float target_velocity) 
+{
+	// get current timestamp
+	unsigned long now_us = micros();
+	// calculate the sample time from last call
+	float Ts = (now_us - open_loop_timestamp) * 1e-6;
+	// quick fix for strange cases (micros overflow + timestamp not defined)
+	if (Ts <= 0 || Ts > 0.5)
+		Ts = 1e-3;
+
+	// calculate the necessary angle to achieve target velocity
+	shaft_angle = _normalizeAngle(shaft_angle + target_velocity * Ts);
+	// for display purposes
+	shaft_velocity = target_velocity;
+
+	// use voltage limit or current limit
+	float Uq = voltage_limit;  //24V
+//  if(_isset(phase_resistance)) Uq =  current_limit*phase_resistance;
+//  voltage_sensor_align
+	// set the maximal allowed voltage (voltage_limit) with the necessary angle
+	driver.setPhaseVoltage(Uq, 0, _electricalAngle(shaft_angle, pole_pairs));
+
+	// save timestamp for next call
+	open_loop_timestamp = now_us;
+
+	return Uq;
+}
+
+void simpleFOC::move_velocity_openloop(float target) 
+{
+	shaft_velocity_sp = target;
+	voltage.q = velocityOpenloop(shaft_velocity_sp); // returns the voltage that is set to the motor
+	voltage.d = 0;
+}
+
+// Function (iterative) generating open loop movement towards the target angle
+// - target_angle - rad
+// it uses voltage_limit and velocity_limit variables
+float simpleFOC::angleOpenloop(float target_angle) 
+{
+	unsigned long now_us = micros();
+	// calculate the sample time from last call
+	float Ts = (now_us - open_loop_timestamp) * 1e-6;
+	// quick fix for strange cases (micros overflow + timestamp not defined)
+	if (Ts <= 0 || Ts > 0.5)
+		Ts = 1e-3;
+
+	// calculate the necessary angle to move from current position towards target angle
+	// with maximal velocity (velocity_limit)
+	if (abs(target_angle - shaft_angle) > abs(velocity_limit * Ts)) {
+		shaft_angle += _sign(target_angle - shaft_angle) * abs(velocity_limit)
+				* Ts;
+		shaft_velocity = velocity_limit;
+	} else {
+		shaft_angle = target_angle;
+		shaft_velocity = 0;
+	}
+
+	// use voltage limit or current limit
+	float Uq = voltage_limit;
+//  if(_isset(phase_resistance))
+//	  Uq =  current_limit*phase_resistance;
+
+	// set the maximal allowed voltage (voltage_limit) with the necessary angle
+	driver.setPhaseVoltage(Uq, 0, _electricalAngle(shaft_angle, pole_pairs));
+
+	open_loop_timestamp = now_us;
+	return Uq;
 }
 
 /**
- * Utility function used to calculate even parity of word
- */
-uint8_t simpleFOC::spiCalcEvenParity(uint16_t value) {
-	uint8_t cnt = 0;
-	uint8_t i;
-
-	for (i = 0; i < 16; i++) {
-		if (value & 0x1)
-			cnt++;
-		value >>= 1;
-	}
-	return cnt & 0x1;
-}
-
-/*
- * Read a register from the SPI encoder sensor
- * Takes the address of the register as a 16 bit word
- * Returns the value of the register
- */
-uint16_t simpleFOC::read(uint16_t angle_register) {
-	uint16_t register_value;
-	uint16_t command = angle_register;
-
-	if (command_rw_bit > 0) {
-		command = angle_register | (1 << command_rw_bit);
-	}
-	if (command_parity_bit > 0) {
-		//Add a parity bit on the the MSB
-		command |=
-				((uint16_t) spiCalcEvenParity(command) << command_parity_bit);
-	}
-
-	//SPI - begin transaction
-
-	//Send the command
-	//  spi->transfer16(command);
-	HAL_GPIO_WritePin(SPI1_NSS_GPIO_Port, SPI1_NSS_Pin, GPIO_PIN_RESET);
-	HAL_SPI_TransmitReceive(&hspi1, (uint8_t*) &command,
-			(uint8_t*) &register_value,
-			sizeof(register_value) / sizeof(uint16_t), 100);
-	HAL_GPIO_WritePin(SPI1_NSS_GPIO_Port, SPI1_NSS_Pin, GPIO_PIN_SET);
-
-//  delay_us(1);
-
-	command = 0x0000;
-	//Now read the response (NO_OPERATION_COMMAND = 0x0000)
-	//  uint16_t register_value = spi->transfer16(0x00);
-	HAL_GPIO_WritePin(SPI1_NSS_GPIO_Port, SPI1_NSS_Pin, GPIO_PIN_RESET);
-	HAL_SPI_TransmitReceive(&hspi1, (uint8_t*) &command,
-			(uint8_t*) &register_value,
-			sizeof(register_value) / sizeof(uint16_t), 100);
-	HAL_GPIO_WritePin(SPI1_NSS_GPIO_Port, SPI1_NSS_Pin, GPIO_PIN_SET);
-
-	//SPI - end transaction
-
-	register_value = register_value >> (1 + data_start_bit - bit_resolution); //this should shift data to the rightmost bits of the word
-	uint16_t data_mask = 0xFFFF >> (16 - bit_resolution);
-	return register_value & data_mask; // Return the data, stripping the non data (e.g parity) bits
-}
-
-// function reading the raw counter of the magnetic sensor
-int simpleFOC::getRawCount() {
-	return (int) read(angle_register);
-}
-
-//  Shaft angle calculation
-//  angle is in radians [rad]
-float simpleFOC::getSensorAngle() {
-	return (getRawCount() / (float) cpr) * _2PI;
-}
-
-// shaft angle calculation
-float simpleFOC::shaftAngle() {
-	LPF_angle_s.x = getAngle();
-	LPF_angle_s = LowPassFilter(LPF_angle_s);
-	return sensor_direction * LPF_angle_s.y_prev - sensor_offset;
-}
-
-
-float simpleFOC::getAngle() {
-	return (float) full_rotations * _2PI + angle_prev;
-}
-
-float simpleFOC::getMechanicalAngle() {
-	return angle_prev;
-}
-
-int32_t simpleFOC::getFullRotations() {
-	return full_rotations;
-}
-
-// Electrical angle calculation
-float simpleFOC::_electricalAngle(float shaft_angle, int pole_pairs) {
-	return (shaft_angle * pole_pairs);
-}
-
-//Conversion shaft angle to elec angle
-float simpleFOC::electricalAngle() {
-	return _normalizeAngle(
-			(float) (sensor_direction * pole_pairs) * getMechanicalAngle()
-					- zero_electric_angle);
-}
-
-//normalizing radian angle to [0,2PI]
-float simpleFOC::_normalizeAngle(float angle) {
-	float a = fmod(angle, _2PI);
-	return a >= 0 ? a : (a + _2PI);      //always project from 0 degree
-}
-
-void simpleFOC::updateSensor() {
-	float val = getSensorAngle();
-	angle_prev_ts = micros();
-	float d_angle = val - angle_prev;
-	// if overflow happened track it as full rotation
-	if (abs(d_angle) > (0.8f * _2PI))
-		full_rotations += (d_angle > 0) ? -1 : 1;
-	angle_prev = val;
-
-	getvelocity();
-}
-
-float simpleFOC::getvelocity() {
-	// calculate sample time
-	float Ts = (micros() - vel_angle_prev_ts) * 1e-6;
-	// quick fix for strange cases (micros overflow)
-	if (Ts <= 0)
-		Ts = 1e-3f;
-	// velocity calculation
-	vel_prev = ((float) (full_rotations - vel_full_rotations) * _2PI
-			+ (angle_prev - vel_angle_prev)) / Ts;
-	// save variables for future pass
-	vel_angle_prev = angle_prev;
-	vel_angle_prev_ts = angle_prev_ts;
-	vel_full_rotations = full_rotations;
-
-	return vel_prev;
-}
-
-// shaft velocity calculation
-float simpleFOC::shaftVelocity() {
-	LPF_velocity_s.x = getvelocity();
-	LPF_velocity_s = LowPassFilter(LPF_velocity_s);
-	return sensor_direction * LPF_velocity_s.y_prev;
-}
-
-//Low-Pass Filter
-struct LPF simpleFOC::LowPassFilter(struct LPF LPF) {
-	unsigned long timestamp = micros();
-
-	float dt = (timestamp - LPF.timestamp_prev) * 1e-6f;
-
-	if (dt < 0.0f)
-		dt = 1e-3f;
-	else if (dt > 0.3f) {
-		LPF.y_prev = LPF.x;
-		LPF.timestamp_prev = timestamp;
-		return LPF;
-	}
-
-	float alpha = LPF.Tf / (LPF.Tf + dt);
-	float y = alpha * LPF.y_prev + (1.0f - alpha) * LPF.x;
-
-	LPF.y_prev = y;
-	LPF.timestamp_prev = timestamp;
-
-	return LPF;
-}
-
-
-
-uint32_t simpleFOC::micros(void) {
+ * @brief Gather system clock and convert to microsecond
+*/
+uint32_t simpleFOC::micros(void) 
+{
     return DWT->CYCCNT / (SystemCoreClock / 1000000U);
+}
+
+void simpleFOC::readEncoderOnly(){
+	Encoder.updateSensor();
 }

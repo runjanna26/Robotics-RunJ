@@ -1,5 +1,0 @@
-../Core/Libs/HelloRunJ.cpp:3:1:HelloRunJ::HelloRunJ()	1
-../Core/Libs/HelloRunJ.cpp:7:1:HelloRunJ::~HelloRunJ()	1
-../Core/Libs/HelloRunJ.cpp:7:1:virtual HelloRunJ::~HelloRunJ()	1
-../Core/Libs/HelloRunJ.cpp:10:6:void HelloRunJ::setSomeVariable(int)	1
-../Core/Libs/HelloRunJ.cpp:14:5:int HelloRunJ::getSomeVariable() const	1

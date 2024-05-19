@@ -85,8 +85,8 @@ all: main-build
 main-build: FinalProject_slave.elf secondary-outputs
 
 # Tool invocations
-FinalProject_slave.elf FinalProject_slave.map: $(OBJS) $(USER_OBJS) /Users/runj/Documents/GitHub/Robotics-RunJ/bldc_driver/control/FinalProject_slave/STM32F103C8TX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-g++ -o "FinalProject_slave.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"/Users/runj/Documents/GitHub/Robotics-RunJ/bldc_driver/control/FinalProject_slave/STM32F103C8TX_FLASH.ld" -Wl,-Map="FinalProject_slave.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -u _printf_float -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+FinalProject_slave.elf FinalProject_slave.map: $(OBJS) $(USER_OBJS) C:\Users\WINDOWS\ 11\Documents\Robotics-RunJ\bldc_driver\control\FinalProject_slave\STM32F103C8TX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-g++ -o "FinalProject_slave.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"C:\Users\WINDOWS 11\Documents\Robotics-RunJ\bldc_driver\control\FinalProject_slave\STM32F103C8TX_FLASH.ld" -Wl,-Map="FinalProject_slave.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -u _printf_float -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

@@ -219,7 +219,7 @@ int main(void)
 	HAL_TIM_Base_Start_IT(&htim4);
 
 	//SPI SETUP
-	simpleFOC.simpleFOC_init();
+	simpleFOC.initSensors();
 
 	//PWM SETUP
 	HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);   //pinMode
@@ -229,21 +229,14 @@ int main(void)
 	HAL_GPIO_WritePin(EN_GPIO_Port, EN_Pin, GPIO_PIN_SET);  // Enable
 //	  HAL_GPIO_WritePin(EN_GPIO_Port, EN_Pin, GPIO_PIN_RESET);  // Disable
 
-	//FOC SETUP
-//	zero_electric_angle = 0.397302926;
-//	simpleFOC.initFOC(zero_electric_angle, CW); //M1 3.85949397
-	//1.98957574+1.98957574+1.98420465
-
-
-	// float sensor_offset = CW;
-	// float zero_electric_angle = 5.87898159;
-	simpleFOC.initFOC(5.87898159, CW); 			// Do not search!!
-	simpleFOC.initFOC(NOT_SET, UNKNOWN); 		//Not yet calibrate find the best init value
-
 	//CAN SETUP ID: 0x103
 	CAN_init_103();
 	t1 = micros();
 	t2 = micros();
+
+	//FOC SETUP
+	simpleFOC.initFOC(5.88972235, CW); 			// Do not search!! checked
+//	simpleFOC.initFOC(NOT_SET, UNKNOWN); 		//Not yet calibrate find the best init value
 
 	/* USER CODE END 2 */
 
@@ -291,7 +284,7 @@ int main(void)
 		//Position sensor testing
 //	    encoder.updateSensor();
 	    simpleFOC.readEncoderOnly();
-		Sx = simpleFOC.Encoder.getSensorVelocity();
+//		Sx = simpleFOC.Encoder.getSensorVelocity();
 //	    getMechanicalVelocity;
 //		electrical_angle = get_full_rotation_angle();
 //		shaft_angle = shaftAngle();
@@ -309,7 +302,6 @@ int main(void)
 //  	  ts = micros()-t1;
 
 //=================Closed-loop testing=================
-		//Speed control
 		if(micros() - t1 >= 3000000)
 	    {
 	    	t1 = micros();
@@ -317,7 +309,6 @@ int main(void)
 	    }
 	  	if(Command_setpoint > _2PI)
 	  		Command_setpoint = 0.0;
-//		if (float_final <= 0.01) float_final = 0.0f ;
 //		move_velocity(float_final); 									//136us --> 72us
 //		loopFOC();  													//1190us --> 485us
 

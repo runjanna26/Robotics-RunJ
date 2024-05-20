@@ -22,7 +22,7 @@
 	PIDController PID_current_d {1.0, 0.0, 0.0, 1000.0, voltage_limit};
 	PIDController PID_current_q {1.0, 0.0, 0.0, 1000.0, voltage_limit};
 	PIDController PID_velocity  {0.5, 55.0, 0.0, 1000.0, current_limit};
-	PIDController PID_position  {10.0, 0.0, 0.2, 0, velocity_limit};
+	PIDController PID_position  {20.0, 0.0, 1.0, 0, velocity_limit};
 
 	LowPassFilter LPF_current_q	{0.001};
 	LowPassFilter LPF_current_d	{0.001};

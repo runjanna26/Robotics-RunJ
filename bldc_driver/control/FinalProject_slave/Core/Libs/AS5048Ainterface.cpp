@@ -237,7 +237,7 @@ void AS5048A_interface::updateSensor()
 		full_rotations += (d_angle > 0) ? -1 : 1;
 	angle_prev = angle_current;
 
-	getSensorVelocity();
+	getShaftVelocity();
 }
 
 

@@ -89,7 +89,7 @@ public:
 	int pole_pairs = 14;	
 
 	LowPassFilter LPF_position	{0.01};
-	LowPassFilter LPF_velocity	{0.01};
+	LowPassFilter LPF_velocity	{0.2};
 };
 
 #endif /* AS5048AINTERFACE_H_ */

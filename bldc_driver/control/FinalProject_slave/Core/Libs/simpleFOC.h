@@ -38,7 +38,7 @@ public:
 	simpleFOC();
 	virtual ~simpleFOC();
 
-	void simpleFOC_init();
+	void initSensors();
 
 	//Initialize and Search "zero_electric_angle"
 	int needsSearch();											//checked
@@ -66,7 +66,7 @@ public:
 	AS5048A_interface Encoder;
 	CurrentSense CurrentSensor;
 	pwm_drivers driver;
-	
+
 private:
 	////Control Variable
 	float target;             			//!< current target value - depends of the controller

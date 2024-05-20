@@ -20,7 +20,7 @@ simpleFOC::~simpleFOC()
 	// TODO Auto-generated destructor stub
 }
 
-void simpleFOC::simpleFOC_init()
+void simpleFOC::initSensors()
 {
 	Encoder.MagneticSensorSPI_init();
 	Encoder.Sensor_init();

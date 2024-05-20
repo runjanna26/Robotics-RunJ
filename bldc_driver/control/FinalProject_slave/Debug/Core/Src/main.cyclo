@@ -2,28 +2,28 @@
 ../Core/Src/main.cpp:100:5:int _write(int, char*, int)	2
 ../Core/Src/main.cpp:136:6:void HAL_CAN_RxFifo1MsgPendingCallback(CAN_HandleTypeDef*)	4
 ../Core/Src/main.cpp:183:5:int main()	3
-../Core/Src/main.cpp:395:6:void SystemClock_Config()	4
-../Core/Src/main.cpp:437:13:void MX_ADC1_Init()	5
-../Core/Src/main.cpp:494:13:void MX_CAN_Init()	2
-../Core/Src/main.cpp:529:13:void MX_SPI1_Init()	2
-../Core/Src/main.cpp:565:13:void MX_TIM2_Init()	8
-../Core/Src/main.cpp:623:13:void MX_USART1_UART_Init()	2
-../Core/Src/main.cpp:652:13:void MX_DMA_Init()	1
-../Core/Src/main.cpp:669:13:void MX_GPIO_Init()	1
-../Core/Src/main.cpp:713:22:void DWT_Init()	1
-../Core/Src/main.cpp:725:26:uint32_t micros()	1
-../Core/Src/main.cpp:730:6:void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef*)	1
-../Core/Src/main.cpp:746:6:void CAN_init_446()	3
-../Core/Src/main.cpp:774:6:void CAN_init_103()	3
-../Core/Src/main.cpp:801:6:void float2Bytes(float, uint8_t*)	1
-../Core/Src/main.cpp:813:7:float Bytes2float(uint8_t*)	1
-../Core/Src/main.cpp:821:6:void ADC_Select_CH3()	2
-../Core/Src/main.cpp:833:6:void ADC_Select_CH8()	2
-../Core/Src/main.cpp:845:6:void ADC_Select_CH9()	2
-../Core/Src/main.cpp:857:10:uint16_t getValueCH3()	1
-../Core/Src/main.cpp:867:10:uint16_t getValueCH8()	1
-../Core/Src/main.cpp:877:10:uint16_t getValueCH9()	1
-../Core/Src/main.cpp:945:6:void Error_Handler()	1
-../Core/Src/main.cpp:952:1:void __static_initialization_and_destruction_0(int, int)	5
-../Core/Src/main.cpp:952:1:cpp)	1
-../Core/Src/main.cpp:952:1:cpp)	1
+../Core/Src/main.cpp:391:6:void SystemClock_Config()	4
+../Core/Src/main.cpp:433:13:void MX_ADC1_Init()	5
+../Core/Src/main.cpp:490:13:void MX_CAN_Init()	2
+../Core/Src/main.cpp:525:13:void MX_SPI1_Init()	2
+../Core/Src/main.cpp:561:13:void MX_TIM2_Init()	8
+../Core/Src/main.cpp:619:13:void MX_USART1_UART_Init()	2
+../Core/Src/main.cpp:648:13:void MX_DMA_Init()	1
+../Core/Src/main.cpp:665:13:void MX_GPIO_Init()	1
+../Core/Src/main.cpp:709:22:void DWT_Init()	1
+../Core/Src/main.cpp:721:26:uint32_t micros()	1
+../Core/Src/main.cpp:726:6:void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef*)	1
+../Core/Src/main.cpp:742:6:void CAN_init_446()	3
+../Core/Src/main.cpp:770:6:void CAN_init_103()	3
+../Core/Src/main.cpp:797:6:void float2Bytes(float, uint8_t*)	1
+../Core/Src/main.cpp:809:7:float Bytes2float(uint8_t*)	1
+../Core/Src/main.cpp:817:6:void ADC_Select_CH3()	2
+../Core/Src/main.cpp:829:6:void ADC_Select_CH8()	2
+../Core/Src/main.cpp:841:6:void ADC_Select_CH9()	2
+../Core/Src/main.cpp:853:10:uint16_t getValueCH3()	1
+../Core/Src/main.cpp:863:10:uint16_t getValueCH8()	1
+../Core/Src/main.cpp:873:10:uint16_t getValueCH9()	1
+../Core/Src/main.cpp:941:6:void Error_Handler()	1
+../Core/Src/main.cpp:948:1:void __static_initialization_and_destruction_0(int, int)	5
+../Core/Src/main.cpp:948:1:cpp)	1
+../Core/Src/main.cpp:948:1:cpp)	1

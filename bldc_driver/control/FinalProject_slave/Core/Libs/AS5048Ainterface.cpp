@@ -201,9 +201,8 @@ float AS5048A_interface::getSensorVelocity()
 	vel_prev = ((float)(full_rotations - vel_full_rotations) * _2PI + (angle_prev - vel_angle_prev)) / Ts;
 	// save variables for future pass
 	vel_angle_prev = angle_prev;
-	vel_angle_prev_ts = angle_prev_ts;
 	vel_full_rotations = full_rotations;
-
+	vel_angle_prev_ts = angle_prev_ts;
 	return vel_prev;
 }
 
@@ -251,7 +250,7 @@ void AS5048A_interface::updateSensor()
 */
 float AS5048A_interface::getShaftAngle() 
 {
-	return sensor_direction * LPF_angle(get_full_rotation_angle()) - sensor_offset;
+	return sensor_direction * LPF_position(get_full_rotation_angle()) - sensor_offset;
 }
 
 /*
@@ -261,5 +260,6 @@ float AS5048A_interface::getShaftAngle()
 */
 float AS5048A_interface::getShaftVelocity() 
 {
-	return sensor_direction * LPF_velocity(getSensorVelocity());
+	vel_prev_LPF = sensor_direction * LPF_velocity(getSensorVelocity());
+	return vel_prev_LPF;
 }

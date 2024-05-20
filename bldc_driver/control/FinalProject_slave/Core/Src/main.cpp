@@ -234,7 +234,11 @@ int main(void)
 //	simpleFOC.initFOC(zero_electric_angle, CW); //M1 3.85949397
 	//1.98957574+1.98957574+1.98420465
 
-	simpleFOC.initFOC(NOT_SET, UNKNOWN); //Not yet calibrate find the best init value
+
+	// float sensor_offset = CW;
+	// float zero_electric_angle = 5.87898159;
+	simpleFOC.initFOC(5.87898159, CW); 			// Do not search!!
+	simpleFOC.initFOC(NOT_SET, UNKNOWN); 		//Not yet calibrate find the best init value
 
 	//CAN SETUP ID: 0x103
 	CAN_init_103();
@@ -306,12 +310,13 @@ int main(void)
 
 //=================Closed-loop testing=================
 		//Speed control
-	  	if(micros() - t1 >= 3000000)
-	  	{
-	  		Command_setpoint = Command_setpoint + 3;
-	  		if(Command_setpoint > 12)
-	  			Command_setpoint = 0;
-	  	}
+		if(micros() - t1 >= 3000000)
+	    {
+	    	t1 = micros();
+	    	Command_setpoint = Command_setpoint + _PI_2;
+	    }
+	  	if(Command_setpoint > _2PI)
+	  		Command_setpoint = 0.0;
 //		if (float_final <= 0.01) float_final = 0.0f ;
 //		move_velocity(float_final); 									//136us --> 72us
 //		loopFOC();  													//1190us --> 485us
@@ -320,8 +325,8 @@ int main(void)
 //	  HAL_UART_Transmit(&huart1, MSG, sizeof(MSG), 100);			  	// 181us
 
 //		Position control
-	  	// simpleFOC.loopFOC(); 														//1190us --> 495 us
-	  	// simpleFOC.move_angle(Command_setpoint); 												//161 us --> 112 us
+	  	simpleFOC.loopFOC(); 														//1190us --> 495 us
+	  	simpleFOC.move_angle(Command_setpoint); 												//161 us --> 112 us
 //		sprintf(MSG, "%.3f,%.3f \n",Command_setpoint,shaft_angle);
 //		HAL_UART_Transmit(&huart1, MSG, sizeof(MSG), 100);
 

@@ -74,18 +74,21 @@ public:
 	float vel_angle_prev = 0; 			// angle at last call to getVelocity, used for velocity
 	long vel_angle_prev_ts = 0;			// last velocity calculation timestamp
 	float vel_prev = 0;					// velocity at last call 
+	float vel_prev_LPF = 0;
 	int32_t full_rotations = 0; 		// full rotation tracking
 	int32_t vel_full_rotations = 0; 	// previous full rotation value for velocity calculation
 
 	//Position sensor variable
-	float sensor_offset = 0; //!< user defined sensor zero offset
+	float sensor_offset = UNKNOWN; //!< user defined sensor zero offset
 	float zero_electric_angle = NOT_SET; //!< absolute zero electric angle - if available
-	// float zero_electric_angle = 5.87898159;
+
+
+
 	int sensor_direction = NOT_SET; //!< if sensor_direction == Direction::CCW then direction will be flipped to CW
 	
 	int pole_pairs = 14;	
 
-	LowPassFilter LPF_angle		{0.01};
+	LowPassFilter LPF_position	{0.01};
 	LowPassFilter LPF_velocity	{0.01};
 };
 

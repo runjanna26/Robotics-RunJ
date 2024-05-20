@@ -22,25 +22,15 @@
 #include "pwm_drivers.h"
 
 extern SPI_HandleTypeDef hspi1;
+
 extern float velocity_limit;
-// extern float velocity_index_search;
-// extern float voltage_sensor_align;
-// extern float shaft_angle;
 extern int pole_pairs;
-// extern float pp_check;
-// extern float electrical_angle;
-// extern struct DQCurrent_s current;
 extern LowPassFilter LPF_current_q;
 extern LowPassFilter LPF_current_d;
-// extern struct DQVoltage_s voltage;      	//!< current d and q voltage set to the motor
-// extern float current_sp;
 extern PIDController PID_current_d;
 extern PIDController PID_current_q;
 extern PIDController PID_velocity;
 extern PIDController PID_position;
-// extern float shaft_velocity_sp;  			//!< current target velocity
-// extern float shaft_angle_sp;     			//!< current target angle
-// extern float shaft_velocity;
 extern float phase_resistance;
 
 class simpleFOC {

@@ -68,7 +68,7 @@ int simpleFOC::alignSensor()
 	int exit_flag = 1; //success
 	// if unknown natural direction
 	if (!_isset(Encoder.sensor_direction)) //sensor_direction == -12345.0
-			{
+	{
 		// check if sensor needs zero search
 		if (needsSearch()) //needSearch == 0 because use Magnetic sensor
 			exit_flag = absoluteZeroSearch(); // o
@@ -163,9 +163,9 @@ void simpleFOC::loopFOC()
 	Encoder.updateSensor();
 	// shaft angle/velocity need the update() to be called first
 	// get shaft angle
-	shaft_angle = Encoder.getShaftAngle();
+	shaft_angle = Encoder.getShaftAngle();						// checked full rotation angle
 	// electrical angle - need shaftAngle to be called first
-	electrical_angle = Encoder.electricalAngle();
+	electrical_angle = Encoder.electricalAngle();				//checked
 
 	// read dq currents
 	current = CurrentSensor.getFOCCurrents(electrical_angle);
@@ -183,7 +183,7 @@ void simpleFOC::loopFOC()
 void simpleFOC::move_angle(float new_target)
 {
 	// get angular velocity
-	shaft_velocity = Encoder.getShaftVelocity(); // read value even if motor is disabled to keep the monitoring updated
+	shaft_velocity = Encoder.getShaftVelocity(); // read value even if motor is disabled to keep the monitoring updated // checked
 
 	// downsampling (optional)
 	// if(motion_cnt++ < motion_downsample) return;

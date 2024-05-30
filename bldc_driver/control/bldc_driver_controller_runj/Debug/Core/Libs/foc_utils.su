@@ -1,0 +1,10 @@
+C:\ST\STM32CubeIDE_1.15.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.0.100.202403111256\tools\bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/include/c++/12.3.1/cmath:279:3:constexpr float std::fmod(float, float)	16	static
+../Core/Libs/foc_utils.cpp:11:29:float _sin(float)	32	static
+../Core/Libs/foc_utils.cpp:39:29:float _cos(float)	24	static
+../Core/Libs/foc_utils.cpp:46:28:void _sincos(float, float*, float*)	24	static
+C:\ST\STM32CubeIDE_1.15.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.0.100.202403111256\tools\arm-none-eabi\include\c++\12.3.1\bits\stl_algobase.h:230:5:constexpr const _Tp& std::min(const _Tp&, const _Tp&) [with _Tp = float]	16	static
+../Core/Libs/foc_utils.cpp:57:29:float _atan2(float, float)	48	static
+../Core/Libs/foc_utils.cpp:80:29:float _normalizeAngle(float)	24	static
+../Core/Libs/foc_utils.cpp:86:7:float _electricalAngle(float, int)	16	static
+../Core/Libs/foc_utils.cpp:93:29:float _sqrtApprox(float)	24	static
+C:\ST\STM32CubeIDE_1.15.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.0.100.202403111256\tools\arm-none-eabi\include\c++\12.3.1\bits\stl_algobase.h:254:5:constexpr const _Tp& std::max(const _Tp&, const _Tp&) [with _Tp = float]	16	static

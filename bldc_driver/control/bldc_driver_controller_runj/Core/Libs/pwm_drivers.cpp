@@ -21,9 +21,9 @@ pwm_drivers::~pwm_drivers() {
 //Write PWM fsw = 25kHzfloat Ts
 void pwm_drivers::writeDutyCycle3PWM(float dc_a, float dc_b, float dc_c) 
 {
-	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, fsw*dc_a);
-	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, fsw*dc_b);
-	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_3, fsw*dc_c);
+	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_3, fsw*dc_a);
+	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, fsw*dc_c);
+	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, fsw*dc_b);
 }
 
 // Method using FOC to set Uq and Ud to the motor at the optimal angle
@@ -32,14 +32,17 @@ void pwm_drivers::setPhaseVoltage(float Uq, float Ud, float angle_el)
 {
 	float Uout;
 	// a bit of optitmisation
-	if (Ud) {
+	if (Ud)
+	{
 		// only if Ud and Uq set
 		// _sqrt is an approx of sqrt (3-4% error)
 		Uout = _sqrtApprox(Ud*Ud + Uq*Uq) / voltage_limit;
 		// angle normalisation in between 0 and 2pi
 		// only necessary if using _sin and _cos - approximation functions
 		angle_el = _normalizeAngle(angle_el + atan2(Uq, Ud));
-	} else {
+	}
+	else
+	{
 		// only Uq available - no need for atan2 and sqrt
 		Uout = Uq / voltage_limit;
 		// angle normalisation in between 0 and 2pi
@@ -51,8 +54,8 @@ void pwm_drivers::setPhaseVoltage(float Uq, float Ud, float angle_el)
 	// calculate the duty cycles
 	float T1 = _SQRT3 * _sin(sector * _PI_3 - angle_el) * Uout;
 	float T2 = _SQRT3 * _sin(angle_el - (sector - 1.0f) * _PI_3) * Uout;
-//  float T0 = 1 - T1 - T2; // modulation_centered around driver->voltage_limit/2
-	float T0 = 0; // pulled to 0 - better for low power supply voltage
+    float T0 = 1 - T1 - T2; // modulation_centered around driver->voltage_limit/2
+//	float T0 = 0; // pulled to 0 - better for low power supply voltage
 
 	// calculate the duty cycles(times)
 	float Ta, Tb, Tc;

@@ -9,8 +9,8 @@
 	// motor configuration parameters
 
 
-	float phase_resistance = 7.1; 	//!< motor phase resistance
-	int pole_pairs = 14;			//!< motor pole pairs number
+	float phase_resistance = 0.15; 	//!< motor phase resistance
+	int pole_pairs = 18;			//!< motor pole pairs number
 	float voltage_power_supply = 24.0;
 
 	// limiting variables

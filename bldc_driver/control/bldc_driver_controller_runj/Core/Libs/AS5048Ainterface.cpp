@@ -87,32 +87,29 @@ uint16_t AS5048A_interface::read(uint16_t angle_register)
 	uint16_t register_value;
 	uint16_t command = angle_register;
 
-	if (command_rw_bit > 0) {
+	if (command_rw_bit > 0)
+	{
 		command = angle_register | (1 << command_rw_bit);
 	}
-	if (command_parity_bit > 0) {
+	if (command_parity_bit > 0)
+	{
 		//Add a parity bit on the the MSB
-		command |=
-				((uint16_t) spiCalcEvenParity(command) << command_parity_bit);
+		command |= ((uint16_t) spiCalcEvenParity(command) << command_parity_bit);
 	}
 
 	//>>>> SPI - begin transaction <<<<
 	//Send the command
 	//  spi->transfer16(command);
 	HAL_GPIO_WritePin(SPI1_NSS_GPIO_Port, SPI1_NSS_Pin, GPIO_PIN_RESET);
-	HAL_SPI_TransmitReceive(&hspi1, (uint8_t*) &command,
-			(uint8_t*) &register_value,
-			sizeof(register_value) / sizeof(uint16_t), 100);
+	HAL_SPI_TransmitReceive(&hspi1, (uint8_t*) &command, (uint8_t*) &register_value, sizeof(register_value) / sizeof(uint16_t), 100);
 	HAL_GPIO_WritePin(SPI1_NSS_GPIO_Port, SPI1_NSS_Pin, GPIO_PIN_SET);
 
-	command = 0x0000;
+//	command = 0x0000;
 	//Now read the response (NO_OPERATION_COMMAND = 0x0000)
 	//  uint16_t register_value = spi->transfer16(0x00);
-	HAL_GPIO_WritePin(SPI1_NSS_GPIO_Port, SPI1_NSS_Pin, GPIO_PIN_RESET);
-	HAL_SPI_TransmitReceive(&hspi1, (uint8_t*) &command,
-			(uint8_t*) &register_value,
-			sizeof(register_value) / sizeof(uint16_t), 100);
-	HAL_GPIO_WritePin(SPI1_NSS_GPIO_Port, SPI1_NSS_Pin, GPIO_PIN_SET);
+//	HAL_GPIO_WritePin(SPI1_NSS_GPIO_Port, SPI1_NSS_Pin, GPIO_PIN_RESET);
+//	HAL_SPI_TransmitReceive(&hspi1, (uint8_t*) & command, (uint8_t*) &register_value, sizeof(register_value) / sizeof(uint16_t), 100);
+//	HAL_GPIO_WritePin(SPI1_NSS_GPIO_Port, SPI1_NSS_Pin, GPIO_PIN_SET);
 
 	//>>>> SPI - end transaction <<<<
 

@@ -27,6 +27,8 @@
 #include "string.h"
 #include "motor_param.h"
 
+#include "simpleFOC.h"
+simpleFOC simpleFOC;
 
 /* USER CODE END Includes */
 
@@ -80,12 +82,16 @@ static void MX_CORDIC_Init(void);
 static void MX_CRC_Init(void);
 static void MX_FMAC_Init(void);
 /* USER CODE BEGIN PFP */
-
+__STATIC_INLINE void DWT_Init(void); 						//checked
+__STATIC_INLINE uint32_t micros(void);						//checked
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+unsigned long t1 = 0, ts, t2 = 0, t3, t4 = 0, t5 = 0;
+float loop_freq = 0;
+float x_float;
+int x_int;
 /* USER CODE END 0 */
 
 /**
@@ -105,6 +111,29 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
+
+  //Delay SETUP
+  	DWT_Init();
+  	//Timer Interrupt tim2,tim4
+//  	HAL_TIM_Base_Start_IT(&htim4);
+
+  	//SPI SETUP
+  	simpleFOC.initSensors();
+
+  	//PWM SETUP
+  	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);   //pinMode
+  	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);	//pinMode
+  	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3);	//pinMode
+
+  	HAL_GPIO_WritePin(ENABLE_GPIO_Port, ENABLE_Pin, GPIO_PIN_SET);  // Enable
+  //	  HAL_GPIO_WritePin(EN_GPIO_Port, EN_Pin, GPIO_PIN_RESET);  // Disable
+
+
+//  	t2 = micros();
+
+  	//FOC SETUP
+//  	simpleFOC.initFOC(5.88972235, CW); 			// Do not search!! checked
+  //	simpleFOC.initFOC(NOT_SET, UNKNOWN); 		//Not yet calibrate find the best init value
 
   /* USER CODE END Init */
 
@@ -134,9 +163,17 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+//	  simpleFOC.readEncoderOnly();
+
+	  x_int = simpleFOC.Encoder.getRawCount();
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+//	  t1++;
+//	  HAL_Delay(1);
+	  t5 = micros() - t4;
+	  t4 = micros();
+	  loop_freq = 1.0 / (t5 * 1e-6);
   }
   /* USER CODE END 3 */
 }
@@ -463,7 +500,7 @@ static void MX_SPI1_Init(void)
   hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;
   hspi1.Init.CLKPhase = SPI_PHASE_2EDGE;
   hspi1.Init.NSS = SPI_NSS_SOFT;
-  hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_64;
+  hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_16;
   hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
   hspi1.Init.TIMode = SPI_TIMODE_DISABLE;
   hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
@@ -607,17 +644,17 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, CS_CON_Pin|ENABLEA15_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(SPI1_NSS_GPIO_Port, SPI1_NSS_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(ENABLE_GPIO_Port, ENABLE_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : CS_CON_Pin ENABLEA15_Pin */
-  GPIO_InitStruct.Pin = CS_CON_Pin|ENABLEA15_Pin;
+  /*Configure GPIO pin : SPI1_NSS_Pin */
+  GPIO_InitStruct.Pin = SPI1_NSS_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+  HAL_GPIO_Init(SPI1_NSS_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : ENABLE_Pin */
   GPIO_InitStruct.Pin = ENABLE_Pin;
@@ -631,6 +668,14 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+//Delay function
+__STATIC_INLINE void DWT_Init(void) {
+	CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
+	DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;  // Data watchpoint trigger(DWT)
+}
+__STATIC_INLINE uint32_t micros(void) {
+	return DWT->CYCCNT / (SystemCoreClock / 1000000U);
+}
 
 /* USER CODE END 4 */
 

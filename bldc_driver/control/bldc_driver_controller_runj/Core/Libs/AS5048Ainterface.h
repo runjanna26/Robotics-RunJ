@@ -85,8 +85,9 @@ public:
 
 
 	int sensor_direction = NOT_SET; //!< if sensor_direction == Direction::CCW then direction will be flipped to CW
+//	int sensor_direction = CW;
 	
-	int pole_pairs = 14;	
+	int pole_pairs = 18; 
 
 	LowPassFilter LPF_position	{0.01};
 	LowPassFilter LPF_velocity	{0.2};

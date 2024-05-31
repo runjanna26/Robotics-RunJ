@@ -25,7 +25,8 @@ CurrentSense::~CurrentSense()
 */
 void CurrentSense::initCurrentsense(float _shunt_resistor, float _gain) 
 {
-	HAL_ADC_Start_DMA(&hadc1, adcResultDMA, 3);
+	HAL_ADC_Start_DMA(&hadc1, adcResultDMA_a, 1);
+//	HAL_ADC_Start_DMA(&hadc2, adcResultDMA_c, 1);
 
 	R_sense = _shunt_resistor;
 	gain_a = _gain;
@@ -46,14 +47,14 @@ void CurrentSense::calibrateOffsets()
 	// read the adc voltage 1000 times ( arbitrary number )
 	for (int i = 0; i < calibration_rounds; i++) 
 	{
-		offset_ia += adcResultDMA[0];
-		offset_ib += adcResultDMA[1];
-		offset_ic += adcResultDMA[2];
+		offset_ia += adcResultDMA_a[0];
+//		offset_ib += adcResultDMA[0];
+		offset_ic += adcResultDMA_c[0];
 		HAL_Delay(1);
 	}
 	// calculate the mean offsets
 	offset_ia = offset_ia / calibration_rounds;
-	offset_ib = offset_ib / calibration_rounds;
+//	offset_ib = offset_ib / calibration_rounds;
 	offset_ic = offset_ic / calibration_rounds;
 }
 
@@ -68,9 +69,9 @@ void CurrentSense::calibrateOffsets()
 struct PhaseCurrent_s CurrentSense::getPhaseCurrents() 
 {
 	struct PhaseCurrent_s current;
-	current.a = ((3.3 / 2) - (adcResultDMA[0] - 0) * ((3.05 - 0.25) / (3785.0 - 311.0))) / (R_sense * gain_a);
-	current.b = ((3.3 / 2) - (adcResultDMA[1] - 0) * ((3.05 - 0.25) / (3785.0 - 311.0))) / (R_sense * gain_b);
-	current.c = ((3.3 / 2) - (adcResultDMA[2] - 0) * ((3.05 - 0.25) / (3785.0 - 311.0))) / (R_sense * gain_c);
+	current.a = ((offset_ia - adcResultDMA_a[0]) * (3.3 / 4096.0)) / (R_sense * gain_a);
+//	current.b = ((offset_ib - adcResultDMA_b[0]) * (3.3 / 4096.0)) / (R_sense * gain_b);
+	current.c = ((offset_ic - adcResultDMA_c[0]) * (3.3 / 4096.0)) / (R_sense * gain_c);
 //    current.b = - current.a  - current.c; // --(1)
 	return current;
 }
@@ -90,12 +91,14 @@ struct DQCurrent_s CurrentSense::getFOCCurrents(float angle_el)
 	float i_alpha, i_beta;
 
     // signal filtering using identity a + b + c = 0. Assumes measurement error is normally distributed.
-    float mid = (1.f/3) * (current.a + current.b + current.c);
-    float a = current.a - mid;
-    float b = current.b - mid;
-    i_alpha = a;
-    i_beta = _1_SQRT3 * a + _2_SQRT3 * b;
+//    float mid = (1.f/3) * (current.a + current.b + current.c);
+//    float a = current.a - mid;
+//    float b = current.b - mid;
+//    i_alpha = a;
+//    i_beta = _1_SQRT3 * a + _2_SQRT3 * b;
 
+	i_alpha = current.a;
+	i_beta = (-(_1_SQRT3) * current.a) + (-(_2_SQRT3) * current.c);
 
 	// calculate park transform
 	float ct = _cos(angle_el);

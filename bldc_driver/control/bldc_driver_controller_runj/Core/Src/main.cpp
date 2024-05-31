@@ -90,6 +90,8 @@ __STATIC_INLINE uint32_t micros(void);						//checked
 /* USER CODE BEGIN 0 */
 unsigned long t1 = 0, ts, t2 = 0, t3, t4 = 0, t5 = 0;
 float loop_freq = 0;
+float x_float;
+int x_int;
 /* USER CODE END 0 */
 
 /**
@@ -110,28 +112,7 @@ int main(void)
 
   /* USER CODE BEGIN Init */
 
-  //Delay SETUP
-  	DWT_Init();
-  	//Timer Interrupt tim2,tim4
-//  	HAL_TIM_Base_Start_IT(&htim4);
 
-  	//SPI SETUP
-  	simpleFOC.initSensors();
-
-  	//PWM SETUP
-  	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);   //pinMode
-  	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);	//pinMode
-  	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3);	//pinMode
-
-  	HAL_GPIO_WritePin(ENABLE_GPIO_Port, ENABLE_Pin, GPIO_PIN_SET);  // Enable
-  //	  HAL_GPIO_WritePin(EN_GPIO_Port, EN_Pin, GPIO_PIN_RESET);  // Disable
-
-
-  	t2 = micros();
-
-  	//FOC SETUP
-//  	simpleFOC.initFOC(5.88972235, CW); 			// Do not search!! checked
-  //	simpleFOC.initFOC(NOT_SET, UNKNOWN); 		//Not yet calibrate find the best init value
 
   /* USER CODE END Init */
 
@@ -155,18 +136,52 @@ int main(void)
   MX_FMAC_Init();
   /* USER CODE BEGIN 2 */
 
+  	  //  Delay SETUP
+	DWT_Init();
+	//  Timer Interrupt tim2,tim4
+//  	HAL_TIM_Base_Start_IT(&htim4);
+
+	//SPI SETUP
+	simpleFOC.initSensors();
+
+
+
+	HAL_GPIO_WritePin(ENABLE_GPIO_Port, ENABLE_Pin, GPIO_PIN_SET);  // Enable
+//	  HAL_GPIO_WritePin(EN_GPIO_Port, EN_Pin, GPIO_PIN_RESET);  // Disable
+
+
+//  	t2 = micros();
+
+	//FOC SETUP
+//  	simpleFOC.initFOC(5.4433322, CW); 				// Do not search!! checked
+//  	simpleFOC.initFOC(NOT_SET, CW);
+  	simpleFOC.initFOC(NOT_SET, UNKNOWN); 		// Check phhase
+
+
+	//PWM SETUP
+	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);   //pinMode
+	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);	//pinMode
+	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3);	//pinMode
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  simpleFOC.readEncoderOnly();
+	  /** Test Encoder	**/
+//	  simpleFOC.readEncoderOnly();					// Test Read position
+//	  x_float = simpleFOC.Encoder.getShaftAngle();	// Test Read position
+//	  x_float = simpleFOC.Encoder.getSensorAngle();	// Test Read position + LPF
+
+	  /** Test Gate Drive	**/
+//	  simpleFOC.driver.writeDutyCycle3PWM(0.2, 0.5, 0.8);  // Test Drive PWM for 3-phases
+
+	  /** Test Open Loop Control **/
+//	  simpleFOC.move_velocity_openloop(1.0);
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	  t1++;
-//	  HAL_Delay(1000);
 	  t5 = micros() - t4;
 	  t4 = micros();
 	  loop_freq = 1.0 / (t5 * 1e-6);
@@ -496,7 +511,7 @@ static void MX_SPI1_Init(void)
   hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;
   hspi1.Init.CLKPhase = SPI_PHASE_2EDGE;
   hspi1.Init.NSS = SPI_NSS_SOFT;
-  hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_64;
+  hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_16;
   hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
   hspi1.Init.TIMode = SPI_TIMODE_DISABLE;
   hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;

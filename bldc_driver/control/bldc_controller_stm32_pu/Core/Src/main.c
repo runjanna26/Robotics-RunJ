@@ -1590,8 +1590,7 @@ void calibrateOffsets() {
 //// read all three phase currents (if possible 2 or 3)
 struct PhaseCurrent_s getPhaseCurrents() {
 	struct PhaseCurrent_s current;
-	current.a = ((offset_ia - adcResultDMA_a[0]) * (3.3 / 4096.0))
-			/ (R_sense * gain_a);
+	current.a = ((offset_ia - adcResultDMA_a[0]) * (3.3 / 4096.0)) / (R_sense * gain_a);
 	current.b = ((offset_ib - adcResultDMA_b[0]) * (3.3 / 4096.0))
 			/ (R_sense * gain_b);
 //	current.c = ((offset_ic - adcResultDMA_c[0]) * (3.3 / 4096.0))

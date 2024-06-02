@@ -1,2 +1,2 @@
-../Core/Libs/motor_param.cpp:28:37:void __static_initialization_and_destruction_0(int, int)	16	static
-../Core/Libs/motor_param.cpp:28:37:cpp)	8	static
+../Core/Libs/motor_param.cpp:28:36:void __static_initialization_and_destruction_0(int, int)	16	static
+../Core/Libs/motor_param.cpp:28:36:cpp)	8	static

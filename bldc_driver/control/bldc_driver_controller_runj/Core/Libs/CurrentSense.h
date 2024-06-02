@@ -16,7 +16,9 @@
 
 
 extern ADC_HandleTypeDef hadc1;
+extern ADC_HandleTypeDef hadc2;
 extern DMA_HandleTypeDef hdma_adc1;
+extern DMA_HandleTypeDef hdma_adc2;
 
 #define CurrentSense_resistance 0.01
 #define CurrentSense_gain 5.0
@@ -45,12 +47,14 @@ private:
 	float gain_c;     //!< phase C gain
 	float R_sense;
 
+	struct PhaseCurrent_s current;
+	struct DQCurrent_s dq_current;
+
 	//===ADC DMA variable===
 	uint32_t adcResultDMA_a[1], adcResultDMA_c[1];  // to store the ADC value
 //	const int adcChannelCount = sizeof(adcResultDMA) / sizeof(adcResultDMA[0]);
 //	volatile int adcConversionComplete = 0; // set by callback
-	
-//	fast_math math;
+
 };
 
 #endif /* CURRENTSENSE_H_ */

@@ -4,14 +4,16 @@ C:\ST\STM32CubeIDE_1.15.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.external
 ../Core/Libs/simpleFOC.cpp:18:1:simpleFOC::~simpleFOC()	16	static
 ../Core/Libs/simpleFOC.cpp:18:1:virtual simpleFOC::~simpleFOC()	16	static
 ../Core/Libs/simpleFOC.cpp:23:6:void simpleFOC::initSensors()	16	static
-../Core/Libs/simpleFOC.cpp:35:5:int simpleFOC::needsSearch()	16	static
-../Core/Libs/simpleFOC.cpp:42:5:int simpleFOC::absoluteZeroSearch()	24	static
-../Core/Libs/simpleFOC.cpp:66:5:int simpleFOC::alignSensor()	56	static
-../Core/Libs/simpleFOC.cpp:137:5:int simpleFOC::initFOC(float, Direction)	32	static
-../Core/Libs/simpleFOC.cpp:161:6:void simpleFOC::loopFOC()	24	static
-../Core/Libs/simpleFOC.cpp:183:6:void simpleFOC::move_angle(float)	16	static
-../Core/Libs/simpleFOC.cpp:210:7:float simpleFOC::velocityOpenloop(float)	40	static
-../Core/Libs/simpleFOC.cpp:238:6:void simpleFOC::move_velocity_openloop(float)	16	static
-../Core/Libs/simpleFOC.cpp:248:7:float simpleFOC::angleOpenloop(float)	48	static
-../Core/Libs/simpleFOC.cpp:283:10:static uint32_t simpleFOC::micros()	4	static
-../Core/Libs/simpleFOC.cpp:288:6:void simpleFOC::readEncoderOnly()	16	static
+../Core/Libs/simpleFOC.cpp:34:5:int simpleFOC::needsSearch()	16	static
+../Core/Libs/simpleFOC.cpp:41:5:int simpleFOC::absoluteZeroSearch()	24	static
+../Core/Libs/simpleFOC.cpp:65:5:int simpleFOC::alignSensor()	56	static
+../Core/Libs/simpleFOC.cpp:136:5:int simpleFOC::initFOC(float, Direction)	32	static
+../Core/Libs/simpleFOC.cpp:160:6:void simpleFOC::loopFOC()	24	static
+../Core/Libs/simpleFOC.cpp:185:6:void simpleFOC::move_torque(float)	16	static
+../Core/Libs/simpleFOC.cpp:195:6:void simpleFOC::move_velocity(float)	16	static
+../Core/Libs/simpleFOC.cpp:213:6:void simpleFOC::move_angle(float)	16	static
+../Core/Libs/simpleFOC.cpp:240:7:float simpleFOC::velocityOpenloop(float)	40	static
+../Core/Libs/simpleFOC.cpp:269:6:void simpleFOC::move_velocity_openloop(float)	16	static
+../Core/Libs/simpleFOC.cpp:279:7:float simpleFOC::angleOpenloop(float)	48	static
+../Core/Libs/simpleFOC.cpp:316:10:static uint32_t simpleFOC::micros()	4	static
+../Core/Libs/simpleFOC.cpp:321:6:void simpleFOC::readEncoderOnly()	16	static

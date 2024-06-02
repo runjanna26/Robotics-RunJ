@@ -26,7 +26,6 @@ void simpleFOC::initSensors()
 	Encoder.Sensor_init();
 	CurrentSensor.initCurrentsense(CurrentSense_resistance, CurrentSense_gain);
 	CurrentSensor.calibrateOffsets();
-	// Encoder.zero_electric_angle = 100.0;
 }
 
 // returns 0 if it does need search for absolute zero
@@ -167,8 +166,10 @@ void simpleFOC::loopFOC()
 	// electrical angle - need shaftAngle to be called first
 	electrical_angle = Encoder.electricalAngle();				//checked
 
+
 	// read dq currents
 	current = CurrentSensor.getFOCCurrents(electrical_angle);
+
 	current.q = LPF_current_q(current.q);   // filter values
 	current.d = LPF_current_d(current.d);   // filter values
 
@@ -178,6 +179,35 @@ void simpleFOC::loopFOC()
 
 	// set the phase voltage - FOC heart function :)
 	driver.setPhaseVoltage(voltage.q, voltage.d, electrical_angle);
+}
+
+
+void simpleFOC::move_torque(float new_target)
+{
+	current_sp = new_target; // if current/foc_current torque control
+}
+
+// Iterative function running outer loop of the FOC algorithm
+// Behavior of this function is determined by the motor.controller variable
+// It runs either angle, velocity or torque loop
+// - needs to be called iteratively it is asynchronous function
+// - if target is not set it uses motor.target value
+void simpleFOC::move_velocity(float new_target)
+{
+// get angular velocity
+	shaft_velocity = Encoder.getShaftVelocity(); // read value even if motor is disabled to keep the monitoring updated
+
+	if (_isset(new_target))
+		target = new_target;
+
+	// velocity set point
+	shaft_velocity_sp = target;
+
+	// calculate the torque command
+	current_sp = PID_velocity(shaft_velocity_sp - shaft_velocity);
+
+	voltage.q = current_sp*phase_resistance;
+	voltage.d = 0;
 }
 
 void simpleFOC::move_angle(float new_target)
@@ -224,7 +254,8 @@ float simpleFOC::velocityOpenloop(float target_velocity)
 
 	// use voltage limit or current limit
 	float Uq = voltage_limit;  //24V
-//  if(_isset(phase_resistance)) Uq =  current_limit*phase_resistance;
+    if(_isset(phase_resistance))
+    	Uq =  current_limit*phase_resistance;
 //  voltage_sensor_align
 	// set the maximal allowed voltage (voltage_limit) with the necessary angle
 	driver.setPhaseVoltage(Uq, 0, _electricalAngle(shaft_angle, pole_pairs));
@@ -256,19 +287,21 @@ float simpleFOC::angleOpenloop(float target_angle)
 
 	// calculate the necessary angle to move from current position towards target angle
 	// with maximal velocity (velocity_limit)
-	if (abs(target_angle - shaft_angle) > abs(velocity_limit * Ts)) {
-		shaft_angle += _sign(target_angle - shaft_angle) * abs(velocity_limit)
-				* Ts;
+	if (abs(target_angle - shaft_angle) > abs(velocity_limit * Ts))
+	{
+		shaft_angle += _sign(target_angle - shaft_angle) * abs(velocity_limit) * Ts;
 		shaft_velocity = velocity_limit;
-	} else {
+	}
+	else
+	{
 		shaft_angle = target_angle;
 		shaft_velocity = 0;
 	}
 
 	// use voltage limit or current limit
 	float Uq = voltage_limit;
-//  if(_isset(phase_resistance))
-//	  Uq =  current_limit*phase_resistance;
+	if(_isset(phase_resistance))
+		Uq =  current_limit*phase_resistance;
 
 	// set the maximal allowed voltage (voltage_limit) with the necessary angle
 	driver.setPhaseVoltage(Uq, 0, _electricalAngle(shaft_angle, pole_pairs));

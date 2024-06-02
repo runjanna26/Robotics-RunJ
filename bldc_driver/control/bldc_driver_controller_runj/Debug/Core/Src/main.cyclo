@@ -1,18 +1,18 @@
-../Core/Src/main.cpp:101:5:int main()	1
-../Core/Src/main.cpp:196:6:void SystemClock_Config()	3
-../Core/Src/main.cpp:243:13:void MX_ADC1_Init()	4
-../Core/Src/main.cpp:311:13:void MX_ADC2_Init()	3
-../Core/Src/main.cpp:370:13:void MX_CORDIC_Init()	2
-../Core/Src/main.cpp:396:13:void MX_CRC_Init()	2
-../Core/Src/main.cpp:427:13:void MX_FDCAN1_Init()	2
-../Core/Src/main.cpp:470:13:void MX_FMAC_Init()	2
-../Core/Src/main.cpp:496:13:void MX_SPI1_Init()	2
-../Core/Src/main.cpp:536:13:void MX_TIM1_Init()	9
-../Core/Src/main.cpp:624:13:void MX_DMA_Init()	1
-../Core/Src/main.cpp:646:13:void MX_GPIO_Init()	1
-../Core/Src/main.cpp:683:22:void DWT_Init()	1
-../Core/Src/main.cpp:687:26:uint32_t micros()	1
-../Core/Src/main.cpp:697:6:void Error_Handler()	1
-../Core/Src/main.cpp:706:1:void __static_initialization_and_destruction_0(int, int)	5
-../Core/Src/main.cpp:706:1:cpp)	1
-../Core/Src/main.cpp:706:1:cpp)	1
+../Core/Src/main.cpp:104:5:int main()	1
+../Core/Src/main.cpp:213:6:void SystemClock_Config()	3
+../Core/Src/main.cpp:260:13:void MX_ADC1_Init()	4
+../Core/Src/main.cpp:328:13:void MX_ADC2_Init()	3
+../Core/Src/main.cpp:387:13:void MX_CORDIC_Init()	2
+../Core/Src/main.cpp:413:13:void MX_CRC_Init()	2
+../Core/Src/main.cpp:444:13:void MX_FDCAN1_Init()	2
+../Core/Src/main.cpp:487:13:void MX_FMAC_Init()	2
+../Core/Src/main.cpp:513:13:void MX_SPI1_Init()	2
+../Core/Src/main.cpp:553:13:void MX_TIM1_Init()	9
+../Core/Src/main.cpp:641:13:void MX_DMA_Init()	1
+../Core/Src/main.cpp:663:13:void MX_GPIO_Init()	1
+../Core/Src/main.cpp:700:22:void DWT_Init()	1
+../Core/Src/main.cpp:704:26:uint32_t micros()	1
+../Core/Src/main.cpp:714:6:void Error_Handler()	1
+../Core/Src/main.cpp:723:1:void __static_initialization_and_destruction_0(int, int)	5
+../Core/Src/main.cpp:723:1:cpp)	1
+../Core/Src/main.cpp:723:1:cpp)	1

@@ -26,7 +26,7 @@ CurrentSense::~CurrentSense()
 void CurrentSense::initCurrentsense(float _shunt_resistor, float _gain) 
 {
 	HAL_ADC_Start_DMA(&hadc1, adcResultDMA_a, 1);
-//	HAL_ADC_Start_DMA(&hadc2, adcResultDMA_c, 1);
+	HAL_ADC_Start_DMA(&hadc2, adcResultDMA_c, 1);
 
 	R_sense = _shunt_resistor;
 	gain_a = _gain;
@@ -68,7 +68,7 @@ void CurrentSense::calibrateOffsets()
 */
 struct PhaseCurrent_s CurrentSense::getPhaseCurrents() 
 {
-	struct PhaseCurrent_s current;
+//	struct PhaseCurrent_s current;
 	current.a = ((offset_ia - adcResultDMA_a[0]) * (3.3 / 4096.0)) / (R_sense * gain_a);
 //	current.b = ((offset_ib - adcResultDMA_b[0]) * (3.3 / 4096.0)) / (R_sense * gain_b);
 	current.c = ((offset_ic - adcResultDMA_c[0]) * (3.3 / 4096.0)) / (R_sense * gain_c);
@@ -85,7 +85,8 @@ struct PhaseCurrent_s CurrentSense::getPhaseCurrents()
 struct DQCurrent_s CurrentSense::getFOCCurrents(float angle_el) 
 {
 	// read current phase currents
-	struct PhaseCurrent_s current = getPhaseCurrents(); //Ia,Ib,Ic
+//	struct PhaseCurrent_s current = getPhaseCurrents(); //Ia, Ib, Ic
+	current = getPhaseCurrents(); //Ia,Ib,Ic
 
 	// calculate clarke transform
 	float i_alpha, i_beta;
@@ -103,7 +104,9 @@ struct DQCurrent_s CurrentSense::getFOCCurrents(float angle_el)
 	// calculate park transform
 	float ct = _cos(angle_el);
 	float st = _sin(angle_el);
-	struct DQCurrent_s dq_current;
+
+//	struct DQCurrent_s dq_current;		// Id, Iq
+
 	dq_current.d = i_alpha * ct + i_beta  * st;
 	dq_current.q = i_beta  * ct - i_alpha * st;
 	return dq_current;

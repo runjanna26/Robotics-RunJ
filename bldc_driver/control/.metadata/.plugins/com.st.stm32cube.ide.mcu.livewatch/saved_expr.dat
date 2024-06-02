@@ -5,3 +5,6 @@ t5
 t1
 x_int
 x_float
+setpoint_cmd
+PID_current_q
+PID_velocity

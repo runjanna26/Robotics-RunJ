@@ -91,7 +91,10 @@ __STATIC_INLINE uint32_t micros(void);						//checked
 unsigned long t1 = 0, ts, t2 = 0, t3, t4 = 0, t5 = 0;
 float loop_freq = 0;
 float x_float;
+float setpoint_cmd = 1.0;
 int x_int;
+struct DQCurrent_s dq_current_debug;
+struct PhaseCurrent_s abc_current_debug;
 /* USER CODE END 0 */
 
 /**
@@ -141,8 +144,7 @@ int main(void)
 	//  Timer Interrupt tim2,tim4
 //  	HAL_TIM_Base_Start_IT(&htim4);
 
-	//SPI SETUP
-	simpleFOC.initSensors();
+
 
 
 
@@ -150,34 +152,49 @@ int main(void)
 //	  HAL_GPIO_WritePin(EN_GPIO_Port, EN_Pin, GPIO_PIN_RESET);  // Disable
 
 
-//  	t2 = micros();
-
-	//FOC SETUP
-//  	simpleFOC.initFOC(5.4433322, CW); 				// Do not search!! checked
-//  	simpleFOC.initFOC(NOT_SET, CW);
-  	simpleFOC.initFOC(NOT_SET, UNKNOWN); 		// Check phhase
-
-
 	//PWM SETUP
 	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);   //pinMode
 	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);	//pinMode
 	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3);	//pinMode
+	//SPI SETUP
+	simpleFOC.initSensors();
+	//FOC SETUP
+  	simpleFOC.initFOC(0.564893246, CW); 				// Do not search!! checked
+//  	simpleFOC.initFOC(NOT_SET, CW);
+//  	simpleFOC.initFOC(NOT_SET, UNKNOWN);
+
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+
 	  /** Test Encoder	**/
-//	  simpleFOC.readEncoderOnly();					// Test Read position
-//	  x_float = simpleFOC.Encoder.getShaftAngle();	// Test Read position
-//	  x_float = simpleFOC.Encoder.getSensorAngle();	// Test Read position + LPF
+//	  simpleFOC.readEncoderOnly();					// Test Read position [/]
+//	  x_float = simpleFOC.Encoder.getShaftAngle();	// Test Read position [/]
+//	  x_float = simpleFOC.Encoder.getSensorAngle();	// Test Read position + LPF [/]
 
 	  /** Test Gate Drive	**/
-//	  simpleFOC.driver.writeDutyCycle3PWM(0.2, 0.5, 0.8);  // Test Drive PWM for 3-phases
+//	  simpleFOC.driver.writeDutyCycle3PWM(0.2, 0.5, 0.8);  // Test Drive PWM for 3-phases [/]
+
+	  /** Test Current Sensor **/
+//	  abc_current_debug = simpleFOC.CurrentSensor.getPhaseCurrents();
+
 
 	  /** Test Open Loop Control **/
-//	  simpleFOC.move_velocity_openloop(1.0);
+//	  simpleFOC.move_velocity_openloop(setpoint_cmd); // Test move velocity open loop [/] : Should set phase resistance
+//	  simpleFOC.angleOpenloop(0.0f);		  // Test move angle open loop [/] : Should set phase resistance
+
+
+	  /** Test Closed Loop Control **/
+//	  simpleFOC.move_torque(setpoint_cmd);
+	  simpleFOC.move_velocity(setpoint_cmd);
+//	  simpleFOC.move_angle(setpoint_cmd);
+
+	  /** Always run loopFOC (except open loop control)**/
+	  simpleFOC.loopFOC();
 
     /* USER CODE END WHILE */
 

@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="absoluteZeroSearch"/>
+		<item key="selection" value="target"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="target"/>
+			<item value="dq_current"/>
+			<item value="hadc2"/>
+			<item value="move_velocity"/>
+			<item value="shaft_angle"/>
 			<item value="absoluteZeroSearch"/>
 			<item value="setPhaseVoltage"/>
 			<item value="velocityOpenloop"/>
@@ -18,19 +23,14 @@
 			<item value="htim1"/>
 			<item value="angle_prev"/>
 			<item value="register_value"/>
-			<item value="MX_SPI1_Init"/>
-			<item value="command"/>
-			<item value="MX_GPIO_Init"/>
-			<item value="GPIo"/>
-			<item value="SPI1"/>
 		</list>
 		<list key="replacehistory">
 			<item value="htim1"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="1182"/>
-		<item key="DIALOG_Y_ORIGIN" value="567"/>
+		<item key="DIALOG_X_ORIGIN" value="579"/>
+		<item key="DIALOG_Y_ORIGIN" value="475"/>
 		<item key="DIALOG_WIDTH" value="414"/>
 		<item key="DIALOG_HEIGHT" value="461"/>
 		<item key="DIALOG_FONT_NAME" value="1|Segoe UI|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI"/>

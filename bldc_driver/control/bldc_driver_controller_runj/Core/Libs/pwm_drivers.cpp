@@ -17,6 +17,12 @@ pwm_drivers::~pwm_drivers() {
 	// TODO Auto-generated destructor stub
 }
 
+void pwm_drivers::initDriver()
+{
+	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);   //pinMode
+	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);	//pinMode
+	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3);	//pinMode
+}
 
 //Write PWM fsw = 25kHzfloat Ts
 void pwm_drivers::writeDutyCycle3PWM(float dc_a, float dc_b, float dc_c) 

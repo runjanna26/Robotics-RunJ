@@ -3,5 +3,6 @@ C:\ST\STM32CubeIDE_1.15.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.external
 ../Core/Libs/pwm_drivers.cpp:11:1:pwm_drivers::pwm_drivers()	16	static
 ../Core/Libs/pwm_drivers.cpp:16:1:pwm_drivers::~pwm_drivers()	16	static
 ../Core/Libs/pwm_drivers.cpp:16:1:virtual pwm_drivers::~pwm_drivers()	16	static
-../Core/Libs/pwm_drivers.cpp:22:6:void pwm_drivers::writeDutyCycle3PWM(float, float, float)	24	static
-../Core/Libs/pwm_drivers.cpp:31:6:void pwm_drivers::setPhaseVoltage(float, float, float)	72	static
+../Core/Libs/pwm_drivers.cpp:20:6:void pwm_drivers::initDriver()	16	static
+../Core/Libs/pwm_drivers.cpp:28:6:void pwm_drivers::writeDutyCycle3PWM(float, float, float)	24	static
+../Core/Libs/pwm_drivers.cpp:37:6:void pwm_drivers::setPhaseVoltage(float, float, float)	72	static

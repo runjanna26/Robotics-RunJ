@@ -1,5 +1,6 @@
 "./Core/Libs/AS5048Ainterface.o"
 "./Core/Libs/CurrentSense.o"
+"./Core/Libs/ekf.o"
 "./Core/Libs/foc_utils.o"
 "./Core/Libs/lowpass_filter.o"
 "./Core/Libs/motor_param.o"

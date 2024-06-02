@@ -1,17 +1,21 @@
-20:53:14 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+05:49:34 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
 make -j16 all 
-arm-none-eabi-g++ "../Core/Libs/motor_param.cpp" -mcpu=cortex-m4 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/WINDOWS 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Libs/motor_param.d" -MT"Core/Libs/motor_param.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Libs/motor_param.o"
+arm-none-eabi-g++ "../Core/Src/main.cpp" -mcpu=cortex-m4 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/WINDOWS 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.cpp: In function 'void MX_CORDIC_Init()':
+../Core/Src/main.cpp:402:30: warning: unused variable 'sConfig' [-Wunused-variable]
+  402 |         CORDIC_ConfigTypeDef sConfig;
+      |                              ^~~~~~~
 arm-none-eabi-g++ -o "bldc_driver_controller_runj.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\WINDOWS 11\Documents\Robotics-RunJ\bldc_driver\control\bldc_driver_controller_runj\STM32G491KEUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="bldc_driver_controller_runj.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
 Finished building target: bldc_driver_controller_runj.elf
  
 arm-none-eabi-size  bldc_driver_controller_runj.elf 
 arm-none-eabi-objdump -h -S bldc_driver_controller_runj.elf  > "bldc_driver_controller_runj.list"
    text	   data	    bss	    dec	    hex	filename
-  44100	    288	   3160	  47548	   b9bc	bldc_driver_controller_runj.elf
+  45456	    288	   3336	  49080	   bfb8	bldc_driver_controller_runj.elf
 Finished building: default.size.stdout
  
 Finished building: bldc_driver_controller_runj.list
  
 
-20:53:15 Build Finished. 0 errors, 0 warnings. (took 903ms)
+05:49:36 Build Finished. 0 errors, 1 warnings. (took 1s.120ms)
 

@@ -23,6 +23,7 @@ public:
 	virtual ~pwm_drivers();
 
 	//PWM function
+	void initDriver();
 	void writeDutyCycle3PWM(float dc_a, float dc_b, float dc_c);  //checked
 	void setPhaseVoltage(float Uq, float Ud, float angle_el);   //checked
 

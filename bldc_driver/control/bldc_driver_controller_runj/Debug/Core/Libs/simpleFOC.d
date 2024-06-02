@@ -42,6 +42,7 @@ Core/Libs/simpleFOC.o: ../Core/Libs/simpleFOC.cpp \
  C:/Users/WINDOWS\ 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs/pid.h \
  C:/Users/WINDOWS\ 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs/lowpass_filter.h \
  C:/Users/WINDOWS\ 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs/AS5048Ainterface.h \
+ C:/Users/WINDOWS\ 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs/ekf.h \
  C:/Users/WINDOWS\ 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs/CurrentSense.h \
  C:/Users/WINDOWS\ 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs/pwm_drivers.h
 C:/Users/WINDOWS\ 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs/simpleFOC.h:
@@ -88,5 +89,6 @@ C:/Users/WINDOWS\ 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_con
 C:/Users/WINDOWS\ 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs/pid.h:
 C:/Users/WINDOWS\ 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs/lowpass_filter.h:
 C:/Users/WINDOWS\ 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs/AS5048Ainterface.h:
+C:/Users/WINDOWS\ 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs/ekf.h:
 C:/Users/WINDOWS\ 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs/CurrentSense.h:
 C:/Users/WINDOWS\ 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs/pwm_drivers.h:

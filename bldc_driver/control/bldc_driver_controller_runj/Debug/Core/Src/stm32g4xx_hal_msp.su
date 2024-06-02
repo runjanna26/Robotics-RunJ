@@ -12,5 +12,5 @@
 ../Core/Src/stm32g4xx_hal_msp.c:482:6:HAL_SPI_MspInit	48	static
 ../Core/Src/stm32g4xx_hal_msp.c:519:6:HAL_SPI_MspDeInit	16	static
 ../Core/Src/stm32g4xx_hal_msp.c:549:6:HAL_TIM_Base_MspInit	24	static
-../Core/Src/stm32g4xx_hal_msp.c:568:6:HAL_TIM_MspPostInit	40	static
-../Core/Src/stm32g4xx_hal_msp.c:602:6:HAL_TIM_Base_MspDeInit	16	static
+../Core/Src/stm32g4xx_hal_msp.c:582:6:HAL_TIM_MspPostInit	40	static
+../Core/Src/stm32g4xx_hal_msp.c:616:6:HAL_TIM_Base_MspDeInit	16	static

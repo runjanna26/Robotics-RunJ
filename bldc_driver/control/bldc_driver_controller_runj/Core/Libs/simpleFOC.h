@@ -21,6 +21,8 @@
 
 #include "pwm_drivers.h"
 
+
+
 extern SPI_HandleTypeDef hspi1;
 
 
@@ -72,6 +74,7 @@ public:
 	AS5048A_interface Encoder;
 	CurrentSense CurrentSensor;
 	pwm_drivers driver;
+
 
 private:
 	////Control Variable

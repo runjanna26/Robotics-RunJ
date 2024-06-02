@@ -40,6 +40,7 @@ Core/Libs/pwm_drivers.o: ../Core/Libs/pwm_drivers.cpp \
  C:/Users/WINDOWS\ 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs/foc_utils.h \
  C:/Users/WINDOWS\ 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs/AS5048Ainterface.h \
  C:/Users/WINDOWS\ 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs/lowpass_filter.h \
+ C:/Users/WINDOWS\ 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs/ekf.h \
  ../Core/Libs/motor_param.h ../Core/Libs/foc_utils.h ../Core/Libs/pid.h \
  ../Core/Libs/lowpass_filter.h
 C:/Users/WINDOWS\ 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs/pwm_drivers.h:
@@ -84,6 +85,7 @@ C:/Users/WINDOWS\ 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_con
 C:/Users/WINDOWS\ 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs/foc_utils.h:
 C:/Users/WINDOWS\ 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs/AS5048Ainterface.h:
 C:/Users/WINDOWS\ 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs/lowpass_filter.h:
+C:/Users/WINDOWS\ 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs/ekf.h:
 ../Core/Libs/motor_param.h:
 ../Core/Libs/foc_utils.h:
 ../Core/Libs/pid.h:

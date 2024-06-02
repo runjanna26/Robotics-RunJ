@@ -59,6 +59,9 @@ void AS5048A_interface::Sensor_init()
 	getSensorAngle();
 	angle_prev = getSensorAngle(); 
 	angle_prev_ts = micros();
+
+
+	ekf.ekf_initialize(&_ekf, Pdiag);
 }
 
 /**
@@ -234,7 +237,38 @@ void AS5048A_interface::updateSensor()
 		full_rotations += (d_angle > 0) ? -1 : 1;
 	angle_prev = angle_current;
 
-	getShaftVelocity();
+//	getShaftVelocity();
+}
+
+void AS5048A_interface::updateVelocity()
+{
+	// calculate sample time
+	float Ts = 1e-3f;
+
+	// [2] EKF Velocity estimation
+	_float_t angle_measurement = get_full_rotation_angle();
+	
+    _float_t fx[EKF_N];
+    fx[0] = _ekf.x[0] + _ekf.x[1] * Ts;   // Angle update
+    fx[1] = _ekf.x[1];                    // Velocity remains the same
+    ekf.ekf_predict(&_ekf, fx, F, Q);
+
+    _float_t hx[EKF_N];
+    hx[0] = _ekf.x[0];  // Predicted measurement
+    ekf.ekf_update(&_ekf, &angle_measurement, hx, H, R);
+
+    vel_prev_EKF = LPF_velocity(_ekf.x[1]);
+
+
+
+    // [1] Velocity calculation
+    vel_prev = ((float)(full_rotations - vel_full_rotations) * _2PI + (angle_prev - vel_angle_prev)) / Ts;
+
+	// save variables for next iteration
+	vel_angle_prev = angle_prev;
+	vel_full_rotations = full_rotations;
+	// Low pass filter
+//	vel_prev_LPF = sensor_direction * LPF_velocity(vel_prev);
 }
 
 
@@ -257,6 +291,8 @@ float AS5048A_interface::getShaftAngle()
 */
 float AS5048A_interface::getShaftVelocity() 
 {
-	vel_prev_LPF = sensor_direction * LPF_velocity(getSensorVelocity());
 	return vel_prev_LPF;
 }
+
+
+

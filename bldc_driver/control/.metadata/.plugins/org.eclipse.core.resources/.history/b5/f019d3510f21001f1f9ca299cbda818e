@@ -1,0 +1,17 @@
+/*
+ * ekf.h
+ *
+ *  Created on: Jun 3, 2024
+ *      Author: WINDOWS 11
+ */
+
+#ifndef LIBS_EKF_H_
+#define LIBS_EKF_H_
+
+class ekf {
+public:
+	ekf();
+	virtual ~ekf();
+};
+
+#endif /* LIBS_EKF_H_ */

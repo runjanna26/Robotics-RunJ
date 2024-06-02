@@ -7,6 +7,7 @@
 CPP_SRCS += \
 ../Core/Libs/AS5048Ainterface.cpp \
 ../Core/Libs/CurrentSense.cpp \
+../Core/Libs/ekf.cpp \
 ../Core/Libs/foc_utils.cpp \
 ../Core/Libs/lowpass_filter.cpp \
 ../Core/Libs/motor_param.cpp \
@@ -17,6 +18,7 @@ CPP_SRCS += \
 OBJS += \
 ./Core/Libs/AS5048Ainterface.o \
 ./Core/Libs/CurrentSense.o \
+./Core/Libs/ekf.o \
 ./Core/Libs/foc_utils.o \
 ./Core/Libs/lowpass_filter.o \
 ./Core/Libs/motor_param.o \
@@ -27,6 +29,7 @@ OBJS += \
 CPP_DEPS += \
 ./Core/Libs/AS5048Ainterface.d \
 ./Core/Libs/CurrentSense.d \
+./Core/Libs/ekf.d \
 ./Core/Libs/foc_utils.d \
 ./Core/Libs/lowpass_filter.d \
 ./Core/Libs/motor_param.d \
@@ -42,7 +45,7 @@ Core/Libs/%.o Core/Libs/%.su Core/Libs/%.cyclo: ../Core/Libs/%.cpp Core/Libs/sub
 clean: clean-Core-2f-Libs
 
 clean-Core-2f-Libs:
-	-$(RM) ./Core/Libs/AS5048Ainterface.cyclo ./Core/Libs/AS5048Ainterface.d ./Core/Libs/AS5048Ainterface.o ./Core/Libs/AS5048Ainterface.su ./Core/Libs/CurrentSense.cyclo ./Core/Libs/CurrentSense.d ./Core/Libs/CurrentSense.o ./Core/Libs/CurrentSense.su ./Core/Libs/foc_utils.cyclo ./Core/Libs/foc_utils.d ./Core/Libs/foc_utils.o ./Core/Libs/foc_utils.su ./Core/Libs/lowpass_filter.cyclo ./Core/Libs/lowpass_filter.d ./Core/Libs/lowpass_filter.o ./Core/Libs/lowpass_filter.su ./Core/Libs/motor_param.cyclo ./Core/Libs/motor_param.d ./Core/Libs/motor_param.o ./Core/Libs/motor_param.su ./Core/Libs/pid.cyclo ./Core/Libs/pid.d ./Core/Libs/pid.o ./Core/Libs/pid.su ./Core/Libs/pwm_drivers.cyclo ./Core/Libs/pwm_drivers.d ./Core/Libs/pwm_drivers.o ./Core/Libs/pwm_drivers.su ./Core/Libs/simpleFOC.cyclo ./Core/Libs/simpleFOC.d ./Core/Libs/simpleFOC.o ./Core/Libs/simpleFOC.su
+	-$(RM) ./Core/Libs/AS5048Ainterface.cyclo ./Core/Libs/AS5048Ainterface.d ./Core/Libs/AS5048Ainterface.o ./Core/Libs/AS5048Ainterface.su ./Core/Libs/CurrentSense.cyclo ./Core/Libs/CurrentSense.d ./Core/Libs/CurrentSense.o ./Core/Libs/CurrentSense.su ./Core/Libs/ekf.cyclo ./Core/Libs/ekf.d ./Core/Libs/ekf.o ./Core/Libs/ekf.su ./Core/Libs/foc_utils.cyclo ./Core/Libs/foc_utils.d ./Core/Libs/foc_utils.o ./Core/Libs/foc_utils.su ./Core/Libs/lowpass_filter.cyclo ./Core/Libs/lowpass_filter.d ./Core/Libs/lowpass_filter.o ./Core/Libs/lowpass_filter.su ./Core/Libs/motor_param.cyclo ./Core/Libs/motor_param.d ./Core/Libs/motor_param.o ./Core/Libs/motor_param.su ./Core/Libs/pid.cyclo ./Core/Libs/pid.d ./Core/Libs/pid.o ./Core/Libs/pid.su ./Core/Libs/pwm_drivers.cyclo ./Core/Libs/pwm_drivers.d ./Core/Libs/pwm_drivers.o ./Core/Libs/pwm_drivers.su ./Core/Libs/simpleFOC.cyclo ./Core/Libs/simpleFOC.d ./Core/Libs/simpleFOC.o ./Core/Libs/simpleFOC.su
 
 .PHONY: clean-Core-2f-Libs
 

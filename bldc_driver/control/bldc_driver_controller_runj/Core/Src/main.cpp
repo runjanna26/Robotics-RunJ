@@ -24,11 +24,13 @@
 #include <stdio.h>   // printf function
 #include <stdlib.h>
 #include "math.h"
+#include "cordic.h"
 #include "string.h"
 #include "motor_param.h"
 
 #include "simpleFOC.h"
 simpleFOC simpleFOC;
+
 
 /* USER CODE END Includes */
 
@@ -79,13 +81,17 @@ static void MX_ADC1_Init(void);
 static void MX_FDCAN1_Init(void);
 static void MX_TIM1_Init(void);
 static void MX_ADC2_Init(void);
-static void MX_CORDIC_Init(void);
+//static void MX_CORDIC_Init(void);
 static void MX_CRC_Init(void);
 static void MX_FMAC_Init(void);
 static void MX_TIM2_Init(void);
 /* USER CODE BEGIN PFP */
 __STATIC_INLINE void DWT_Init(void); 						//checked
 __STATIC_INLINE uint32_t micros(void);						//checked
+
+
+
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -97,17 +103,6 @@ float setpoint_cmd = 1.0;
 int x_int;
 struct DQCurrent_s dq_current_debug;
 struct PhaseCurrent_s abc_current_debug;
-
-
-float angle = 0.5f; // Example angle in radians
-float value = 9.0f; // Example value for square root
-
-// Variables to store the results
-float sine_result = 0.0f;
-float cosine_result = 0.0f;
-float sqrt_result = 0.0f;
-
-
 
 /* USER CODE END 0 */
 
@@ -174,7 +169,6 @@ int main(void)
 //  	simpleFOC.initFOC(NOT_SET, CW);
 //  	simpleFOC.initFOC(NOT_SET, UNKNOWN);
 
-
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -182,7 +176,8 @@ int main(void)
   while (1)
   {
 	  /** Test CORDIC **/
-
+//	  cordic_cos = cordic_q31_cosf(radian); // 40 us
+//	  cordic_cos1 = _cos(radian);			// 15 us
 
 	  /** Test Encoder	**/
 //	  simpleFOC.readEncoderOnly();					// Test Read position [/]
@@ -202,12 +197,12 @@ int main(void)
 
 
 	  /** Test Closed Loop Control **/
-//	  simpleFOC.move_torque(setpoint_cmd);
-//	  simpleFOC.move_velocity(setpoint_cmd);
-//	  simpleFOC.move_angle(setpoint_cmd);
+	  simpleFOC.move_torque(setpoint_cmd);			// 14 us
+//	  simpleFOC.move_velocity(setpoint_cmd);		// 21 us
+//	  simpleFOC.move_angle(setpoint_cmd);			// 26 us
 
 	  /** Always run loopFOC (except open loop control)**/
-//	  simpleFOC.loopFOC();
+	  simpleFOC.loopFOC();							// 115 us
 
     /* USER CODE END WHILE */
 
@@ -392,37 +387,31 @@ static void MX_ADC2_Init(void)
 
 }
 
-/**
-  * @brief CORDIC Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_CORDIC_Init(void)
-{
-	CORDIC_ConfigTypeDef sConfig;
-//	int32_t input_q31 = f32_to_q31
-
-
-    // Enable CORDIC peripheral clock
-    __HAL_RCC_CORDIC_CLK_ENABLE();
-
-    // Configure the CORDIC peripheral
-//	sConfig.Function = CORDIC_FUNCTION_SINE; // Set initial function
-//    hcordic.Init.Precision = CORDIC_PRECISION_6CYCLES; // Set the desired precision
-//    hcordic.Init.Scale = CORDIC_SCALE_0; // No scaling
-//    hcordic.Init.NbWrite = CORDIC_NBWRITE_1; // Number of writes
-//    hcordic.Init.NbRead = CORDIC_NBREAD_1; // Number of reads
-//    hcordic.Init.InSize = CORDIC_INSIZE_SINGLE; // Single input size
-//    hcordic.Init.OutSize = CORDIC_OUTSIZE_SINGLE; // Single output size
-//    hcordic.Init.InputFormat = CORDIC_FORMAT_FLOAT; // Input format
-//    hcordic.Init.OutputFormat = CORDIC_FORMAT_FLOAT; // Output format
-
-    if (HAL_CORDIC_Init(&hcordic) != HAL_OK)
-    {
-        // Initialization error
-        Error_Handler();
-    }
-}
+///**
+//  * @brief CORDIC Initialization Function
+//  * @param None
+//  * @retval None
+//  */
+//void MX_CORDIC_Init(void)
+//{
+//
+//  /* USER CODE BEGIN CORDIC_Init 0 */
+//
+//  /* USER CODE END CORDIC_Init 0 */
+//
+//  /* USER CODE BEGIN CORDIC_Init 1 */
+//
+//  /* USER CODE END CORDIC_Init 1 */
+//  hcordic.Instance = CORDIC;
+//  if (HAL_CORDIC_Init(&hcordic) != HAL_OK)
+//  {
+//    Error_Handler();
+//  }
+//  /* USER CODE BEGIN CORDIC_Init 2 */
+//
+//  /* USER CODE END CORDIC_Init 2 */
+//
+//}
 
 /**
   * @brief CRC Initialization Function
@@ -777,8 +766,10 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   {
 	  simpleFOC.Encoder.updateVelocity();
   }
-
 }
+
+
+
 /* USER CODE END 4 */
 
 /**

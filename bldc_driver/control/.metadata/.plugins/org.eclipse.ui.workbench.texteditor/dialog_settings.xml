@@ -1,36 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="target"/>
+		<item key="selection" value="cordic"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="cordic"/>
+			<item value="codic"/>
+			<item value="f32_to_q31"/>
+			<item value="cordic_cos1"/>
+			<item value="ldexp"/>
+			<item value="q31_to_f32"/>
+			<item value="CORDIC_ConfigTypeDef"/>
+			<item value="hcordic"/>
+			<item value="MX_CORDIC_Init"/>
+			<item value="ekf_update_step3"/>
+			<item value="ekf_initialize"/>
+			<item value="ekf_t"/>
+			<item value="_float_t"/>
 			<item value="target"/>
 			<item value="dq_current"/>
-			<item value="hadc2"/>
-			<item value="move_velocity"/>
-			<item value="shaft_angle"/>
-			<item value="absoluteZeroSearch"/>
-			<item value="setPhaseVoltage"/>
-			<item value="velocityOpenloop"/>
-			<item value="move_velocity_openloop"/>
-			<item value="HAL_TIM_PWM_Start"/>
-			<item value="MX_TIM1_Init"/>
-			<item value="SystemClock_Config"/>
-			<item value="htim1"/>
-			<item value="angle_prev"/>
-			<item value="register_value"/>
 		</list>
 		<list key="replacehistory">
+			<item value="float"/>
 			<item value="htim1"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="579"/>
-		<item key="DIALOG_Y_ORIGIN" value="475"/>
+		<item key="DIALOG_X_ORIGIN" value="1455"/>
+		<item key="DIALOG_Y_ORIGIN" value="568"/>
 		<item key="DIALOG_WIDTH" value="414"/>
 		<item key="DIALOG_HEIGHT" value="461"/>
 		<item key="DIALOG_FONT_NAME" value="1|Segoe UI|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI"/>

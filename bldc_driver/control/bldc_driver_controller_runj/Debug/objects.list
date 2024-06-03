@@ -7,6 +7,7 @@
 "./Core/Libs/pid.o"
 "./Core/Libs/pwm_drivers.o"
 "./Core/Libs/simpleFOC.o"
+"./Core/Src/cordic.o"
 "./Core/Src/main.o"
 "./Core/Src/stm32g4xx_hal_msp.o"
 "./Core/Src/stm32g4xx_it.o"

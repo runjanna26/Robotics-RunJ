@@ -17,6 +17,6 @@ C:\ST\STM32CubeIDE_1.15.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.external
 ../Core/Libs/AS5048Ainterface.cpp:220:10:static uint32_t AS5048A_interface::micros()	4	static
 ../Core/Libs/AS5048Ainterface.cpp:230:6:void AS5048A_interface::updateSensor()	24	static
 ../Core/Libs/AS5048Ainterface.cpp:243:6:void AS5048A_interface::updateVelocity()	56	static
-../Core/Libs/AS5048Ainterface.cpp:282:7:float AS5048A_interface::getShaftAngle()	32	static
+../Core/Libs/AS5048Ainterface.cpp:282:7:float AS5048A_interface::getShaftAngle()	24	static
 ../Core/Libs/AS5048Ainterface.cpp:292:7:float AS5048A_interface::getShaftVelocity()	16	static
 C:\ST\STM32CubeIDE_1.15.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.0.100.202403111256\tools\bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/include/c++/12.3.1/cmath:415:5:constexpr typename __gnu_cxx::__promote_2<_Tp, _Up>::__type std::pow(_Tp, _Up) [with _Tp = int; _Up = int]	24	static

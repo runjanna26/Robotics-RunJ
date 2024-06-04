@@ -27,7 +27,7 @@ public:
     PIDController(float P, float I, float D, float ramp, float limit);
     ~PIDController() = default;
 
-    float operator() (float error);
+    float operator() (float error); // Functors
     void reset();
 	static uint32_t micros(void);	
 

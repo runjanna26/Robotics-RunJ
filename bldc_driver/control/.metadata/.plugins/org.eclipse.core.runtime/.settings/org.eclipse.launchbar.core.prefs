@@ -1,10 +1,10 @@
 LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/arch=x86_64
 LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/name=Local
 LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/os=win32
-configDescList=org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:FinalProject,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:FinalProject_slave Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:cordic_31 Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:bldc_driver_controller_runj Debug
+configDescList=org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:FinalProject,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:FinalProject_slave Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:bldc_driver_controller_runj Debug
 eclipse.preferences.version=1
 org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:FinalProject/activeLaunchMode=run
 org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:FinalProject/activeLaunchTarget=null\:---
 org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:FinalProject_slave\ Debug/activeLaunchMode=run
 org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:FinalProject_slave\ Debug/activeLaunchTarget=null\:---
-org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:bldc_driver_controller_runj\ Debug/activeLaunchMode=run
+org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:bldc_driver_controller_runj\ Debug/activeLaunchMode=debug

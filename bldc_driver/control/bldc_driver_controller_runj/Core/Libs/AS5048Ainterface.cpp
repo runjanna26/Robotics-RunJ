@@ -61,7 +61,7 @@ void AS5048A_interface::Sensor_init()
 	angle_prev_ts = micros();
 
 
-	ekf.ekf_initialize(&_ekf, Pdiag);
+	ekf_encoder.ekf_initialize(&_ekf_s_encoder, Pdiag);
 }
 
 /**
@@ -249,15 +249,15 @@ void AS5048A_interface::updateVelocity()
 	_float_t angle_measurement = get_full_rotation_angle();
 	
     _float_t fx[EKF_N];
-    fx[0] = _ekf.x[0] + _ekf.x[1] * Ts;   // Angle update
-    fx[1] = _ekf.x[1];                    // Velocity remains the same
-    ekf.ekf_predict(&_ekf, fx, F, Q);
+    fx[0] = _ekf_s_encoder.x[0] + _ekf_s_encoder.x[1] * Ts;   // Angle update
+    fx[1] = _ekf_s_encoder.x[1];                    // Velocity remains the same
+    ekf_encoder.ekf_predict(&_ekf_s_encoder, fx, F, Q);
 
     _float_t hx[EKF_N];
-    hx[0] = _ekf.x[0];  // Predicted measurement
-    ekf.ekf_update(&_ekf, &angle_measurement, hx, H, R);
+    hx[0] = _ekf_s_encoder.x[0];  // Predicted measurement
+    ekf_encoder.ekf_update(&_ekf_s_encoder, &angle_measurement, hx, H, R);
 
-    vel_prev_EKF = LPF_velocity(_ekf.x[1]);
+    vel_prev_EKF = LPF_velocity(_ekf_s_encoder.x[1]);
 
 
 

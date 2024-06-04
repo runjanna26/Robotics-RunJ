@@ -20,7 +20,7 @@ public:
     LowPassFilter(float Tf);
     ~LowPassFilter() = default;
 
-    float operator() (float x);
+    float operator() (float x);         // Functors
     float Tf; //!< Low pass filter time constant
 	static uint32_t micros(void);											//checked
 

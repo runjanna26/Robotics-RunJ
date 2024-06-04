@@ -12,18 +12,17 @@
 #include "math.h"
 #include <cstdint>  // for uint32_t
 #include "foc_utils.h"
-
-
+#include "motor_param.h"
+#include "ekf.h"
 
 extern ADC_HandleTypeDef hadc1;
 extern ADC_HandleTypeDef hadc2;
 extern DMA_HandleTypeDef hdma_adc1;
 extern DMA_HandleTypeDef hdma_adc2;
-
-#define CurrentSense_resistance 0.01
-#define CurrentSense_gain 5.0
-
-
+extern float phase_resistance;
+extern float phase_inductance;
+extern float CurrentSense_resistance;
+extern float CurrentSense_gain;
 
 
 
@@ -52,8 +51,49 @@ private:
 
 	//===ADC DMA variable===
 	uint32_t adcResultDMA_a[1], adcResultDMA_c[1];  // to store the ADC value
-//	const int adcChannelCount = sizeof(adcResultDMA) / sizeof(adcResultDMA[0]);
-//	volatile int adcConversionComplete = 0; // set by callback
+
+	// EKF	
+	EKF ekf_current{2,1};
+	ekf_t _ekf_s_current;
+
+	static constexpr int EKF_N = 3;  // State vector dimension: [ia, ib, ic]
+	static constexpr int EKF_M = 3;  // Measurement vector dimension: [ia, ib, ic]
+
+	const float Pdiag[EKF_N] = {1, 1, 1};
+
+    _float_t x[EKF_N];          // State vector
+    _float_t P[EKF_N * EKF_N];  // Prediction error covariance
+
+    static constexpr _float_t Ts = 0.001f; // Sample time
+
+    // Process noise covariance: Higher values indicate more uncertainty
+    // Q00 [Position]: small because encoder is good. (1e-9)
+    // Q11 [Velocity]: large because velocity calculation is bad. (1.0)
+    const _float_t Q[EKF_N * EKF_N] = {1e-9, 0, 	0,
+    								   0, 1e-6, 	0,
+									   0,    0,  1e-6};
+    // Measurement noise covariance
+    // Lower values indicate higher confidence in measurements
+    const _float_t R[EKF_M * EKF_M] = {1e-9, 0, 	0,
+    								   0, 1e-6, 	0,
+									   0,    0,  1e-6};
+	// State transition model
+	const _float_t F[EKF_N * EKF_N] = {	1 - ((CurrentSense_resistance + phase_resistance) * Ts / phase_inductance), 0, 0,
+										0, 1 - ((CurrentSense_resistance + phase_resistance) * Ts / phase_inductance), 0,
+										0, 0, 1 - ((CurrentSense_resistance + phase_resistance) * Ts / phase_inductance)};
+	// Observation model: defines how measurements are mapped to the state space
+	const _float_t H[EKF_M * EKF_N] = {	1, 0, 0,
+										0, 1, 0,
+										0, 0, 1};
+
+									
+// // Input model
+// const _float_t B[EKF_N * EKF_N] = 
+// {(Ts / L), 0, 0,
+// 0, (Ts / L), 0,
+// 0, 0, (Ts / L)};
+
+
 
 };
 

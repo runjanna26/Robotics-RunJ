@@ -17,6 +17,9 @@
 #include "ekf.h"
 
 extern SPI_HandleTypeDef hspi1;
+extern int pole_pairs;
+extern LowPassFilter LPF_position;
+extern LowPassFilter LPF_velocity;
 
 #define DEF_ANGLE_REGISTER 0x3FFF
 
@@ -55,13 +58,9 @@ public:
 	float getShaftAngle();
 	float getShaftVelocity();
 
-
 	static uint32_t micros(void);											//checked
 
-
-
-
-	//===Magnetic Sensor===//
+	//===Magnetic Encoder===//
 	float cpr; 							// Maximum range of the magnetic sensor
 	int bit_resolution; 				//!< the number of bites of angle data
 	int command_parity_bit; 			//!< the bit where parity flag is stored in command
@@ -79,23 +78,16 @@ public:
 	int32_t full_rotations = 0; 		// full rotation tracking
 	int32_t vel_full_rotations = 0; 	// previous full rotation value for velocity calculation
 
-	//Position sensor variable
+	// Position sensor variable
 	float sensor_offset = UNKNOWN; //!< user defined sensor zero offset
 	float zero_electric_angle = NOT_SET; //!< absolute zero electric angle - if available
-
-
-
 	int sensor_direction = NOT_SET; //!< if sensor_direction == Direction::CCW then direction will be flipped to CW
-//	int sensor_direction = CW;
-	
-	int pole_pairs = 21;
-
-	LowPassFilter LPF_position	{0.01};
-	LowPassFilter LPF_velocity	{0.0}; //0.05
 
 private:
-	EKF ekf;
-	ekf_t _ekf;
+
+	// EKF
+	EKF ekf_encoder{2,1};
+	ekf_t _ekf_s_encoder;
 
 	static constexpr int EKF_N = 2;  // State vector dimension: [angle, velocity]
 	static constexpr int EKF_M = 1;  // Measurement vector dimension: [angle]
@@ -121,10 +113,6 @@ private:
     								   0, 1};   // Velocity
     // Observation model: defines how measurements are mapped to the state space.
     const _float_t H[EKF_M * EKF_N] = {1, 0};
-
-
-
-
 };
 
 #endif /* AS5048AINTERFACE_H_ */

@@ -37,7 +37,11 @@ Core/Libs/CurrentSense.o: ../Core/Libs/CurrentSense.cpp \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_spi_ex.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_tim.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_tim_ex.h \
- C:/Users/WINDOWS\ 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs/foc_utils.h
+ C:/Users/WINDOWS\ 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs/foc_utils.h \
+ C:/Users/WINDOWS\ 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs/motor_param.h \
+ C:/Users/WINDOWS\ 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs/pid.h \
+ C:/Users/WINDOWS\ 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs/lowpass_filter.h \
+ C:/Users/WINDOWS\ 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs/ekf.h
 C:/Users/WINDOWS\ 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs/CurrentSense.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:
@@ -78,3 +82,7 @@ C:/Users/WINDOWS\ 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_con
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_tim.h:
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_tim_ex.h:
 C:/Users/WINDOWS\ 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs/foc_utils.h:
+C:/Users/WINDOWS\ 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs/motor_param.h:
+C:/Users/WINDOWS\ 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs/pid.h:
+C:/Users/WINDOWS\ 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs/lowpass_filter.h:
+C:/Users/WINDOWS\ 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs/ekf.h:

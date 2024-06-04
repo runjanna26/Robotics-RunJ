@@ -1,4 +1,4 @@
-../Core/Libs/CurrentSense.cpp:12:1:CurrentSense::CurrentSense()	16	static
+../Core/Libs/CurrentSense.cpp:12:1:CurrentSense::CurrentSense()	24	static
 ../Core/Libs/CurrentSense.cpp:17:1:CurrentSense::~CurrentSense()	16	static
 ../Core/Libs/CurrentSense.cpp:17:1:virtual CurrentSense::~CurrentSense()	16	static
 ../Core/Libs/CurrentSense.cpp:26:6:void CurrentSense::initCurrentsense(float, float)	24	static

@@ -291,7 +291,7 @@ float AS5048A_interface::getShaftAngle()
 */
 float AS5048A_interface::getShaftVelocity() 
 {
-	return vel_prev_LPF;
+	return vel_prev_EKF;
 }
 
 

@@ -22,6 +22,7 @@ simpleFOC::~simpleFOC()
 
 void simpleFOC::initSensors()
 {
+	driver.initDriver();
 	Encoder.MagneticSensorSPI_init();
 	Encoder.Sensor_init();
 	CurrentSensor.initCurrentsense(CurrentSense_resistance, CurrentSense_gain);

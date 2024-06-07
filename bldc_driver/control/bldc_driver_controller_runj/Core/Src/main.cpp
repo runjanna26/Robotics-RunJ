@@ -157,17 +157,11 @@ int main(void)
 	HAL_GPIO_WritePin(ENABLE_GPIO_Port, ENABLE_Pin, GPIO_PIN_SET);  // Enable
 //	  HAL_GPIO_WritePin(EN_GPIO_Port, EN_Pin, GPIO_PIN_RESET);  // Disable
 
-
-	//PWM SETUP
-//	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);   //pinMode
-//	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);	//pinMode
-//	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3);	//pinMode
 	//SPI SETUP
 	simpleFOC.initSensors();
 	//FOC SETUP
-  	simpleFOC.initFOC(0.564893246, CW); 				// Do not search!! checked
-//  	simpleFOC.initFOC(NOT_SET, CW);
-//  	simpleFOC.initFOC(NOT_SET, UNKNOWN);
+//  	simpleFOC.initFOC(0.564893246, CW);
+  	simpleFOC.initFOC(NOT_SET, UNKNOWN);
 
   /* USER CODE END 2 */
 
@@ -188,7 +182,8 @@ int main(void)
 //	  simpleFOC.driver.writeDutyCycle3PWM(0.2, 0.5, 0.8);  // Test Drive PWM for 3-phases [/]
 
 	  /** Test Current Sensor **/
-//	  abc_current_debug = simpleFOC.CurrentSensor.getPhaseCurrents();
+	  abc_current_debug = simpleFOC.CurrentSensor.getPhaseCurrents();
+//	  dq_current_debug = simpleFOC.CurrentSensor.getFOCCurrents();
 
 
 	  /** Test Open Loop Control **/
@@ -197,8 +192,8 @@ int main(void)
 
 
 	  /** Test Closed Loop Control **/
-	  simpleFOC.move_torque(setpoint_cmd);			// 14 us
-//	  simpleFOC.move_velocity(setpoint_cmd);		// 21 us
+//	  simpleFOC.move_torque(setpoint_cmd);			// 14 us
+	  simpleFOC.move_velocity(setpoint_cmd);		// 21 us  maximum 100 rad/s --> 950 rpm
 //	  simpleFOC.move_angle(setpoint_cmd);			// 26 us
 
 	  /** Always run loopFOC (except open loop control)**/
@@ -637,7 +632,13 @@ static void MX_TIM1_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN TIM1_Init 2 */
-
+//  // Configure TIM1 trigger output for ADC synchronization
+//  sMasterConfig.MasterOutputTrigger = TIM_TRGO_UPDATE;
+//  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+//  if (HAL_TIMEx_MasterConfigSynchronization(&htim1, &sMasterConfig) != HAL_OK) {
+//      // Master configuration error
+//      Error_Handler();
+//  }
   /* USER CODE END TIM1_Init 2 */
   HAL_TIM_MspPostInit(&htim1);
 

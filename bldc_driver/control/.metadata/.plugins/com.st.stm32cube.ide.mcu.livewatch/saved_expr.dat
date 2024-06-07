@@ -11,3 +11,4 @@ LPF_current_q
 LPF_current_d
 LPF_velocity
 LPF_position
+current_limit

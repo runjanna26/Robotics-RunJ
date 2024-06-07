@@ -1,19 +1,10 @@
-02:23:39 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+04:24:48 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
 make -j16 all 
-arm-none-eabi-g++ "../Core/Src/main.cpp" -mcpu=cortex-m4 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/WINDOWS 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-arm-none-eabi-g++ "../Core/Libs/CurrentSense.cpp" -mcpu=cortex-m4 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/WINDOWS 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Libs/CurrentSense.d" -MT"Core/Libs/CurrentSense.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Libs/CurrentSense.o"
-arm-none-eabi-g++ "../Core/Libs/simpleFOC.cpp" -mcpu=cortex-m4 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/WINDOWS 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Libs/simpleFOC.d" -MT"Core/Libs/simpleFOC.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Libs/simpleFOC.o"
-arm-none-eabi-g++ -o "bldc_driver_controller_runj.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\WINDOWS 11\Documents\Robotics-RunJ\bldc_driver\control\bldc_driver_controller_runj\STM32G491KEUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="bldc_driver_controller_runj.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
-Finished building target: bldc_driver_controller_runj.elf
- 
 arm-none-eabi-size  bldc_driver_controller_runj.elf 
-arm-none-eabi-objdump -h -S bldc_driver_controller_runj.elf  > "bldc_driver_controller_runj.list"
    text	   data	    bss	    dec	    hex	filename
-  49388	    304	   3568	  53260	   d00c	bldc_driver_controller_runj.elf
+  50364	    304	   3584	  54252	   d3ec	bldc_driver_controller_runj.elf
 Finished building: default.size.stdout
  
-Finished building: bldc_driver_controller_runj.list
- 
 
-02:23:41 Build Finished. 0 errors, 0 warnings. (took 1s.225ms)
+04:24:48 Build Finished. 0 errors, 0 warnings. (took 243ms)
 

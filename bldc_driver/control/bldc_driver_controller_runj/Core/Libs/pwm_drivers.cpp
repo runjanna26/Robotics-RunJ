@@ -52,10 +52,15 @@ void pwm_drivers::setPhaseVoltage(float Uq, float Ud, float angle_el)
 //
 //	// center = modulation_centered ? (driver->voltage_limit)/2 : Uq;
 //		float center = voltage_limit / 2;
+//        float Umin = min(Ua, min(Ub, Uc));
+//        float Umax = max(Ua, max(Ub, Uc));
+//        center -= (Umax + Umin) / 2;
+//
 //	// Inverse Clarke transform
 //		Ua = iv_alpha + center;
 //		Ub = -0.5f * iv_alpha + _SQRT3_2 * iv_beta + center;
 //		Uc = -0.5f * iv_alpha - _SQRT3_2 * iv_beta + center;
+
 
 // ===========================================================================
 	float Uout;

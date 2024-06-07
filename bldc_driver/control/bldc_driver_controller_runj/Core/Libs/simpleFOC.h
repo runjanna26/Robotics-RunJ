@@ -92,8 +92,8 @@ private:
 	long open_loop_timestamp;
 
 	float pp_check;
-	float voltage_sensor_align = 1;		//!< sensor and motor align voltage parameter
-	float velocity_index_search = 1;	//!< target velocity for index search
+	float voltage_sensor_align = 3;		//!< sensor and motor align voltage parameter
+	float velocity_index_search = 3;	//!< target velocity for index search
 };
 
 #endif /* SIMPLEFOC_H_ */

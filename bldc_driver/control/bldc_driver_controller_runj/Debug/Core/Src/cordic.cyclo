@@ -1,0 +1,4 @@
+../Core/Src/cordic.c:30:6:MX_CORDIC_Init	2
+../Core/Src/cordic.c:87:12:f32_to_q31	1
+../Core/Src/cordic.c:101:7:cordic_q31_cosf	1
+../Core/Src/cordic.c:130:7:cordic_q31_sinf	1

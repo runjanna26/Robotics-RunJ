@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="SmartImportWizard">
+		<item key="SmartImportRootWizardPage.STORE_HIDE_ALREADY_OPEN" value="true"/>
+		<item key="SmartImportRootWizardPage.STORE_CLOSE_IMPORTED" value="false"/>
+		<item key="SmartImportRootWizardPage.STORE_NESTED_PROJECTS" value="true"/>
+		<item key="SmartImportRootWizardPage.STORE_CONFIGURE_NATURES" value="true"/>
+		<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+			<item value="C:\Users\WINDOWS 11\STM32CubeIDE\workspace_1.15.1"/>
+			<item value="C:\Users\WINDOWS 11\Documents\Robotics-RunJ\bldc_driver\control"/>
+			<item value="C:\Users\WINDOWS 11\Documents\Robotics-RunJ\bldc_driver\control\bldc_controller_stm32"/>
+			<item value="C:\Users\WINDOWS 11\Documents\Robotics-RunJ\bldc_driver\control\FinalProject_slave"/>
+		</list>
+	</section>
+	<section name="ExternalProjectImportWizard">
+		<item key="WizardProjectsImportPage.STORE_NESTED_PROJECTS" value="true"/>
+	</section>
+</section>

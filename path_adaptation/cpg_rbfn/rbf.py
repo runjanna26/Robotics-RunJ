@@ -9,9 +9,13 @@ class RBF:
 
         self.target_length = None
         self.ci = []
+
         self.M  = []
         self.M_stack = []
 
+        self.error = []
+        self.error_stack = []
+        self.error_max = 0
         self.learning_iteration = 0
         self.learning_rate = 0.25
 
@@ -43,5 +47,9 @@ class RBF:
         learning_iteration = learning_iteration
         for i in range(learning_iteration):
             self.M = np.matmul(self.W, self.K)           # calculate forward value <--- Inspect these iterations
-            self.W = self.W + learning_rate * (target_traj[self.ci] - self.M[self.ci])
+            self.error = (target_traj[self.ci] - self.M[self.ci])
+            self.W = self.W + learning_rate * self.error
             self.M_stack.append(self.M)
+
+            self.error_max = np.max(abs(self.error))  # Get the maximum absolute error
+            self.error_stack.append(self.error_max)

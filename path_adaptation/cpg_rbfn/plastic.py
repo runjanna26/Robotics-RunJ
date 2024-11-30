@@ -62,8 +62,7 @@ class Plastic:
             self.update(perturbation=0.0)
         self.discretize_count += 1
 
-    def gen_cpg_finite_size(self):
-        cpg_length = 100000
+    def gen_cpg_finite_size(self, cpg_length = 100000):
         sizeOut         = cpg_length                # increase cpg list size and decrease 
         self.out0       = np.empty((1,sizeOut))
         self.out1       = np.empty((1,sizeOut))
@@ -74,6 +73,8 @@ class Plastic:
             self.out0[0][idx]    = self.getOut0() 
             self.out1[0][idx]    = self.getOut1()
             self.outFreq[0][idx] = self.getFrequency() 
+        return {'out0':self.out0[0],
+                'out1':self.out1[0]}
 
     def gen_cpg_one_cycle(self):
         self.gen_cpg_finite_size()

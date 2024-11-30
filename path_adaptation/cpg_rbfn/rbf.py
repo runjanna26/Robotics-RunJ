@@ -9,6 +9,8 @@ class RBF:
 
         self.target_length = None
         self.ci = []
+        self.cx = []
+        self.cy = []
 
         self.M  = []
         self.M_stack = []
@@ -19,7 +21,8 @@ class RBF:
         self.learning_iteration = 0
         self.learning_rate = 0.25
 
-    def construct_kernels_with_cpg(self, O0_cpg_one_cycle, O1_cpg_one_cycle, target_length):
+    # Record
+    def construct_kernels_with_cpg_one_cycle(self, O0_cpg_one_cycle, O1_cpg_one_cycle, target_length):
         
         if target_length is None:
             print('please input target length')
@@ -32,16 +35,16 @@ class RBF:
         self.M = np.zeros((self.target_length))
 
         self.ci = np.linspace(0, O0_cpg_one_cycle.shape[0]-1, num = self.nc, dtype = int) # self.ci is the indices of raw data center at each sampling point
-        cx = O0_cpg_one_cycle[self.ci]
-        cy = O1_cpg_one_cycle[self.ci]
+        self.cx = O0_cpg_one_cycle[self.ci]
+        self.cy = O1_cpg_one_cycle[self.ci]
 
         b = np.zeros((self.target_length, 1))
         for i in range(self.nc):
-            b = np.exp(-(np.power((O0_cpg_one_cycle - cx[i]), 2) + np.power((O1_cpg_one_cycle - cy[i]), 2)) / self.variance_gaussian) # b is a normalized gaussian distribution
+            b = np.exp(-(np.power((O0_cpg_one_cycle - self.cx[i]), 2) + np.power((O1_cpg_one_cycle - self.cy[i]), 2)) / self.variance_gaussian) # b is a normalized gaussian distribution
             self.K[i, :] = b.transpose()
         return self.K
     
-    def calculate_RBF_weight(self, target_traj, learning_iteration = 500, learning_rate= 0.25):
+    def calculate_RBF_weight(self, target_traj, learning_iteration = 500, learning_rate = 0.25):
         self.learning_iteration = learning_iteration
         self.learning_rate = learning_rate
         learning_iteration = learning_iteration
@@ -53,3 +56,17 @@ class RBF:
 
             self.error_max = np.max(abs(self.error))  # Get the maximum absolute error
             self.error_stack.append(self.error_max)
+
+    def get_RBF_weight(self):
+        return self.W
+    def get_RBF_kernels(self):
+        return self.K
+    
+    # Replay
+    def reconstruct_kernels_with_cpg(self, O0_cpg, O1_cpg):
+        b = np.zeros((self.target_length, 1))
+        for i in range(self.nc):
+            b = np.exp(-(np.power((O0_cpg - self.cx[i]), 2) + np.power((O1_cpg - self.cy[i]), 2)) / self.variance_gaussian) # b is a normalized gaussian distribution
+            self.K[i, :] = b.transpose()
+
+        self.M = np.matmul(self.W, self.K)         

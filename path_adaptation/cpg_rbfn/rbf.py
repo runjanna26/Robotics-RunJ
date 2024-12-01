@@ -1,7 +1,7 @@
 import numpy as np
 
 class RBF:
-    def __init__(self, nc = 30, variance_gaussian = 0.01, nM = 500, alpha = 0.25): 
+    def __init__(self, nc = 40, variance_gaussian = 0.01, nM = 500, alpha = 0.25): 
         self.nc = nc
         self.variance_gaussian = variance_gaussian
         self.nM = nM
@@ -44,29 +44,43 @@ class RBF:
             self.K[i, :] = b.transpose()
         return self.K
     
-    def calculate_RBF_weight(self, target_traj, learning_iteration = 500, learning_rate = 0.25):
-        self.learning_iteration = learning_iteration
+    def imitate_path_by_learning(self, target_traj, max_learning_iteration = 500, learning_rate = 0.05):
+        # learning rate 0.25 is too high
+
+        self.learning_iteration = max_learning_iteration
         self.learning_rate = learning_rate
-        learning_iteration = learning_iteration
-        for i in range(learning_iteration):
-            self.M = np.matmul(self.W, self.K)           # calculate forward value <--- Inspect these iterations
+
+        # self.M_stack = [] # Comment to see the evolution across the learning serveral paths
+        # self.error_stack = [] # Comment to see the evolution across the learning serveral paths
+        for i in range(self.learning_iteration):
+            self.M = np.matmul(self.W, self.K)           
             self.error = (target_traj[self.ci] - self.M[self.ci])
-            self.W = self.W + learning_rate * self.error
+            self.W = self.W + learning_rate * self.error   # [where is the point of has much error --> adjust weight??]
+
+            # Investigate path learning evolution
             self.M_stack.append(self.M)
 
-            self.error_max = np.max(abs(self.error))  # Get the maximum absolute error
+            self.error_max = np.mean(abs(self.error))  # Get the maximum absolute error --> [should change to average error along path]  --> error 10% of first iteration is defined as converge.
             self.error_stack.append(self.error_max)
+        return self.M  
 
-    def get_RBF_weight(self):
+    def get_rbf_weight(self):
         return self.W
-    def get_RBF_kernels(self):
-        return self.K
+    def get_evolution_learning_path(self):
+        return self.M_stack
+    def get_error_while_learning(self):
+        return self.error_stack
+
     
     # Replay
-    def reconstruct_kernels_with_cpg(self, O0_cpg, O1_cpg):
-        b = np.zeros((self.target_length, 1))
+    def regenerate_target_traj(self, O0_cpg_t, O1_cpg_t, weight):
+        '''
+        reconstruct_kernels_with_cpg on time step
+        '''
+        self.K = np.zeros((self.nc,1))
         for i in range(self.nc):
-            b = np.exp(-(np.power((O0_cpg - self.cx[i]), 2) + np.power((O1_cpg - self.cy[i]), 2)) / self.variance_gaussian) # b is a normalized gaussian distribution
-            self.K[i, :] = b.transpose()
+            b = np.exp(-(np.power((O0_cpg_t - self.cx[i]), 2) + np.power((O1_cpg_t - self.cy[i]), 2)) / self.variance_gaussian) # b is a normalized gaussian distribution
+            self.K[i] = b
 
-        self.M = np.matmul(self.W, self.K)         
+        self.M = np.matmul(weight, self.K)     
+        return self.M[0]    

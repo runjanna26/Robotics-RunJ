@@ -87,7 +87,7 @@ private:
 	struct DQVoltage_s voltage;      	//!< current d and q voltage set to the motor
 	struct DQCurrent_s current;      	//!< current d and q current measure
 
-
+	struct DQCurrent_s current_LPF;      	//!< current d and q current measure
 
 	long open_loop_timestamp;
 

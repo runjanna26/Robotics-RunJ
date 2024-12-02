@@ -62,7 +62,7 @@ void pwm_drivers::setPhaseVoltage(float Uq, float Ud, float angle_el)
 //		Uc = -0.5f * iv_alpha - _SQRT3_2 * iv_beta + center;
 
 
-// ===========================================================================
+// ===========================================================================[Old]
 	float Uout;
 	// a bit of optitmisation
 	if (Ud)
@@ -72,7 +72,7 @@ void pwm_drivers::setPhaseVoltage(float Uq, float Ud, float angle_el)
 		Uout = _sqrtApprox(Ud*Ud + Uq*Uq) / voltage_limit;
 		// angle normalisation in between 0 and 2pi
 		// only necessary if using _sin and _cos - approximation functions
-		angle_el = _normalizeAngle(angle_el + atan2(Uq, Ud));
+		angle_el = _normalizeAngle(angle_el + _atan2(Uq, Ud));
 	}
 	else
 	{

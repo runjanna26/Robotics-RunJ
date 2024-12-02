@@ -36,6 +36,9 @@ public:
 	void calibrateOffsets();									//
 	struct PhaseCurrent_s getPhaseCurrents();					//checked
 	struct DQCurrent_s getFOCCurrents(float angle_el);			//checked
+
+	//===ADC DMA variable===
+	uint32_t adcResultDMA_a[1], adcResultDMA_c[1];  // to store the ADC value
 private:
 	//===Current Sensor===
 	double offset_ia; //!< zero current A voltage value (center of the adc reading)
@@ -49,8 +52,7 @@ private:
 	struct PhaseCurrent_s current;
 	struct DQCurrent_s dq_current;
 
-	//===ADC DMA variable===
-	uint32_t adcResultDMA_a[1], adcResultDMA_c[1];  // to store the ADC value
+
 
 	// EKF	
 	EKF ekf_current{2,1};

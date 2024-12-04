@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="driver"/>
-		<item key="wrap" value="true"/>
+		<item key="selection" value="TIM1"/>
+		<item key="wrap" value="false"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
-			<item value="driver"/>
-			<item value="cordic"/>
-			<item value="codic"/>
-			<item value="f32_to_q31"/>
-			<item value="cordic_cos1"/>
-			<item value="ldexp"/>
-			<item value="q31_to_f32"/>
-			<item value="CORDIC_ConfigTypeDef"/>
-			<item value="hcordic"/>
-			<item value="MX_CORDIC_Init"/>
-			<item value="ekf_update_step3"/>
-			<item value="ekf_initialize"/>
-			<item value="ekf_t"/>
-			<item value="_float_t"/>
-			<item value="target"/>
+			<item value="TIM1"/>
+			<item value="TIM1_CC"/>
+			<item value="CC"/>
+			<item value="TIM_BREAK_DISABLE"/>
+			<item value="HAL_ADC_Start_DMA"/>
+			<item value="HAL_TIM_OC_DelayElapsedCallback"/>
+			<item value="HAL_TIM_OC_Start_IT"/>
+			<item value="TIM_TRGO2_OC5REF"/>
+			<item value="sMasterConfig.MasterOutputTrigger2 = TIM_TRGO2_OC5REF"/>
+			<item value="ADC_EXTERNALTRIG_T1_TRGO2"/>
+			<item value="TRGO"/>
+			<item value="HAL_DMA_Init"/>
+			<item value="HAL_TIM_OC_Start"/>
+			<item value="HAL_NVIC_SetPriority"/>
+			<item value="ExternalTrigConv"/>
 		</list>
 		<list key="replacehistory">
 			<item value="float"/>
@@ -30,8 +30,8 @@
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="1455"/>
-		<item key="DIALOG_Y_ORIGIN" value="568"/>
+		<item key="DIALOG_X_ORIGIN" value="1765"/>
+		<item key="DIALOG_Y_ORIGIN" value="702"/>
 		<item key="DIALOG_WIDTH" value="414"/>
 		<item key="DIALOG_HEIGHT" value="461"/>
 		<item key="DIALOG_FONT_NAME" value="1|Segoe UI|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI"/>

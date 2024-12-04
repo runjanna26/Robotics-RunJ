@@ -171,11 +171,11 @@ void simpleFOC::loopFOC()
 	// read dq currents
 	current = CurrentSensor.getFOCCurrents(electrical_angle);
 
-	current.q = LPF_current_q(current.q);   // filter values
-	current.d = LPF_current_d(current.d);   // filter values
+	current_LPF.q = LPF_current_q(current.q);   // filter values
+	current_LPF.d = LPF_current_d(current.d);   // filter values
 
 	// calculate the phase voltages
-	voltage.q = PID_current_q(current_sp - current.q);
+	voltage.q = PID_current_q(current_sp - current_LPF.q);
 	voltage.d = PID_current_d(0 - current.d);
 
 	// set the phase voltage - FOC heart function :)
@@ -214,7 +214,7 @@ void simpleFOC::move_velocity(float new_target)
 void simpleFOC::move_angle(float new_target)
 {
 	// get angular velocity
-	shaft_velocity = Encoder.getShaftVelocity(); // read value even if motor is disabled to keep the monitoring updated // checked
+//	shaft_velocity = Encoder.getShaftVelocity(); // read value even if motor is disabled to keep the monitoring updated // checked
 
 	// downsampling (optional)
 	// if(motion_cnt++ < motion_downsample) return;
@@ -226,9 +226,10 @@ void simpleFOC::move_angle(float new_target)
 	// angle set point
 	shaft_angle_sp = target;
 	// calculate velocity set point
-	shaft_velocity_sp = PID_position(shaft_angle_sp - shaft_angle);
-	// calculate the torque command
-	current_sp = PID_velocity(shaft_velocity_sp - shaft_velocity);
+	current_sp = PID_position(shaft_angle_sp - shaft_angle);
+
+//	// calculate the torque command
+//	current_sp = PID_velocity(shaft_velocity_sp - shaft_velocity);
 
 	voltage.q = current_sp*phase_resistance;
 	voltage.d = 0;

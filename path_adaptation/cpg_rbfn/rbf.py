@@ -18,6 +18,10 @@ class RBF:
         self.error = []
         self.error_stack = []
         self.error_max = 0
+        self.error_max_stack = []
+
+        self.W_stack = []
+
         self.learning_iteration = 0
         self.learning_rate = 0.25
 
@@ -44,8 +48,8 @@ class RBF:
             self.K[i, :] = b.transpose()
         return self.K
     
-    def imitate_path_by_learning(self, target_traj, max_learning_iteration = 500, learning_rate = 0.05):
-        # learning rate 0.25 is too high
+    def imitate_path_by_learning(self, target_traj, max_learning_iteration = 15, learning_rate = 0.05):
+        ''' learning rate 0.25 is too high '''
 
         self.learning_iteration = max_learning_iteration
         self.learning_rate = learning_rate
@@ -59,17 +63,24 @@ class RBF:
 
             # Investigate path learning evolution
             self.M_stack.append(self.M)
+            self.W_stack.append(self.W)
+
 
             self.error_max = np.mean(abs(self.error))  # Get the maximum absolute error --> [should change to average error along path]  --> error 10% of first iteration is defined as converge.
-            self.error_stack.append(self.error_max)
+            self.error_max_stack.append(self.error_max)
+            self.error_stack.append(self.error)
         return self.M  
 
     def get_rbf_weight(self):
         return self.W
     def get_evolution_learning_path(self):
-        return self.M_stack
+        return np.asarray(self.M_stack)
     def get_error_while_learning(self):
-        return self.error_stack
+        return np.asarray(self.error_stack)
+    def get_error_max_while_learning(self):
+        return np.asarray(self.error_max_stack)
+    def get_weight_while_learning(self):
+        return np.asarray(self.W_stack)
 
     
     # Replay

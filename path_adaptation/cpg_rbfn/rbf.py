@@ -1,7 +1,7 @@
 import numpy as np
 
 class RBF:
-    def __init__(self, nc = 40, variance_gaussian = 0.01, nM = 500, alpha = 0.25): 
+    def __init__(self, nc = 100, variance_gaussian = 0.01, nM = 500, alpha = 0.25): 
         self.nc = nc
         self.variance_gaussian = variance_gaussian
         self.nM = nM
@@ -42,13 +42,14 @@ class RBF:
         self.cx = O0_cpg_one_cycle[self.ci]
         self.cy = O1_cpg_one_cycle[self.ci]
 
+
         b = np.zeros((self.target_length, 1))
         for i in range(self.nc):
             b = np.exp(-(np.power((O0_cpg_one_cycle - self.cx[i]), 2) + np.power((O1_cpg_one_cycle - self.cy[i]), 2)) / self.variance_gaussian) # b is a normalized gaussian distribution
             self.K[i, :] = b.transpose()
         return self.K
     
-    def imitate_path_by_learning(self, target_traj, max_learning_iteration = 15, learning_rate = 0.05):
+    def imitate_path_by_learning(self, target_traj, max_learning_iteration = 500, learning_rate = 0.05):
         ''' learning rate 0.25 is too high '''
 
         self.learning_iteration = max_learning_iteration
@@ -58,7 +59,9 @@ class RBF:
         # self.error_stack = [] # Comment to see the evolution across the learning serveral paths
         for i in range(self.learning_iteration):
             self.M = np.matmul(self.W, self.K)           
+            
             self.error = (target_traj[self.ci] - self.M[self.ci])
+            
             self.W = self.W + learning_rate * self.error   # [where is the point of has much error --> adjust weight??]
 
             # Investigate path learning evolution

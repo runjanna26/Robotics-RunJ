@@ -89,8 +89,66 @@ static void MX_TIM2_Init(void);
 __STATIC_INLINE void DWT_Init(void); 						//checked
 __STATIC_INLINE uint32_t micros(void);						//checked
 
+void FDCAN1_Config(void);
+void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs);
 
 
+
+// Buffer to store received data
+#define RX_FIFO0_NEW_MESSAGE 1
+uint8_t rxData[8];
+void FDCAN1_Config(void)
+{
+    // Start the FDCAN module
+    if (HAL_FDCAN_Start(&hfdcan1) != HAL_OK)
+    {
+        Error_Handler();
+    }
+
+    // Activate the notification for RX FIFO 0
+    if (HAL_FDCAN_ActivateNotification(&hfdcan1, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0) != HAL_OK)
+    {
+        Error_Handler();
+    }
+
+    // Configure the filter to accept all messages (optional, adjust as needed)
+    FDCAN_FilterTypeDef filterConfig;
+    filterConfig.IdType = FDCAN_STANDARD_ID;       // Standard Identifier (11 bits)
+    filterConfig.FilterIndex = 0;
+    filterConfig.FilterType = FDCAN_FILTER_MASK;
+    filterConfig.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
+    filterConfig.FilterID1 = 0x000;               // Accept all IDs
+    filterConfig.FilterID2 = 0x7FF;               // Mask for all bits
+
+    if (HAL_FDCAN_ConfigFilter(&hfdcan1, &filterConfig) != HAL_OK)
+    {
+        Error_Handler();
+    }
+}
+
+// Callback function for received messages
+void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
+{
+    if ((RxFifo0ITs & FDCAN_IT_RX_FIFO0_NEW_MESSAGE) != 0)
+    {
+        FDCAN_RxHeaderTypeDef rxHeader;
+
+        // Retrieve the message from RX FIFO 0
+        if (HAL_FDCAN_GetRxMessage(hfdcan, FDCAN_RX_FIFO0, &rxHeader, rxData) != HAL_OK)
+        {
+            Error_Handler();
+        }
+
+        // Process received data (debugging or further handling)
+        printf("Received message: ID: 0x%X, DLC: %d, Data: ",
+               rxHeader.Identifier, rxHeader.DataLength >> 16);
+        for (int i = 0; i < (rxHeader.DataLength >> 16); i++)
+        {
+            printf("%02X ", rxData[i]);
+        }
+        printf("\n");
+    }
+}
 
 /* USER CODE END PFP */
 
@@ -149,10 +207,10 @@ int main(void)
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
 
-  	  //  Delay SETUP
+  //  Delay SETUP
 	DWT_Init();
 	//  Timer Interrupt tim2,tim4
-  	HAL_TIM_Base_Start_IT(&htim2);
+  HAL_TIM_Base_Start_IT(&htim2);
 
 	HAL_GPIO_WritePin(ENABLE_GPIO_Port, ENABLE_Pin, GPIO_PIN_SET);  // Enable
 //	  HAL_GPIO_WritePin(EN_GPIO_Port, EN_Pin, GPIO_PIN_RESET);  // Disable
@@ -160,8 +218,12 @@ int main(void)
 	//SPI SETUP
 	simpleFOC.initSensors();
 	//FOC SETUP
-  	simpleFOC.initFOC(5.26846504, CW);
+  simpleFOC.initFOC(5.26846504, CW);
 //  	simpleFOC.initFOC(NOT_SET, UNKNOWN);
+
+
+  // Configure FDCAN
+    FDCAN1_Config();
 
   /* USER CODE END 2 */
 

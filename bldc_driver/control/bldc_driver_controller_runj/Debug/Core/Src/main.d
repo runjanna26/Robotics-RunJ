@@ -46,7 +46,8 @@ Core/Src/main.o: ../Core/Src/main.cpp ../Core/Inc/main.h \
  C:/Users/WINDOWS\ 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs/AS5048Ainterface.h \
  C:/Users/WINDOWS\ 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs/ekf.h \
  C:/Users/WINDOWS\ 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs/CurrentSense.h \
- C:/Users/WINDOWS\ 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs/pwm_drivers.h
+ C:/Users/WINDOWS\ 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs/pwm_drivers.h \
+ C:/Users/WINDOWS\ 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs/can_fd.h
 ../Core/Inc/main.h:
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:
 ../Core/Inc/stm32g4xx_hal_conf.h:
@@ -97,3 +98,4 @@ C:/Users/WINDOWS\ 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_con
 C:/Users/WINDOWS\ 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs/ekf.h:
 C:/Users/WINDOWS\ 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs/CurrentSense.h:
 C:/Users/WINDOWS\ 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs/pwm_drivers.h:
+C:/Users/WINDOWS\ 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs/can_fd.h:

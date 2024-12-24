@@ -14,3 +14,8 @@ LPF_position
 current_limit
 x_float
 CANFD
+position_des
+velocity_des
+kp_des
+kd_des
+tau_des

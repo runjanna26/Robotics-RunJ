@@ -58,18 +58,21 @@ public:
 	//Closed Loop
 	void move_torque(float new_target);  //closed loop			//checked
 	void move_velocity(float new_target);		//closed loop			//checked
-	void move_angle(float new_target);	 //closed loop			//checked
+	void move_angle(float new_target, float kp, float kd, float tau_ff);	 //closed loop			//checked
 	// void move_haptic(float new_target, float passivity_gain);
 	
 
 	//Open Loop
 	float velocityOpenloop(float target_velocity);		//checked 50 rpm so
-	float shaft_angle;        							//!< current motor anglesmooth
+
 	void move_velocity_openloop(float target);			//checked 50 rpm so smooth
 	float angleOpenloop(float target_angle);			//
 	
 	static uint32_t micros(void);											//checked
 
+	float shaft_angle;        			//!< current motor angle smooth
+	float shaft_velocity;     			//!< current motor velocity
+	struct DQCurrent_s current_LPF;      	//!< current d and q current measure
 	AS5048A_interface Encoder;
 	CurrentSense CurrentSensor;
 	pwm_drivers driver;
@@ -79,14 +82,14 @@ private:
 	////Control Variable
 	float target;             			//!< current target value - depends of the controller
 	float electrical_angle;   			//!< current electrical angle
-	float shaft_velocity;     			//!< current motor velocity
+
 	float current_sp;         			//!< target current ( q current )
 	float shaft_velocity_sp;  			//!< current target velocity
 	float shaft_angle_sp;     			//!< current target angle
 	struct DQVoltage_s voltage;      	//!< current d and q voltage set to the motor
 	struct DQCurrent_s current;      	//!< current d and q current measure
 
-	struct DQCurrent_s current_LPF;      	//!< current d and q current measure
+
 
 	long open_loop_timestamp;
 

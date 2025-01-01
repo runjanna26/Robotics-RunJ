@@ -33,7 +33,8 @@
 simpleFOC simpleFOC;
 
 #include "can_fd.h"
-can_fd CANFD(0x1);
+#define motor_ID  1
+can_fd CANFD(motor_ID);
 
 
 struct MIT_Params {
@@ -133,6 +134,8 @@ static unsigned int float_to_uint(float x, float x_min, float x_max, int num_bit
 static float uint_to_float(unsigned int x, float x_min, float x_max, int num_bits);
 
 void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs);
+void send_can_message(uint32_t message_id, uint8_t *data, uint8_t data_length);
+void send_motor_states(float position_fb, float velocity_fb, float current_fb);
 
 
 // Limit the value to be within min and max
@@ -204,11 +207,58 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
             kd_des = kd;
             tau_des = tau;
         }
+
+    }
+    // Send the motor states feedback when motor has received command
+    send_motor_states(simpleFOC.shaft_angle, simpleFOC.shaft_velocity, simpleFOC.current_LPF.q);
+
+}
+
+void send_can_message(uint32_t message_id, uint8_t *data, uint8_t data_length)
+{
+    FDCAN_TxHeaderTypeDef txHeader;
+    HAL_StatusTypeDef status;
+
+    // Configure the CAN message
+    txHeader.Identifier = message_id;               // Set the CAN ID
+    txHeader.IdType = FDCAN_STANDARD_ID;            // Standard 11-bit ID
+    txHeader.TxFrameType = FDCAN_DATA_FRAME;        // Data frame
+    txHeader.DataLength = FDCAN_DLC_BYTES_0 + data_length;      // Set data length (DLC)
+    txHeader.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
+    txHeader.BitRateSwitch = FDCAN_BRS_OFF;         // No bitrate switch
+    txHeader.FDFormat = FDCAN_CLASSIC_CAN;          // Classic CAN format
+    txHeader.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
+
+    // Transmit the message
+    status = HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &txHeader, data);
+    if (status == HAL_OK)
+    {
+//        printf("CAN message sent: ID=0x%X\n", message_id);
+
+    }
+    else
+    {
+//        printf("Failed to send CAN message: %d\n", status);
     }
 }
 
 
+void send_motor_states(float position_fb, float velocity_fb, float current_fb)
+{
+	unsigned int position_fb_uint = float_to_uint(position_fb, BE8108.P_min,  BE8108.P_max, 16);
+	unsigned int velocity_fb_uint = float_to_uint(velocity_fb, BE8108.V_min,  BE8108.V_max, 16);
+	unsigned int current_fb_uint  = float_to_uint(current_fb,  BE8108.T_min,  BE8108.T_max, 16);
 
+	uint8_t data[8] = {(uint8_t)(position_fb_uint >> 8 & 0xff),
+					   (uint8_t)(position_fb_uint & 0x00ff),
+					   (uint8_t)(velocity_fb_uint >> 8 & 0xff),
+					   (uint8_t)(velocity_fb_uint & 0x00ff),
+					   (uint8_t)(current_fb_uint >> 8 & 0xff),
+					   (uint8_t)(current_fb_uint & 0x00ff),
+					   0xff,
+					   0xff};
+	send_can_message(motor_ID, data, 8);
+}
 
 /* USER CODE END PFP */
 
@@ -270,7 +320,7 @@ int main(void)
   //  Delay SETUP
 	DWT_Init();
 	//  Timer Interrupt tim2,tim4
-//	HAL_TIM_Base_Start_IT(&htim2);
+	HAL_TIM_Base_Start_IT(&htim2);
 
 	HAL_GPIO_WritePin(ENABLE_GPIO_Port, ENABLE_Pin, GPIO_PIN_SET);  // Enable
 //	HAL_GPIO_WritePin(EN_GPIO_Port, EN_Pin, GPIO_PIN_RESET);  // Disable
@@ -320,9 +370,11 @@ int main(void)
 //	  simpleFOC.move_angle(setpoint_cmd);			// 26 us  a lot of noise in q,d current
 
 
-	  simpleFOC.move_angle(position_des);
+	  simpleFOC.move_angle(position_des, kp_des, kd_des, tau_des);
 	  /** Always run loopFOC (except open loop control)**/
 	  simpleFOC.loopFOC();							// 115 us
+
+
 
     /* USER CODE END WHILE */
 
@@ -929,6 +981,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
   if(htim->Instance == TIM2) // 1000 Hz timer interrupt event
   {
+	  CANFD.test = true;
 	  simpleFOC.Encoder.updateVelocity();
   }
 }

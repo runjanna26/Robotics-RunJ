@@ -211,10 +211,10 @@ void simpleFOC::move_velocity(float new_target)
 	voltage.d = 0;
 }
 
-void simpleFOC::move_angle(float new_target)
+void simpleFOC::move_angle(float new_target, float kp, float kd, float tau_ff)
 {
 	// get angular velocity
-//	shaft_velocity = Encoder.getShaftVelocity(); // read value even if motor is disabled to keep the monitoring updated // checked
+	shaft_velocity = Encoder.getShaftVelocity(); // read value even if motor is disabled to keep the monitoring updated // checked
 
 	// downsampling (optional)
 	// if(motion_cnt++ < motion_downsample) return;
@@ -223,10 +223,15 @@ void simpleFOC::move_angle(float new_target)
 	if(_isset(new_target))
 		  target = new_target;
 
+
+	PID_position.P = kp;
+	PID_position.D = kd;
+
+
 	// angle set point
 	shaft_angle_sp = target;
 	// calculate velocity set point
-	current_sp = PID_position(shaft_angle_sp - shaft_angle);
+	current_sp = PID_position(shaft_angle_sp - shaft_angle) + tau_ff;
 
 //	// calculate the torque command
 //	current_sp = PID_velocity(shaft_velocity_sp - shaft_velocity);

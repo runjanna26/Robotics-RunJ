@@ -1373,3 +1373,723 @@ Finished building: default.size.stdout
  
 Finished building: bldc_driver_controller_runj.list
  
+20:57:58 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-g++ "../Core/Src/main.cpp" -mcpu=cortex-m4 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/WINDOWS 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-g++ "../Core/Libs/AS5048Ainterface.cpp" -mcpu=cortex-m4 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/WINDOWS 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Libs/AS5048Ainterface.d" -MT"Core/Libs/AS5048Ainterface.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Libs/AS5048Ainterface.o"
+arm-none-eabi-g++ "../Core/Libs/CurrentSense.cpp" -mcpu=cortex-m4 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/WINDOWS 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Libs/CurrentSense.d" -MT"Core/Libs/CurrentSense.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Libs/CurrentSense.o"
+arm-none-eabi-g++ "../Core/Libs/can_fd.cpp" -mcpu=cortex-m4 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/WINDOWS 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Libs/can_fd.d" -MT"Core/Libs/can_fd.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Libs/can_fd.o"
+arm-none-eabi-g++ "../Core/Libs/ekf.cpp" -mcpu=cortex-m4 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/WINDOWS 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Libs/ekf.d" -MT"Core/Libs/ekf.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Libs/ekf.o"
+arm-none-eabi-g++ "../Core/Libs/foc_utils.cpp" -mcpu=cortex-m4 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/WINDOWS 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Libs/foc_utils.d" -MT"Core/Libs/foc_utils.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Libs/foc_utils.o"
+arm-none-eabi-g++ "../Core/Libs/lowpass_filter.cpp" -mcpu=cortex-m4 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/WINDOWS 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Libs/lowpass_filter.d" -MT"Core/Libs/lowpass_filter.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Libs/lowpass_filter.o"
+arm-none-eabi-g++ "../Core/Libs/motor_param.cpp" -mcpu=cortex-m4 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/WINDOWS 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Libs/motor_param.d" -MT"Core/Libs/motor_param.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Libs/motor_param.o"
+arm-none-eabi-g++ "../Core/Libs/pid.cpp" -mcpu=cortex-m4 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/WINDOWS 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Libs/pid.d" -MT"Core/Libs/pid.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Libs/pid.o"
+arm-none-eabi-g++ "../Core/Libs/pwm_drivers.cpp" -mcpu=cortex-m4 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/WINDOWS 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Libs/pwm_drivers.d" -MT"Core/Libs/pwm_drivers.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Libs/pwm_drivers.o"
+arm-none-eabi-g++ "../Core/Libs/simpleFOC.cpp" -mcpu=cortex-m4 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/WINDOWS 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Libs/simpleFOC.d" -MT"Core/Libs/simpleFOC.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Libs/simpleFOC.o"
+../Core/Src/main.cpp: In function 'void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef*, uint32_t)':
+../Core/Src/main.cpp:188:31: warning: comparison of integer expressions of different signedness: 'int' and 'uint32_t' {aka 'long unsigned int'} [-Wsign-compare]
+  188 |             for (int i = 0; i < rxHeader.DataLength; i++)
+      |                             ~~^~~~~~~~~~~~~~~~~~~~~
+arm-none-eabi-g++ -o "bldc_driver_controller_runj.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\WINDOWS 11\Documents\Robotics-RunJ\bldc_driver\control\bldc_driver_controller_runj\STM32G491KEUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="bldc_driver_controller_runj.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: bldc_driver_controller_runj.elf
+ 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+arm-none-eabi-objdump -h -S bldc_driver_controller_runj.elf  > "bldc_driver_controller_runj.list"
+   text	   data	    bss	    dec	    hex	filename
+  54196	    352	   3616	  58164	   e334	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+Finished building: bldc_driver_controller_runj.list
+ 
+20:58:11 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+   text	   data	    bss	    dec	    hex	filename
+  54196	    352	   3616	  58164	   e334	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+21:00:12 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+   text	   data	    bss	    dec	    hex	filename
+  54196	    352	   3616	  58164	   e334	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+21:00:29 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+   text	   data	    bss	    dec	    hex	filename
+  54196	    352	   3616	  58164	   e334	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+21:01:04 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+   text	   data	    bss	    dec	    hex	filename
+  54196	    352	   3616	  58164	   e334	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+21:03:13 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+   text	   data	    bss	    dec	    hex	filename
+  54196	    352	   3616	  58164	   e334	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+21:06:52 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+   text	   data	    bss	    dec	    hex	filename
+  54196	    352	   3616	  58164	   e334	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+21:07:44 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+   text	   data	    bss	    dec	    hex	filename
+  54196	    352	   3616	  58164	   e334	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+21:08:19 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+   text	   data	    bss	    dec	    hex	filename
+  54196	    352	   3616	  58164	   e334	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+21:08:37 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+   text	   data	    bss	    dec	    hex	filename
+  54196	    352	   3616	  58164	   e334	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+21:26:41 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+   text	   data	    bss	    dec	    hex	filename
+  54196	    352	   3616	  58164	   e334	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+21:27:20 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+   text	   data	    bss	    dec	    hex	filename
+  54196	    352	   3616	  58164	   e334	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+21:28:15 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+   text	   data	    bss	    dec	    hex	filename
+  54196	    352	   3616	  58164	   e334	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+21:29:19 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+   text	   data	    bss	    dec	    hex	filename
+  54196	    352	   3616	  58164	   e334	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+00:42:26 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+   text	   data	    bss	    dec	    hex	filename
+  54196	    352	   3616	  58164	   e334	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+00:45:36 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+   text	   data	    bss	    dec	    hex	filename
+  54196	    352	   3616	  58164	   e334	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+00:46:10 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+   text	   data	    bss	    dec	    hex	filename
+  54196	    352	   3616	  58164	   e334	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+00:46:48 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-g++ "../Core/Src/main.cpp" -mcpu=cortex-m4 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/WINDOWS 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.cpp: In function 'void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef*, uint32_t)':
+../Core/Src/main.cpp:188:31: warning: comparison of integer expressions of different signedness: 'int' and 'uint32_t' {aka 'long unsigned int'} [-Wsign-compare]
+  188 |             for (int i = 0; i < rxHeader.DataLength; i++)
+      |                             ~~^~~~~~~~~~~~~~~~~~~~~
+arm-none-eabi-g++ -o "bldc_driver_controller_runj.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\WINDOWS 11\Documents\Robotics-RunJ\bldc_driver\control\bldc_driver_controller_runj\STM32G491KEUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="bldc_driver_controller_runj.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: bldc_driver_controller_runj.elf
+ 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+arm-none-eabi-objdump -h -S bldc_driver_controller_runj.elf  > "bldc_driver_controller_runj.list"
+   text	   data	    bss	    dec	    hex	filename
+  53228	    352	   3616	  57196	   df6c	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+Finished building: bldc_driver_controller_runj.list
+ 
+00:48:40 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-g++ "../Core/Src/main.cpp" -mcpu=cortex-m4 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/WINDOWS 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.cpp: In function 'void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef*, uint32_t)':
+../Core/Src/main.cpp:188:31: warning: comparison of integer expressions of different signedness: 'int' and 'uint32_t' {aka 'long unsigned int'} [-Wsign-compare]
+  188 |             for (int i = 0; i < rxHeader.DataLength; i++)
+      |                             ~~^~~~~~~~~~~~~~~~~~~~~
+arm-none-eabi-g++ -o "bldc_driver_controller_runj.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\WINDOWS 11\Documents\Robotics-RunJ\bldc_driver\control\bldc_driver_controller_runj\STM32G491KEUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="bldc_driver_controller_runj.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: bldc_driver_controller_runj.elf
+ 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+arm-none-eabi-objdump -h -S bldc_driver_controller_runj.elf  > "bldc_driver_controller_runj.list"
+   text	   data	    bss	    dec	    hex	filename
+  53732	    352	   3616	  57700	   e164	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+Finished building: bldc_driver_controller_runj.list
+ 
+00:51:16 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-g++ "../Core/Src/main.cpp" -mcpu=cortex-m4 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/WINDOWS 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.cpp: In function 'void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef*, uint32_t)':
+../Core/Src/main.cpp:188:31: warning: comparison of integer expressions of different signedness: 'int' and 'uint32_t' {aka 'long unsigned int'} [-Wsign-compare]
+  188 |             for (int i = 0; i < rxHeader.DataLength; i++)
+      |                             ~~^~~~~~~~~~~~~~~~~~~~~
+arm-none-eabi-g++ -o "bldc_driver_controller_runj.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\WINDOWS 11\Documents\Robotics-RunJ\bldc_driver\control\bldc_driver_controller_runj\STM32G491KEUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="bldc_driver_controller_runj.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: bldc_driver_controller_runj.elf
+ 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+arm-none-eabi-objdump -h -S bldc_driver_controller_runj.elf  > "bldc_driver_controller_runj.list"
+   text	   data	    bss	    dec	    hex	filename
+  53732	    352	   3616	  57700	   e164	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+Finished building: bldc_driver_controller_runj.list
+ 
+00:59:36 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-g++ "../Core/Src/main.cpp" -mcpu=cortex-m4 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/WINDOWS 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.cpp: In function 'void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef*, uint32_t)':
+../Core/Src/main.cpp:188:31: warning: comparison of integer expressions of different signedness: 'int' and 'uint32_t' {aka 'long unsigned int'} [-Wsign-compare]
+  188 |             for (int i = 0; i < rxHeader.DataLength; i++)
+      |                             ~~^~~~~~~~~~~~~~~~~~~~~
+arm-none-eabi-g++ -o "bldc_driver_controller_runj.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\WINDOWS 11\Documents\Robotics-RunJ\bldc_driver\control\bldc_driver_controller_runj\STM32G491KEUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="bldc_driver_controller_runj.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: bldc_driver_controller_runj.elf
+ 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+arm-none-eabi-objdump -h -S bldc_driver_controller_runj.elf  > "bldc_driver_controller_runj.list"
+   text	   data	    bss	    dec	    hex	filename
+  54196	    352	   3616	  58164	   e334	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+Finished building: bldc_driver_controller_runj.list
+ 
+01:00:19 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-g++ "../Core/Src/main.cpp" -mcpu=cortex-m4 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/WINDOWS 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.cpp: In function 'void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef*, uint32_t)':
+../Core/Src/main.cpp:188:31: warning: comparison of integer expressions of different signedness: 'int' and 'uint32_t' {aka 'long unsigned int'} [-Wsign-compare]
+  188 |             for (int i = 0; i < rxHeader.DataLength; i++)
+      |                             ~~^~~~~~~~~~~~~~~~~~~~~
+arm-none-eabi-g++ -o "bldc_driver_controller_runj.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\WINDOWS 11\Documents\Robotics-RunJ\bldc_driver\control\bldc_driver_controller_runj\STM32G491KEUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="bldc_driver_controller_runj.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: bldc_driver_controller_runj.elf
+ 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+arm-none-eabi-objdump -h -S bldc_driver_controller_runj.elf  > "bldc_driver_controller_runj.list"
+   text	   data	    bss	    dec	    hex	filename
+  53732	    352	   3616	  57700	   e164	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+Finished building: bldc_driver_controller_runj.list
+ 
+01:01:57 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-g++ "../Core/Src/main.cpp" -mcpu=cortex-m4 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/WINDOWS 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.cpp: In function 'void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef*, uint32_t)':
+../Core/Src/main.cpp:188:31: warning: comparison of integer expressions of different signedness: 'int' and 'uint32_t' {aka 'long unsigned int'} [-Wsign-compare]
+  188 |             for (int i = 0; i < rxHeader.DataLength; i++)
+      |                             ~~^~~~~~~~~~~~~~~~~~~~~
+arm-none-eabi-g++ -o "bldc_driver_controller_runj.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\WINDOWS 11\Documents\Robotics-RunJ\bldc_driver\control\bldc_driver_controller_runj\STM32G491KEUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="bldc_driver_controller_runj.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: bldc_driver_controller_runj.elf
+ 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+arm-none-eabi-objdump -h -S bldc_driver_controller_runj.elf  > "bldc_driver_controller_runj.list"
+   text	   data	    bss	    dec	    hex	filename
+  53732	    352	   3616	  57700	   e164	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+Finished building: bldc_driver_controller_runj.list
+ 
+01:02:11 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+   text	   data	    bss	    dec	    hex	filename
+  53732	    352	   3616	  57700	   e164	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+01:02:48 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-g++ "../Core/Src/main.cpp" -mcpu=cortex-m4 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/WINDOWS 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.cpp: In function 'void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef*, uint32_t)':
+../Core/Src/main.cpp:188:31: warning: comparison of integer expressions of different signedness: 'int' and 'uint32_t' {aka 'long unsigned int'} [-Wsign-compare]
+  188 |             for (int i = 0; i < rxHeader.DataLength; i++)
+      |                             ~~^~~~~~~~~~~~~~~~~~~~~
+arm-none-eabi-g++ -o "bldc_driver_controller_runj.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\WINDOWS 11\Documents\Robotics-RunJ\bldc_driver\control\bldc_driver_controller_runj\STM32G491KEUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="bldc_driver_controller_runj.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: bldc_driver_controller_runj.elf
+ 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+arm-none-eabi-objdump -h -S bldc_driver_controller_runj.elf  > "bldc_driver_controller_runj.list"
+   text	   data	    bss	    dec	    hex	filename
+  51836	    352	   3616	  55804	   d9fc	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+Finished building: bldc_driver_controller_runj.list
+ 
+01:03:29 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-g++ "../Core/Src/main.cpp" -mcpu=cortex-m4 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/WINDOWS 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.cpp: In function 'void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef*, uint32_t)':
+../Core/Src/main.cpp:188:31: warning: comparison of integer expressions of different signedness: 'int' and 'uint32_t' {aka 'long unsigned int'} [-Wsign-compare]
+  188 |             for (int i = 0; i < rxHeader.DataLength; i++)
+      |                             ~~^~~~~~~~~~~~~~~~~~~~~
+arm-none-eabi-g++ -o "bldc_driver_controller_runj.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\WINDOWS 11\Documents\Robotics-RunJ\bldc_driver\control\bldc_driver_controller_runj\STM32G491KEUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="bldc_driver_controller_runj.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: bldc_driver_controller_runj.elf
+ 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+arm-none-eabi-objdump -h -S bldc_driver_controller_runj.elf  > "bldc_driver_controller_runj.list"
+   text	   data	    bss	    dec	    hex	filename
+  53732	    352	   3616	  57700	   e164	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+Finished building: bldc_driver_controller_runj.list
+ 
+01:06:14 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-g++ "../Core/Src/main.cpp" -mcpu=cortex-m4 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/WINDOWS 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.cpp: In function 'void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef*, uint32_t)':
+../Core/Src/main.cpp:188:31: warning: comparison of integer expressions of different signedness: 'int' and 'uint32_t' {aka 'long unsigned int'} [-Wsign-compare]
+  188 |             for (int i = 0; i < rxHeader.DataLength; i++)
+      |                             ~~^~~~~~~~~~~~~~~~~~~~~
+arm-none-eabi-g++ -o "bldc_driver_controller_runj.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\WINDOWS 11\Documents\Robotics-RunJ\bldc_driver\control\bldc_driver_controller_runj\STM32G491KEUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="bldc_driver_controller_runj.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: bldc_driver_controller_runj.elf
+ 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+arm-none-eabi-objdump -h -S bldc_driver_controller_runj.elf  > "bldc_driver_controller_runj.list"
+   text	   data	    bss	    dec	    hex	filename
+  53748	    352	   3616	  57716	   e174	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+Finished building: bldc_driver_controller_runj.list
+ 
+01:09:58 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-g++ "../Core/Src/main.cpp" -mcpu=cortex-m4 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/WINDOWS 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.cpp: In function 'void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef*, uint32_t)':
+../Core/Src/main.cpp:188:31: warning: comparison of integer expressions of different signedness: 'int' and 'uint32_t' {aka 'long unsigned int'} [-Wsign-compare]
+  188 |             for (int i = 0; i < rxHeader.DataLength; i++)
+      |                             ~~^~~~~~~~~~~~~~~~~~~~~
+arm-none-eabi-g++ -o "bldc_driver_controller_runj.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\WINDOWS 11\Documents\Robotics-RunJ\bldc_driver\control\bldc_driver_controller_runj\STM32G491KEUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="bldc_driver_controller_runj.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: bldc_driver_controller_runj.elf
+ 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+arm-none-eabi-objdump -h -S bldc_driver_controller_runj.elf  > "bldc_driver_controller_runj.list"
+   text	   data	    bss	    dec	    hex	filename
+  53748	    352	   3616	  57716	   e174	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+Finished building: bldc_driver_controller_runj.list
+ 
+01:13:17 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+   text	   data	    bss	    dec	    hex	filename
+  53748	    352	   3616	  57716	   e174	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+01:15:04 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-g++ "../Core/Src/main.cpp" -mcpu=cortex-m4 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/WINDOWS 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.cpp: In function 'void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef*, uint32_t)':
+../Core/Src/main.cpp:188:31: warning: comparison of integer expressions of different signedness: 'int' and 'uint32_t' {aka 'long unsigned int'} [-Wsign-compare]
+  188 |             for (int i = 0; i < rxHeader.DataLength; i++)
+      |                             ~~^~~~~~~~~~~~~~~~~~~~~
+arm-none-eabi-g++ -o "bldc_driver_controller_runj.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\WINDOWS 11\Documents\Robotics-RunJ\bldc_driver\control\bldc_driver_controller_runj\STM32G491KEUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="bldc_driver_controller_runj.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: bldc_driver_controller_runj.elf
+ 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+arm-none-eabi-objdump -h -S bldc_driver_controller_runj.elf  > "bldc_driver_controller_runj.list"
+   text	   data	    bss	    dec	    hex	filename
+  53748	    352	   3616	  57716	   e174	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+Finished building: bldc_driver_controller_runj.list
+ 
+01:17:22 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-g++ "../Core/Src/main.cpp" -mcpu=cortex-m4 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/WINDOWS 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.cpp: In function 'void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef*, uint32_t)':
+../Core/Src/main.cpp:188:31: warning: comparison of integer expressions of different signedness: 'int' and 'uint32_t' {aka 'long unsigned int'} [-Wsign-compare]
+  188 |             for (int i = 0; i < rxHeader.DataLength; i++)
+      |                             ~~^~~~~~~~~~~~~~~~~~~~~
+arm-none-eabi-g++ -o "bldc_driver_controller_runj.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\WINDOWS 11\Documents\Robotics-RunJ\bldc_driver\control\bldc_driver_controller_runj\STM32G491KEUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="bldc_driver_controller_runj.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: bldc_driver_controller_runj.elf
+ 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+arm-none-eabi-objdump -h -S bldc_driver_controller_runj.elf  > "bldc_driver_controller_runj.list"
+   text	   data	    bss	    dec	    hex	filename
+  53748	    352	   3616	  57716	   e174	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+Finished building: bldc_driver_controller_runj.list
+ 
+01:18:44 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+   text	   data	    bss	    dec	    hex	filename
+  53748	    352	   3616	  57716	   e174	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+01:20:55 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-g++ "../Core/Src/main.cpp" -mcpu=cortex-m4 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/WINDOWS 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.cpp: In function 'void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef*, uint32_t)':
+../Core/Src/main.cpp:188:31: warning: comparison of integer expressions of different signedness: 'int' and 'uint32_t' {aka 'long unsigned int'} [-Wsign-compare]
+  188 |             for (int i = 0; i < rxHeader.DataLength; i++)
+      |                             ~~^~~~~~~~~~~~~~~~~~~~~
+arm-none-eabi-g++ -o "bldc_driver_controller_runj.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\WINDOWS 11\Documents\Robotics-RunJ\bldc_driver\control\bldc_driver_controller_runj\STM32G491KEUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="bldc_driver_controller_runj.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: bldc_driver_controller_runj.elf
+ 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+arm-none-eabi-objdump -h -S bldc_driver_controller_runj.elf  > "bldc_driver_controller_runj.list"
+   text	   data	    bss	    dec	    hex	filename
+  53748	    352	   3616	  57716	   e174	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+Finished building: bldc_driver_controller_runj.list
+ 
+01:27:10 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+   text	   data	    bss	    dec	    hex	filename
+  53748	    352	   3616	  57716	   e174	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+01:31:02 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+   text	   data	    bss	    dec	    hex	filename
+  53748	    352	   3616	  57716	   e174	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+01:32:16 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-g++ "../Core/Src/main.cpp" -mcpu=cortex-m4 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/WINDOWS 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.cpp: In function 'void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef*, uint32_t)':
+../Core/Src/main.cpp:188:31: warning: comparison of integer expressions of different signedness: 'int' and 'uint32_t' {aka 'long unsigned int'} [-Wsign-compare]
+  188 |             for (int i = 0; i < rxHeader.DataLength; i++)
+      |                             ~~^~~~~~~~~~~~~~~~~~~~~
+arm-none-eabi-g++ -o "bldc_driver_controller_runj.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\WINDOWS 11\Documents\Robotics-RunJ\bldc_driver\control\bldc_driver_controller_runj\STM32G491KEUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="bldc_driver_controller_runj.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: bldc_driver_controller_runj.elf
+ 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+arm-none-eabi-objdump -h -S bldc_driver_controller_runj.elf  > "bldc_driver_controller_runj.list"
+   text	   data	    bss	    dec	    hex	filename
+  54212	    352	   3616	  58180	   e344	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+Finished building: bldc_driver_controller_runj.list
+ 
+01:33:13 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+   text	   data	    bss	    dec	    hex	filename
+  54212	    352	   3616	  58180	   e344	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+01:38:05 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-g++ "../Core/Src/main.cpp" -mcpu=cortex-m4 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/WINDOWS 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.cpp: In function 'void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef*, uint32_t)':
+../Core/Src/main.cpp:188:31: warning: comparison of integer expressions of different signedness: 'int' and 'uint32_t' {aka 'long unsigned int'} [-Wsign-compare]
+  188 |             for (int i = 0; i < rxHeader.DataLength; i++)
+      |                             ~~^~~~~~~~~~~~~~~~~~~~~
+arm-none-eabi-g++ -o "bldc_driver_controller_runj.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\WINDOWS 11\Documents\Robotics-RunJ\bldc_driver\control\bldc_driver_controller_runj\STM32G491KEUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="bldc_driver_controller_runj.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: bldc_driver_controller_runj.elf
+ 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+arm-none-eabi-objdump -h -S bldc_driver_controller_runj.elf  > "bldc_driver_controller_runj.list"
+   text	   data	    bss	    dec	    hex	filename
+  54212	    352	   3616	  58180	   e344	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+Finished building: bldc_driver_controller_runj.list
+ 
+01:41:38 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-g++ "../Core/Libs/simpleFOC.cpp" -mcpu=cortex-m4 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/WINDOWS 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Libs/simpleFOC.d" -MT"Core/Libs/simpleFOC.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Libs/simpleFOC.o"
+arm-none-eabi-g++ -o "bldc_driver_controller_runj.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\WINDOWS 11\Documents\Robotics-RunJ\bldc_driver\control\bldc_driver_controller_runj\STM32G491KEUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="bldc_driver_controller_runj.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: bldc_driver_controller_runj.elf
+ 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+arm-none-eabi-objdump -h -S bldc_driver_controller_runj.elf  > "bldc_driver_controller_runj.list"
+   text	   data	    bss	    dec	    hex	filename
+  54268	    352	   3616	  58236	   e37c	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+Finished building: bldc_driver_controller_runj.list
+ 
+01:43:46 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-g++ "../Core/Src/main.cpp" -mcpu=cortex-m4 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/WINDOWS 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-g++ "../Core/Libs/simpleFOC.cpp" -mcpu=cortex-m4 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/WINDOWS 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Libs/simpleFOC.d" -MT"Core/Libs/simpleFOC.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Libs/simpleFOC.o"
+../Core/Src/main.cpp: In function 'void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef*, uint32_t)':
+../Core/Src/main.cpp:188:31: warning: comparison of integer expressions of different signedness: 'int' and 'uint32_t' {aka 'long unsigned int'} [-Wsign-compare]
+  188 |             for (int i = 0; i < rxHeader.DataLength; i++)
+      |                             ~~^~~~~~~~~~~~~~~~~~~~~
+arm-none-eabi-g++ -o "bldc_driver_controller_runj.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\WINDOWS 11\Documents\Robotics-RunJ\bldc_driver\control\bldc_driver_controller_runj\STM32G491KEUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="bldc_driver_controller_runj.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: bldc_driver_controller_runj.elf
+ 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+arm-none-eabi-objdump -h -S bldc_driver_controller_runj.elf  > "bldc_driver_controller_runj.list"
+   text	   data	    bss	    dec	    hex	filename
+  54260	    352	   3616	  58228	   e374	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+Finished building: bldc_driver_controller_runj.list
+ 
+01:44:13 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+   text	   data	    bss	    dec	    hex	filename
+  54260	    352	   3616	  58228	   e374	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+01:44:43 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+   text	   data	    bss	    dec	    hex	filename
+  54260	    352	   3616	  58228	   e374	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+01:45:14 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+   text	   data	    bss	    dec	    hex	filename
+  54260	    352	   3616	  58228	   e374	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+01:46:00 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+   text	   data	    bss	    dec	    hex	filename
+  54260	    352	   3616	  58228	   e374	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+01:46:24 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+   text	   data	    bss	    dec	    hex	filename
+  54260	    352	   3616	  58228	   e374	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+01:47:16 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+   text	   data	    bss	    dec	    hex	filename
+  54260	    352	   3616	  58228	   e374	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+01:47:36 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+   text	   data	    bss	    dec	    hex	filename
+  54260	    352	   3616	  58228	   e374	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+01:48:36 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+   text	   data	    bss	    dec	    hex	filename
+  54260	    352	   3616	  58228	   e374	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+01:49:09 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+   text	   data	    bss	    dec	    hex	filename
+  54260	    352	   3616	  58228	   e374	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+01:49:33 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+   text	   data	    bss	    dec	    hex	filename
+  54260	    352	   3616	  58228	   e374	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+01:49:56 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+   text	   data	    bss	    dec	    hex	filename
+  54260	    352	   3616	  58228	   e374	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+01:55:15 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-g++ "../Core/Src/main.cpp" -mcpu=cortex-m4 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/WINDOWS 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.cpp: In function 'void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef*, uint32_t)':
+../Core/Src/main.cpp:188:31: warning: comparison of integer expressions of different signedness: 'int' and 'uint32_t' {aka 'long unsigned int'} [-Wsign-compare]
+  188 |             for (int i = 0; i < rxHeader.DataLength; i++)
+      |                             ~~^~~~~~~~~~~~~~~~~~~~~
+arm-none-eabi-g++ -o "bldc_driver_controller_runj.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\WINDOWS 11\Documents\Robotics-RunJ\bldc_driver\control\bldc_driver_controller_runj\STM32G491KEUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="bldc_driver_controller_runj.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: bldc_driver_controller_runj.elf
+ 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+arm-none-eabi-objdump -h -S bldc_driver_controller_runj.elf  > "bldc_driver_controller_runj.list"
+   text	   data	    bss	    dec	    hex	filename
+  54260	    352	   3616	  58228	   e374	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+Finished building: bldc_driver_controller_runj.list
+ 
+01:55:51 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-g++ "../Core/Src/main.cpp" -mcpu=cortex-m4 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/WINDOWS 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.cpp: In function 'void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef*, uint32_t)':
+../Core/Src/main.cpp:188:31: warning: comparison of integer expressions of different signedness: 'int' and 'uint32_t' {aka 'long unsigned int'} [-Wsign-compare]
+  188 |             for (int i = 0; i < rxHeader.DataLength; i++)
+      |                             ~~^~~~~~~~~~~~~~~~~~~~~
+arm-none-eabi-g++ -o "bldc_driver_controller_runj.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\WINDOWS 11\Documents\Robotics-RunJ\bldc_driver\control\bldc_driver_controller_runj\STM32G491KEUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="bldc_driver_controller_runj.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: bldc_driver_controller_runj.elf
+ 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+arm-none-eabi-objdump -h -S bldc_driver_controller_runj.elf  > "bldc_driver_controller_runj.list"
+   text	   data	    bss	    dec	    hex	filename
+  54260	    352	   3616	  58228	   e374	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+Finished building: bldc_driver_controller_runj.list
+ 
+01:56:20 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-g++ "../Core/Src/main.cpp" -mcpu=cortex-m4 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/WINDOWS 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.cpp: In function 'void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef*, uint32_t)':
+../Core/Src/main.cpp:188:31: warning: comparison of integer expressions of different signedness: 'int' and 'uint32_t' {aka 'long unsigned int'} [-Wsign-compare]
+  188 |             for (int i = 0; i < rxHeader.DataLength; i++)
+      |                             ~~^~~~~~~~~~~~~~~~~~~~~
+arm-none-eabi-g++ -o "bldc_driver_controller_runj.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\WINDOWS 11\Documents\Robotics-RunJ\bldc_driver\control\bldc_driver_controller_runj\STM32G491KEUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="bldc_driver_controller_runj.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: bldc_driver_controller_runj.elf
+ 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+arm-none-eabi-objdump -h -S bldc_driver_controller_runj.elf  > "bldc_driver_controller_runj.list"
+   text	   data	    bss	    dec	    hex	filename
+  54260	    352	   3616	  58228	   e374	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+Finished building: bldc_driver_controller_runj.list
+ 
+01:59:11 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-g++ "../Core/Src/main.cpp" -mcpu=cortex-m4 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/WINDOWS 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.cpp: In function 'void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef*, uint32_t)':
+../Core/Src/main.cpp:188:31: warning: comparison of integer expressions of different signedness: 'int' and 'uint32_t' {aka 'long unsigned int'} [-Wsign-compare]
+  188 |             for (int i = 0; i < rxHeader.DataLength; i++)
+      |                             ~~^~~~~~~~~~~~~~~~~~~~~
+arm-none-eabi-g++ -o "bldc_driver_controller_runj.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\WINDOWS 11\Documents\Robotics-RunJ\bldc_driver\control\bldc_driver_controller_runj\STM32G491KEUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="bldc_driver_controller_runj.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: bldc_driver_controller_runj.elf
+ 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+arm-none-eabi-objdump -h -S bldc_driver_controller_runj.elf  > "bldc_driver_controller_runj.list"
+   text	   data	    bss	    dec	    hex	filename
+  54492	    352	   3616	  58460	   e45c	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+Finished building: bldc_driver_controller_runj.list
+ 
+02:02:53 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-g++ "../Core/Src/main.cpp" -mcpu=cortex-m4 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/WINDOWS 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.cpp: In function 'void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef*, uint32_t)':
+../Core/Src/main.cpp:188:31: warning: comparison of integer expressions of different signedness: 'int' and 'uint32_t' {aka 'long unsigned int'} [-Wsign-compare]
+  188 |             for (int i = 0; i < rxHeader.DataLength; i++)
+      |                             ~~^~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.cpp:213:82: error: 'DQCurrent_s simpleFOC::current_LPF' is private within this context
+  213 |     send_motor_states(simpleFOC.shaft_angle, simpleFOC.shaft_velocity, simpleFOC.current_LPF.q);
+      |                                                                                  ^~~~~~~~~~~
+In file included from ../Core/Src/main.cpp:32:
+C:/Users/WINDOWS 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs/simpleFOC.h:92:28: note: declared private here
+   92 |         struct DQCurrent_s current_LPF;         //!< current d and q current measure
+      |                            ^~~~~~~~~~~
+make: *** [Core/Src/subdir.mk:43: Core/Src/main.o] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+02:02:58 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-g++ "../Core/Src/main.cpp" -mcpu=cortex-m4 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/WINDOWS 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.cpp: In function 'void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef*, uint32_t)':
+../Core/Src/main.cpp:188:31: warning: comparison of integer expressions of different signedness: 'int' and 'uint32_t' {aka 'long unsigned int'} [-Wsign-compare]
+  188 |             for (int i = 0; i < rxHeader.DataLength; i++)
+      |                             ~~^~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.cpp:213:82: error: 'DQCurrent_s simpleFOC::current_LPF' is private within this context
+  213 |     send_motor_states(simpleFOC.shaft_angle, simpleFOC.shaft_velocity, simpleFOC.current_LPF.q);
+      |                                                                                  ^~~~~~~~~~~
+In file included from ../Core/Src/main.cpp:32:
+C:/Users/WINDOWS 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs/simpleFOC.h:92:28: note: declared private here
+   92 |         struct DQCurrent_s current_LPF;         //!< current d and q current measure
+      |                            ^~~~~~~~~~~
+make: *** [Core/Src/subdir.mk:43: Core/Src/main.o] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+02:03:29 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-g++ "../Core/Src/main.cpp" -mcpu=cortex-m4 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/WINDOWS 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-g++ "../Core/Libs/simpleFOC.cpp" -mcpu=cortex-m4 -std=gnu++14 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G491xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/WINDOWS 11/Documents/Robotics-RunJ/bldc_driver/control/bldc_driver_controller_runj/Core/Libs" -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-use-cxa-atexit -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Libs/simpleFOC.d" -MT"Core/Libs/simpleFOC.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Libs/simpleFOC.o"
+../Core/Src/main.cpp: In function 'void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef*, uint32_t)':
+../Core/Src/main.cpp:188:31: warning: comparison of integer expressions of different signedness: 'int' and 'uint32_t' {aka 'long unsigned int'} [-Wsign-compare]
+  188 |             for (int i = 0; i < rxHeader.DataLength; i++)
+      |                             ~~^~~~~~~~~~~~~~~~~~~~~
+arm-none-eabi-g++ -o "bldc_driver_controller_runj.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\WINDOWS 11\Documents\Robotics-RunJ\bldc_driver\control\bldc_driver_controller_runj\STM32G491KEUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="bldc_driver_controller_runj.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: bldc_driver_controller_runj.elf
+ 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+arm-none-eabi-objdump -h -S bldc_driver_controller_runj.elf  > "bldc_driver_controller_runj.list"
+   text	   data	    bss	    dec	    hex	filename
+  54500	    352	   3616	  58468	   e464	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+Finished building: bldc_driver_controller_runj.list
+ 
+02:07:19 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+   text	   data	    bss	    dec	    hex	filename
+  54500	    352	   3616	  58468	   e464	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+02:07:42 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+   text	   data	    bss	    dec	    hex	filename
+  54500	    352	   3616	  58468	   e464	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+02:08:14 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+   text	   data	    bss	    dec	    hex	filename
+  54500	    352	   3616	  58468	   e464	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+02:08:31 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+   text	   data	    bss	    dec	    hex	filename
+  54500	    352	   3616	  58468	   e464	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 
+02:08:54 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+make -j16 all 
+arm-none-eabi-size  bldc_driver_controller_runj.elf 
+   text	   data	    bss	    dec	    hex	filename
+  54500	    352	   3616	  58468	   e464	bldc_driver_controller_runj.elf
+Finished building: default.size.stdout
+ 

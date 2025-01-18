@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="TIM1"/>
+		<item key="selection" value="hfdcan1"/>
 		<item key="wrap" value="false"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="hfdcan1"/>
+			<item value="setpoint_cmd"/>
+			<item value="FDCAN_HandleTypeDef"/>
+			<item value="setPhaseVoltage"/>
+			<item value="Ua"/>
+			<item value="TIM_HandleTypeDef"/>
+			<item value="rxHeader"/>
+			<item value="rxData"/>
+			<item value="simpleFOC"/>
+			<item value="MX_FDCAN1_Init"/>
 			<item value="TIM1"/>
 			<item value="TIM1_CC"/>
 			<item value="CC"/>
 			<item value="TIM_BREAK_DISABLE"/>
 			<item value="HAL_ADC_Start_DMA"/>
-			<item value="HAL_TIM_OC_DelayElapsedCallback"/>
-			<item value="HAL_TIM_OC_Start_IT"/>
-			<item value="TIM_TRGO2_OC5REF"/>
-			<item value="sMasterConfig.MasterOutputTrigger2 = TIM_TRGO2_OC5REF"/>
-			<item value="ADC_EXTERNALTRIG_T1_TRGO2"/>
-			<item value="TRGO"/>
-			<item value="HAL_DMA_Init"/>
-			<item value="HAL_TIM_OC_Start"/>
-			<item value="HAL_NVIC_SetPriority"/>
-			<item value="ExternalTrigConv"/>
 		</list>
 		<list key="replacehistory">
 			<item value="float"/>
@@ -30,8 +30,8 @@
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="1765"/>
-		<item key="DIALOG_Y_ORIGIN" value="702"/>
+		<item key="DIALOG_X_ORIGIN" value="1358"/>
+		<item key="DIALOG_Y_ORIGIN" value="390"/>
 		<item key="DIALOG_WIDTH" value="414"/>
 		<item key="DIALOG_HEIGHT" value="461"/>
 		<item key="DIALOG_FONT_NAME" value="1|Segoe UI|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI"/>

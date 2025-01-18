@@ -1,20 +1,28 @@
-../Core/Src/main.cpp:113:5:int main()	1
-../Core/Src/main.cpp:216:6:void SystemClock_Config()	3
-../Core/Src/main.cpp:263:13:void MX_ADC1_Init()	4
-../Core/Src/main.cpp:340:13:void MX_ADC2_Init()	3
-../Core/Src/main.cpp:425:13:void MX_CRC_Init()	2
-../Core/Src/main.cpp:456:13:void MX_FDCAN1_Init()	2
-../Core/Src/main.cpp:499:13:void MX_FMAC_Init()	2
-../Core/Src/main.cpp:525:13:void MX_SPI1_Init()	2
-../Core/Src/main.cpp:565:13:void MX_TIM1_Init()	10
-../Core/Src/main.cpp:665:13:void MX_TIM2_Init()	4
-../Core/Src/main.cpp:708:13:void MX_DMA_Init()	2
-../Core/Src/main.cpp:747:6:void DMA1_Channel1_IRQHandler()	1
-../Core/Src/main.cpp:757:13:void MX_GPIO_Init()	1
-../Core/Src/main.cpp:794:22:void DWT_Init()	1
-../Core/Src/main.cpp:798:26:uint32_t micros()	1
-../Core/Src/main.cpp:803:6:void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef*)	2
-../Core/Src/main.cpp:819:6:void Error_Handler()	1
-../Core/Src/main.cpp:828:1:void __static_initialization_and_destruction_0(int, int)	5
-../Core/Src/main.cpp:828:1:cpp)	1
-../Core/Src/main.cpp:828:1:cpp)	1
+../Core/Src/main.cpp:142:14:float limit_value(float, float, float)	1
+../Core/Src/main.cpp:147:21:unsigned int float_to_uint(float, float, float, int)	1
+../Core/Src/main.cpp:162:14:float uint_to_float(unsigned int, float, float, int)	1
+../Core/Src/main.cpp:173:6:void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef*, uint32_t)	5
+../Core/Src/main.cpp:217:6:void send_can_message(uint32_t, uint8_t*, uint8_t)	1
+../Core/Src/main.cpp:246:6:void send_motor_states(float, float, float)	1
+../Core/Src/main.cpp:281:5:int main()	1
+../Core/Src/main.cpp:393:6:void SystemClock_Config()	3
+../Core/Src/main.cpp:440:13:void MX_ADC1_Init()	4
+../Core/Src/main.cpp:517:13:void MX_ADC2_Init()	3
+../Core/Src/main.cpp:602:13:void MX_CRC_Init()	2
+../Core/Src/main.cpp:633:13:void MX_FDCAN1_Init()	2
+../Core/Src/main.cpp:676:13:void MX_FMAC_Init()	2
+../Core/Src/main.cpp:702:13:void MX_SPI1_Init()	2
+../Core/Src/main.cpp:742:13:void MX_TIM1_Init()	10
+../Core/Src/main.cpp:842:13:void MX_TIM2_Init()	4
+../Core/Src/main.cpp:885:13:void MX_DMA_Init()	2
+../Core/Src/main.cpp:924:6:void DMA1_Channel1_IRQHandler()	1
+../Core/Src/main.cpp:934:13:void MX_GPIO_Init()	1
+../Core/Src/main.cpp:971:22:void DWT_Init()	1
+../Core/Src/main.cpp:975:26:uint32_t micros()	1
+../Core/Src/main.cpp:980:6:void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef*)	2
+../Core/Src/main.cpp:997:6:void Error_Handler()	1
+C:\ST\STM32CubeIDE_1.15.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.0.100.202403111256\tools\arm-none-eabi\include\c++\12.3.1\bits\stl_algobase.h:230:5:constexpr const _Tp& std::min(const _Tp&, const _Tp&) [with _Tp = float]	2
+C:\ST\STM32CubeIDE_1.15.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.0.100.202403111256\tools\arm-none-eabi\include\c++\12.3.1\bits\stl_algobase.h:254:5:constexpr const _Tp& std::max(const _Tp&, const _Tp&) [with _Tp = float]	2
+../Core/Src/main.cpp:1006:1:void __static_initialization_and_destruction_0(int, int)	5
+../Core/Src/main.cpp:1006:1:cpp)	1
+../Core/Src/main.cpp:1006:1:cpp)	1

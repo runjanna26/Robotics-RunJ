@@ -11,9 +11,9 @@ C:\ST\STM32CubeIDE_1.15.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.external
 ../Core/Libs/simpleFOC.cpp:161:6:void simpleFOC::loopFOC()	24	static
 ../Core/Libs/simpleFOC.cpp:186:6:void simpleFOC::move_torque(float)	16	static
 ../Core/Libs/simpleFOC.cpp:196:6:void simpleFOC::move_velocity(float)	16	static
-../Core/Libs/simpleFOC.cpp:214:6:void simpleFOC::move_angle(float)	16	static
-../Core/Libs/simpleFOC.cpp:242:7:float simpleFOC::velocityOpenloop(float)	40	static
-../Core/Libs/simpleFOC.cpp:271:6:void simpleFOC::move_velocity_openloop(float)	16	static
-../Core/Libs/simpleFOC.cpp:281:7:float simpleFOC::angleOpenloop(float)	48	static
-../Core/Libs/simpleFOC.cpp:318:10:static uint32_t simpleFOC::micros()	4	static
-../Core/Libs/simpleFOC.cpp:323:6:void simpleFOC::readEncoderOnly()	16	static
+../Core/Libs/simpleFOC.cpp:214:6:void simpleFOC::move_angle(float, float, float, float)	32	static
+../Core/Libs/simpleFOC.cpp:247:7:float simpleFOC::velocityOpenloop(float)	40	static
+../Core/Libs/simpleFOC.cpp:276:6:void simpleFOC::move_velocity_openloop(float)	16	static
+../Core/Libs/simpleFOC.cpp:286:7:float simpleFOC::angleOpenloop(float)	48	static
+../Core/Libs/simpleFOC.cpp:323:10:static uint32_t simpleFOC::micros()	4	static
+../Core/Libs/simpleFOC.cpp:328:6:void simpleFOC::readEncoderOnly()	16	static

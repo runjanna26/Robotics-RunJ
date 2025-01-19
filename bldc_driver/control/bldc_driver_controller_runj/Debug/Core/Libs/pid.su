@@ -1,4 +1,4 @@
 ../Core/Libs/pid.cpp:11:1:PIDController::PIDController(float, float, float, float, float)	32	static
 ../Core/Libs/pid.cpp:25:7:float PIDController::operator()(float)	48	static
-../Core/Libs/pid.cpp:70:6:void PIDController::reset()	16	static
-../Core/Libs/pid.cpp:80:10:static uint32_t PIDController::micros()	4	static
+../Core/Libs/pid.cpp:74:6:void PIDController::reset()	16	static
+../Core/Libs/pid.cpp:84:10:static uint32_t PIDController::micros()	16	static

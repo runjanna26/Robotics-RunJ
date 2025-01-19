@@ -2,6 +2,6 @@
 ../Core/Libs/CurrentSense.cpp:17:1:CurrentSense::~CurrentSense()	16	static
 ../Core/Libs/CurrentSense.cpp:17:1:virtual CurrentSense::~CurrentSense()	16	static
 ../Core/Libs/CurrentSense.cpp:26:6:void CurrentSense::initCurrentsense(float, float)	24	static
-../Core/Libs/CurrentSense.cpp:40:6:void CurrentSense::calibrateOffsets()	32	static
-../Core/Libs/CurrentSense.cpp:69:23:PhaseCurrent_s CurrentSense::getPhaseCurrents()	56	static
-../Core/Libs/CurrentSense.cpp:85:20:DQCurrent_s CurrentSense::getFOCCurrents(float)	56	static
+../Core/Libs/CurrentSense.cpp:41:6:void CurrentSense::calibrateOffsets()	32	static
+../Core/Libs/CurrentSense.cpp:70:23:PhaseCurrent_s CurrentSense::getPhaseCurrents()	56	static
+../Core/Libs/CurrentSense.cpp:105:20:DQCurrent_s CurrentSense::getFOCCurrents(float)	56	static

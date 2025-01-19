@@ -249,8 +249,8 @@ void AS5048A_interface::updateVelocity()
 	_float_t angle_measurement = get_full_rotation_angle();
 	
     _float_t fx[EKF_N];
-    fx[0] = _ekf_s_encoder.x[0] + _ekf_s_encoder.x[1] * Ts;   // Angle update
-    fx[1] = _ekf_s_encoder.x[1];                    // Velocity remains the same
+    fx[0] = _ekf_s_encoder.x[0] + _ekf_s_encoder.x[1] * Ts;   		// Angle update
+    fx[1] = _ekf_s_encoder.x[1];                    				// Velocity remains the same
     ekf_encoder.ekf_predict(&_ekf_s_encoder, fx, F, Q);
 
     _float_t hx[EKF_N];

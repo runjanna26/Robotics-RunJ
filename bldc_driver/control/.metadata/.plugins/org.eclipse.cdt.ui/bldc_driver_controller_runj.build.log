@@ -1,10 +1,10 @@
-02:08:54 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
+01:02:18 **** Incremental Build of configuration Debug for project bldc_driver_controller_runj ****
 make -j16 all 
 arm-none-eabi-size  bldc_driver_controller_runj.elf 
    text	   data	    bss	    dec	    hex	filename
-  54500	    352	   3616	  58468	   e464	bldc_driver_controller_runj.elf
+  57316	    352	   3672	  61340	   ef9c	bldc_driver_controller_runj.elf
 Finished building: default.size.stdout
  
 
-02:08:54 Build Finished. 0 errors, 0 warnings. (took 239ms)
+01:02:18 Build Finished. 0 errors, 0 warnings. (took 240ms)
 

@@ -264,7 +264,7 @@ void send_motor_states(float position_fb, float velocity_fb, float current_fb)
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-unsigned long t1 = 0, ts, t2 = 0, t3, t4 = 0, t5 = 0;
+unsigned long t1 = 0, ts, te = 0, t3, t4 = 0, t5 = 0;
 float loop_freq = 0;
 float x_float;
 float setpoint_cmd = 0.0;
@@ -328,7 +328,7 @@ int main(void)
 	//SPI SETUP
 	simpleFOC.initSensors();
 	//FOC SETUP
-	simpleFOC.initFOC(5.26846504, CW);
+	simpleFOC.initFOC(4.91525555, CW);
 //	simpleFOC.initFOC(NOT_SET, UNKNOWN);
 
 
@@ -340,8 +340,15 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+    const uint32_t target_period_loopFOC = 100; // 125 µs for 8 kHz
+    const uint32_t target_period_move_torque = 1000; // 1000 µs for 1 kHz
+    uint32_t t_loopFOC_start = 0; // Timestamp for loopFOC
+    uint32_t t_move_torque_start = 0; // Timestamp for move_torque
+    ts = micros();
   while (1)
   {
+	  uint32_t t_now = micros(); // Get the current time
+
 	  /** Test CORDIC **/
 //	  cordic_cos = cordic_q31_cosf(radian); // 40 us
 //	  cordic_cos1 = _cos(radian);			// 15 us
@@ -361,19 +368,29 @@ int main(void)
 
 	  /** Test Open Loop Control **/
 //	  simpleFOC.move_velocity_openloop(setpoint_cmd); // Test move velocity open loop [/] : Should set phase resistance
-//	  simpleFOC.angleOpenloop(0.0f);		  // Test move angle open loop [/] : Should set phase resistance
+//	  simpleFOC.angleOpenloop(setpoint_cmd);		  // Test move angle open loop [/] : Should set phase resistance
+
+//	  if (t_now-ts > 5000000) setpoint_cmd = 1.0;
 
 
-	  /** Test Closed Loop Control **/
-//	  simpleFOC.move_torque(setpoint_cmd);			// 14 us
-//	  simpleFOC.move_velocity(setpoint_cmd);		// 21 us  maximum 100 rad/s --> 950 rpm
-//	  simpleFOC.move_angle(setpoint_cmd);			// 26 us  a lot of noise in q,d current
+	    // ** Run move_torque at 1 kHz **
+	    if ((t_now - t_move_torque_start) >= target_period_move_torque)
+	    {
+	        t_move_torque_start = t_now; 			// Update the move_torque timestamp
+
+	        /** Test Closed Loop Control **/
+	        // simpleFOC.move_torque(setpoint_cmd);		// 14 us (max)
+//	        simpleFOC.move_velocity(setpoint_cmd);		// 21 us  (max change 0-80)maximum 100 rad/s --> 950 rpm
+	        simpleFOC.move_angle(position_des, kp_des, kd_des, tau_des); // 26 us  a lot of noise in q,d current
+	    }
 
 
-	  simpleFOC.move_angle(position_des, kp_des, kd_des, tau_des);
-	  /** Always run loopFOC (except open loop control)**/
-	  simpleFOC.loopFOC();							// 115 us
-
+	    // ** Run loopFOC at 8 kHz **
+	    if ((t_now - t_loopFOC_start) >= target_period_loopFOC)
+	    {
+	        t_loopFOC_start = t_now; 				// Update the loopFOC timestamp
+	        simpleFOC.loopFOC(); 					// Run FOC update
+	    }
 
 
     /* USER CODE END WHILE */

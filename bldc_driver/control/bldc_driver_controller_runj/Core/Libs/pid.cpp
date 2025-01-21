@@ -22,50 +22,54 @@ PIDController::PIDController(float P, float I, float D, float ramp, float limit)
 }
 
 // PID controller "Functors" (see https://www.geeksforgeeks.org/functors-in-cpp/)
-float PIDController::operator() (float error)
+float PIDController::operator()(float error)
 {
-    // calculate the time from the last call
+    // Calculate the time difference (Ts) from the last call
     unsigned long timestamp_now = micros();
     float Ts = (timestamp_now - timestamp_prev) * 1e-6f;
-    // quick fix for strange cases (micros overflow)
-    if(Ts <= 0 || Ts > 0.5f) Ts = 1e-3f;
 
-    // u(s) = (P + I/s + Ds)e(s)
-    // Discrete implementations
-    // proportional part
-    // u_p  = P *e(k)
+    // Handle strange Ts values due to overflow or high-frequency issues
+    if (Ts <= 0.0f || Ts > 0.5f) {
+        // Reset Ts to a default reasonable value if it's negative or too large
+        Ts = 1e-3f;
+    }
+
+    // Proportional part
     float proportional = P * error;
-    // Tustin transform of the integral part
-    // u_ik = u_ik_1  + I*Ts/2*(ek + ek_1)
-    float integral = integral_prev + I*Ts*0.5f*(error + error_prev);
-    // antiwindup - limit the output
-    integral = _constrain(integral, -limit, limit);
-    // Discrete derivation
-    // u_dk = D(ek - ek_1)/Ts
-    float derivative = D*(error - error_prev)/Ts;
 
-    // sum all the components
+    // Integral part (Tustin transform)
+    float integral = integral_prev + I * Ts * 0.5f * (error + error_prev);
+    integral = _constrain(integral, -limit, limit);  // Anti-windup
+
+    // Derivative part
+    float derivative = D * (error - error_prev) / Ts;
+
+    // Combine all components
     float output = proportional + integral + derivative;
-    // antiwindup - limit the output variable
+
+    // Anti-windup - limit the output
     output = _constrain(output, -limit, limit);
 
-    // if output ramp defined
-    if(output_ramp > 0)
-	{
-        // limit the acceleration by ramping the output
-        float output_rate = (output - output_prev)/Ts;
+    // If output ramp is defined, apply ramping
+    if (output_ramp > 0)
+    {
+        // Limit the acceleration by ramping the output
+        float output_rate = (output - output_prev) / Ts;
         if (output_rate > output_ramp)
-            output = output_prev + output_ramp*Ts;
+            output = output_prev + output_ramp * Ts;
         else if (output_rate < -output_ramp)
-            output = output_prev - output_ramp*Ts;
+            output = output_prev - output_ramp * Ts;
     }
-    // saving for the next pass
+
+    // Save values for the next pass
     integral_prev = integral;
     output_prev = output;
     error_prev = error;
     timestamp_prev = timestamp_now;
+
     return output;
 }
+
 
 void PIDController::reset()
 {
@@ -79,5 +83,21 @@ void PIDController::reset()
 */
 uint32_t PIDController::micros(void) 
 {
-    return DWT->CYCCNT / (SystemCoreClock / 1000000U);
+    static uint32_t last_count = 0;
+    static uint32_t overflow_count = 0;
+
+    uint32_t current_count = DWT->CYCCNT;
+
+    if (current_count < last_count) {
+        // Overflow detected: increment overflow_count
+        overflow_count++;
+    }
+    last_count = current_count;
+
+    // Calculate total microseconds considering overflows
+    uint32_t total_microseconds = (overflow_count * (UINT32_MAX / (SystemCoreClock / 1000000U))) +
+                                  (current_count / (SystemCoreClock / 1000000U));
+
+    return total_microseconds;
 }
+

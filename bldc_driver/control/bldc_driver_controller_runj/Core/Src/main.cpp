@@ -23,6 +23,7 @@
 /* USER CODE BEGIN Includes */
 #include <stdio.h>   // printf function
 #include <stdlib.h>
+#include <algorithm>
 #include "math.h"
 #include "cordic.h"
 #include "string.h"
@@ -31,6 +32,44 @@
 #include "simpleFOC.h"
 simpleFOC simpleFOC;
 
+#include "can_fd.h"
+#define motor_ID  1
+can_fd CANFD(motor_ID);
+
+
+struct MIT_Params {
+    float P_min;               // Minimum position
+    float P_max;               // Maximum position
+    float V_min;               // Minimum velocity
+    float V_max;               // Maximum velocity
+    float T_min;               // Minimum torque
+    float T_max;               // Maximum torque
+    float Kp_min;              // Minimum proportional gain
+    float Kp_max;              // Maximum proportional gain
+    float Kd_min;              // Minimum derivative gain
+    float Kd_max;              // Maximum derivative gain
+    float Kt_TMotor;           // Torque constant (from TMotor website)
+    float Current_Factor;      // Corrective factor for q-axis current
+    float Kt_actual;           // Actual torque constant (calculated)
+    float GEAR_RATIO;          // Gear ratio
+};
+
+MIT_Params BE8108 = {
+    .P_min = -12.5f,
+    .P_max = 12.5f,
+    .V_min = -50.0f,
+    .V_max = 50.0f,
+    .T_min = -18.0f,
+    .T_max = 18.0f,
+    .Kp_min = 0.0f,
+    .Kp_max = 500.0f,
+    .Kd_min = 0.0f,
+    .Kd_max = 5.0f,
+    .Kt_TMotor = 0.091f,
+    .Current_Factor = 0.59f,
+    .Kt_actual = 0.115f,
+    .GEAR_RATIO = 9.0f
+};
 
 /* USER CODE END Includes */
 
@@ -89,72 +128,143 @@ static void MX_TIM2_Init(void);
 __STATIC_INLINE void DWT_Init(void); 						//checked
 __STATIC_INLINE uint32_t micros(void);						//checked
 
-void FDCAN1_Config(void);
+
+static float limit_value(float value, float min_value, float max_value);
+static unsigned int float_to_uint(float x, float x_min, float x_max, int num_bits);
+static float uint_to_float(unsigned int x, float x_min, float x_max, int num_bits);
+
 void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs);
+void send_can_message(uint32_t message_id, uint8_t *data, uint8_t data_length);
+void send_motor_states(float position_fb, float velocity_fb, float current_fb);
 
 
-
-// Buffer to store received data
-#define RX_FIFO0_NEW_MESSAGE 1
-uint8_t rxData[8];
-void FDCAN1_Config(void)
+// Limit the value to be within min and max
+static float limit_value(float value, float min_value, float max_value)
 {
-    // Start the FDCAN module
-    if (HAL_FDCAN_Start(&hfdcan1) != HAL_OK)
-    {
-        Error_Handler();
-    }
-
-    // Activate the notification for RX FIFO 0
-    if (HAL_FDCAN_ActivateNotification(&hfdcan1, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0) != HAL_OK)
-    {
-        Error_Handler();
-    }
-
-    // Configure the filter to accept all messages (optional, adjust as needed)
-    FDCAN_FilterTypeDef filterConfig;
-    filterConfig.IdType = FDCAN_STANDARD_ID;       // Standard Identifier (11 bits)
-    filterConfig.FilterIndex = 0;
-    filterConfig.FilterType = FDCAN_FILTER_MASK;
-    filterConfig.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
-    filterConfig.FilterID1 = 0x000;               // Accept all IDs
-    filterConfig.FilterID2 = 0x7FF;               // Mask for all bits
-
-    if (HAL_FDCAN_ConfigFilter(&hfdcan1, &filterConfig) != HAL_OK)
-    {
-        Error_Handler();
-    }
+	return std::max(min_value, std::min(value, max_value));
 }
 
+static unsigned int float_to_uint(float x, float x_min, float x_max, int num_bits)
+{
+    float span = x_max - x_min;
+    float bitratio = float((1 << num_bits) / span);
+
+    // Clamp the value to ensure it is within range
+    x = limit_value(x, x_min, x_max - (2.0f / bitratio));
+
+    // Perform the conversion
+    unsigned int result = static_cast<unsigned int>((x - x_min) * bitratio);
+
+    // Ensure the result is within the unsigned integer range
+    return limit_value(result, 0, static_cast<unsigned int>((x_max - x_min) * bitratio));
+}
+
+static float uint_to_float(unsigned int x, float x_min, float x_max, int num_bits)
+{
+    float span = x_max - x_min;
+
+    // Perform the conversion
+    return static_cast<float>(x) * span / ((1 << num_bits) - 1) + x_min;
+}
+
+
+float position_des, velocity_des, kp_des, kd_des, tau_des;
 // Callback function for received messages
 void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 {
+	FDCAN_RxHeaderTypeDef rxHeader;
     if ((RxFifo0ITs & FDCAN_IT_RX_FIFO0_NEW_MESSAGE) != 0)
     {
-        FDCAN_RxHeaderTypeDef rxHeader;
-
+    	uint8_t rxData[8];
         // Retrieve the message from RX FIFO 0
         if (HAL_FDCAN_GetRxMessage(hfdcan, FDCAN_RX_FIFO0, &rxHeader, rxData) != HAL_OK)
         {
             Error_Handler();
         }
 
-        // Process received data (debugging or further handling)
-        printf("Received message: ID: 0x%X, DLC: %d, Data: ",
-               rxHeader.Identifier, rxHeader.DataLength >> 16);
-        for (int i = 0; i < (rxHeader.DataLength >> 16); i++)
+        // Recieved command from main controller
+        if (rxHeader.Identifier == CANFD.motor_id)
         {
-            printf("%02X ", rxData[i]);
+            for (int i = 0; i < rxHeader.DataLength; i++)
+            {
+            	CANFD.Data[i] = rxData[i];
+            }
+            unsigned int position_uint = (unsigned int)  CANFD.Data[0] << 8 | CANFD.Data[1];
+            unsigned int velocity_uint = (unsigned int) ((CANFD.Data[2] << 8) | (CANFD.Data[3] >> 4) <<4 ) >> 4;
+            unsigned int kp_uint       = (unsigned int) ((CANFD.Data[3] & 0x0F) << 8) | CANFD.Data[4];
+            unsigned int kd_uint       = (unsigned int) ((CANFD.Data[5] << 8) | (CANFD.Data[6] >> 4) <<4 ) >> 4;
+            unsigned int tau_uint      = (unsigned int) ((CANFD.Data[6] & 0x0F) << 8) | CANFD.Data[7];
+
+            float position = (float) uint_to_float(position_uint, BE8108.P_min,  BE8108.P_max,  16);
+            float velocity = (float) uint_to_float(velocity_uint, BE8108.V_min,  BE8108.V_max,  12);
+            float kp       = (float) uint_to_float(kp_uint,       BE8108.Kp_min, BE8108.Kp_max, 12);
+            float kd       = (float) uint_to_float(kd_uint,       BE8108.Kd_min, BE8108.Kd_max, 12);
+            float tau      = (float) uint_to_float(tau_uint,      BE8108.T_min,  BE8108.T_max,  12);
+
+            position_des = position;
+            velocity_des = velocity;
+            kp_des = kp;
+            kd_des = kd;
+            tau_des = tau;
         }
-        printf("\n");
+
     }
+    // Send the motor states feedback when motor has received command
+    send_motor_states(simpleFOC.shaft_angle, simpleFOC.shaft_velocity, simpleFOC.current_LPF.q);
+
+}
+
+void send_can_message(uint32_t message_id, uint8_t *data, uint8_t data_length)
+{
+    FDCAN_TxHeaderTypeDef txHeader;
+    HAL_StatusTypeDef status;
+
+    // Configure the CAN message
+    txHeader.Identifier = message_id;               // Set the CAN ID
+    txHeader.IdType = FDCAN_STANDARD_ID;            // Standard 11-bit ID
+    txHeader.TxFrameType = FDCAN_DATA_FRAME;        // Data frame
+    txHeader.DataLength = FDCAN_DLC_BYTES_0 + data_length;      // Set data length (DLC)
+    txHeader.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
+    txHeader.BitRateSwitch = FDCAN_BRS_OFF;         // No bitrate switch
+    txHeader.FDFormat = FDCAN_CLASSIC_CAN;          // Classic CAN format
+    txHeader.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
+
+    // Transmit the message
+    status = HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &txHeader, data);
+    if (status == HAL_OK)
+    {
+//        printf("CAN message sent: ID=0x%X\n", message_id);
+
+    }
+    else
+    {
+//        printf("Failed to send CAN message: %d\n", status);
+    }
+}
+
+
+void send_motor_states(float position_fb, float velocity_fb, float current_fb)
+{
+	unsigned int position_fb_uint = float_to_uint(position_fb, BE8108.P_min,  BE8108.P_max, 16);
+	unsigned int velocity_fb_uint = float_to_uint(velocity_fb, BE8108.V_min,  BE8108.V_max, 16);
+	unsigned int current_fb_uint  = float_to_uint(current_fb,  BE8108.T_min,  BE8108.T_max, 16);
+
+	uint8_t data[8] = {(uint8_t)(position_fb_uint >> 8 & 0xff),
+					   (uint8_t)(position_fb_uint & 0x00ff),
+					   (uint8_t)(velocity_fb_uint >> 8 & 0xff),
+					   (uint8_t)(velocity_fb_uint & 0x00ff),
+					   (uint8_t)(current_fb_uint >> 8 & 0xff),
+					   (uint8_t)(current_fb_uint & 0x00ff),
+					   0xff,
+					   0xff};
+	send_can_message(motor_ID, data, 8);
 }
 
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-unsigned long t1 = 0, ts, t2 = 0, t3, t4 = 0, t5 = 0;
+unsigned long t1 = 0, ts, te = 0, t3, t4 = 0, t5 = 0;
 float loop_freq = 0;
 float x_float;
 float setpoint_cmd = 0.0;
@@ -210,27 +320,35 @@ int main(void)
   //  Delay SETUP
 	DWT_Init();
 	//  Timer Interrupt tim2,tim4
-  HAL_TIM_Base_Start_IT(&htim2);
+	HAL_TIM_Base_Start_IT(&htim2);
 
 	HAL_GPIO_WritePin(ENABLE_GPIO_Port, ENABLE_Pin, GPIO_PIN_SET);  // Enable
-//	  HAL_GPIO_WritePin(EN_GPIO_Port, EN_Pin, GPIO_PIN_RESET);  // Disable
+//	HAL_GPIO_WritePin(EN_GPIO_Port, EN_Pin, GPIO_PIN_RESET);  // Disable
 
 	//SPI SETUP
 	simpleFOC.initSensors();
 	//FOC SETUP
-  simpleFOC.initFOC(5.26846504, CW);
-//  	simpleFOC.initFOC(NOT_SET, UNKNOWN);
+	simpleFOC.initFOC(4.91525555, CW);
+//	simpleFOC.initFOC(NOT_SET, UNKNOWN);
+
 
 
   // Configure FDCAN
-    FDCAN1_Config();
+    CANFD.Config();
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+    const uint32_t target_period_loopFOC = 100; // 125 µs for 8 kHz
+    const uint32_t target_period_move_torque = 1000; // 1000 µs for 1 kHz
+    uint32_t t_loopFOC_start = 0; // Timestamp for loopFOC
+    uint32_t t_move_torque_start = 0; // Timestamp for move_torque
+    ts = micros();
   while (1)
   {
+	  uint32_t t_now = micros(); // Get the current time
+
 	  /** Test CORDIC **/
 //	  cordic_cos = cordic_q31_cosf(radian); // 40 us
 //	  cordic_cos1 = _cos(radian);			// 15 us
@@ -250,16 +368,30 @@ int main(void)
 
 	  /** Test Open Loop Control **/
 //	  simpleFOC.move_velocity_openloop(setpoint_cmd); // Test move velocity open loop [/] : Should set phase resistance
-//	  simpleFOC.angleOpenloop(0.0f);		  // Test move angle open loop [/] : Should set phase resistance
+//	  simpleFOC.angleOpenloop(setpoint_cmd);		  // Test move angle open loop [/] : Should set phase resistance
+
+//	  if (t_now-ts > 5000000) setpoint_cmd = 1.0;
 
 
-	  /** Test Closed Loop Control **/
-//	  simpleFOC.move_torque(setpoint_cmd);			// 14 us
-//	  simpleFOC.move_velocity(setpoint_cmd);		// 21 us  maximum 100 rad/s --> 950 rpm
-	  simpleFOC.move_angle(setpoint_cmd);			// 26 us  a lot of noise in q,d current
+	    // ** Run move_torque at 1 kHz **
+	    if ((t_now - t_move_torque_start) >= target_period_move_torque)
+	    {
+	        t_move_torque_start = t_now; 			// Update the move_torque timestamp
 
-	  /** Always run loopFOC (except open loop control)**/
-	  simpleFOC.loopFOC();							// 115 us
+	        /** Test Closed Loop Control **/
+	        // simpleFOC.move_torque(setpoint_cmd);		// 14 us (max)
+//	        simpleFOC.move_velocity(setpoint_cmd);		// 21 us  (max change 0-80)maximum 100 rad/s --> 950 rpm
+	        simpleFOC.move_angle(position_des, kp_des, kd_des, tau_des); // 26 us  a lot of noise in q,d current
+	    }
+
+
+	    // ** Run loopFOC at 8 kHz **
+	    if ((t_now - t_loopFOC_start) >= target_period_loopFOC)
+	    {
+	        t_loopFOC_start = t_now; 				// Update the loopFOC timestamp
+	        simpleFOC.loopFOC(); 					// Run FOC update
+	    }
+
 
     /* USER CODE END WHILE */
 
@@ -866,6 +998,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
   if(htim->Instance == TIM2) // 1000 Hz timer interrupt event
   {
+	  CANFD.test = true;
 	  simpleFOC.Encoder.updateVelocity();
   }
 }

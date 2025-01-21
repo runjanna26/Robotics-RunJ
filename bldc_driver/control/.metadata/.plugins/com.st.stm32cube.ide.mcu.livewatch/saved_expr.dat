@@ -4,13 +4,4 @@ t5
 t1
 setpoint_cmd
 PID_current_q
-PID_current_d
-PID_velocity
-PID_position
-LPF_current_q
-LPF_current_d
-LPF_velocity
-LPF_position
-current_limit
-x_float
-rxData
+position_des

@@ -37,6 +37,11 @@ public:
     EKF(int n, int m);
     virtual ~EKF();
 
+    // Class-level buffers
+    _float_t *FP;
+    _float_t *Ft;
+    _float_t *FPFt;
+
     void ekf_initialize(ekf_t* ekf, const _float_t* pdiag);
     void ekf_predict(ekf_t* ekf, const _float_t* fx, const _float_t* F, const _float_t* Q);
     void ekf_update_step3(ekf_t* ekf, _float_t* GH);

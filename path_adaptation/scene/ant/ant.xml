@@ -1,0 +1,205 @@
+<mujoco>
+    <compiler meshdir="asset" texturedir="asset" />
+    <statistic extent="1.5" meansize=".05" />
+
+    <option timestep="0.005" jacobian="sparse" />
+
+    <visual>
+        <rgba haze="0.15 0.25 0.35 1" />
+        <quality shadowsize="4096" />
+        <map stiffness="700" shadowscale="0.5" fogstart="10" fogend="15" zfar="40" haze="0.3" />
+    </visual>
+
+    <asset>
+        <texture type="skybox" builtin="gradient" rgb1="0.3 0.5 0.7" rgb2="0 0 0" width="512"
+            height="512" />
+        <texture name="texplane" type="2d" builtin="checker" rgb1=".2 .3 .4" rgb2=".1 0.15 0.2"
+            width="512" height="512" mark="cross" markrgb=".8 .8 .8" />
+        <material name="matplane" reflectance="0.3" texture="texplane" texrepeat="1 1"
+            texuniform="true" />
+    </asset>
+
+
+    <worldbody>
+        <geom name="Body" size="0.05 0.1" pos="-1.34983 -0.14564 0.125"
+            quat="-0.706436 0.0308445 0.706432 0.0308437" type="cylinder" />
+        <geom size="0.025" pos="-1.17538 -0.133716 0.124975"
+            quat="0.923879 -9.37379e-08 -2.26303e-07 0.382684" />
+        <geom size="0.05" pos="-1.20038 -0.158716 0.124975"
+            quat="-0.706436 0.0308445 0.706432 0.0308438" />
+        <geom size="0.025 0.025" pos="-1.25019 -0.154358 0.124976"
+            quat="0.70643 0.0308438 0.706438 -0.0308445" type="cylinder" />
+        <geom size="0.025" pos="-1.17538 -0.183716 0.124975"
+            quat="0.92388 9.3738e-08 -2.26303e-07 -0.382683" />
+        <body name="Bottom" pos="-1.47436 -0.134746 0.125001"
+            quat="-0.706434 -0.706433 0.0308405 0.0308474">
+            <inertial pos="-0.230605 -4e-06 0" quat="1 0 1.12974e-06 0" mass="0.005"
+                diaginertia="6.62214e-05 6.62214e-05 5.87786e-06" />
+            <joint name="Body_joint" pos="0 0 0" axis="0 0 1" />
+            <geom name="Bottom" size="0.05 0.175" pos="-0.2 0 0"
+                quat="-0.499999 0.499999 0.500001 -0.500001" type="cylinder" />
+            <geom size="0.05" pos="-0.374975 -2.3e-05 1e-06"
+                quat="0.305816 0.637558 0.305813 0.637554" />
+            <geom size="0.025 0.025" pos="-0.324975 -2.3e-05 1e-06"
+                quat="-0.305814 -0.637556 0.305814 0.637556" type="cylinder" />
+            <body name="Coxa" pos="-0.075 -1e-06 -0.05" quat="0.5 -0.5 0.5 0.5">
+                <inertial pos="0 0 0" mass="0.005" diaginertia="1.53846e-06 1.53846e-06 9.93595e-07" />
+                <joint name="TL_joint1" pos="0 0 0" axis="0 0 1" />
+                <geom name="Coxa" size="0.02 0.025" quat="-0.707107 2.44949e-07 0 0.707107"
+                    type="cylinder" />
+                <body name="Femur" pos="0.031 0 0" quat="0.707115 0.707098 4.62141e-07 1.41422e-06">
+                    <inertial pos="0.049996 1e-06 -5e-06" mass="0.005"
+                        diaginertia="4.23653e-06 4.23653e-06 1.39724e-07" />
+                    <joint name="CL_joint1" pos="0 0 0" axis="0 0 1" />
+                    <geom name="Femur" size="0.0075 0.05" pos="0.049996 1e-06 -5e-06"
+                        quat="-0.707116 2.57244e-07 0.707098 4.49863e-07" type="cylinder" />
+                    <body name="Tibia" pos="0.100001 -1e-06 0"
+                        quat="1 -3.26795e-07 3.26795e-07 -8.26795e-07">
+                        <inertial pos="0.10232 6e-06 -5e-06"
+                            quat="0.297344 0.508832 -0.520004 0.618281" mass="0.005"
+                            diaginertia="1.33917e-05 1.33912e-05 2.45476e-07" />
+                        <joint name="FL_joint1" pos="0 0 0" axis="0 0 1" />
+                        <geom name="Tibia" size="0.0075 0.075" pos="0.075016 6e-06 -5e-06"
+                            quat="-0.707154 -2.49388e-06 0.707059 1.78677e-06" type="cylinder" />
+                        <geom size="0.015" pos="0.154013 6e-06 -5e-06"
+                            quat="-0.49999 0.499953 0.500009 0.500049" />
+                    </body>
+                </body>
+            </body>
+            <body name="Coxa_2" pos="-0.324968 -1.7e-05 -0.05" quat="0.5 -0.5 0.5 0.5">
+                <inertial pos="0 0 0" mass="0.005" diaginertia="1.53846e-06 1.53846e-06 9.93595e-07" />
+                <joint name="TL_joint2" pos="0 0 0" axis="0 0 1" />
+                <geom size="0.02 0.025" quat="-0.707107 2.44949e-07 0 0.707107" type="cylinder" />
+                <body name="Femur_2" pos="0.031 0 0"
+                    quat="0.707115 0.707098 4.62141e-07 1.41422e-06">
+                    <inertial pos="0.049996 1e-06 -5e-06" mass="0.005"
+                        diaginertia="4.23653e-06 4.23653e-06 1.39724e-07" />
+                    <joint name="CL_joint2" pos="0 0 0" axis="0 0 1" />
+                    <geom size="0.0075 0.05" pos="0.049996 1e-06 -5e-06"
+                        quat="-0.707116 2.57244e-07 0.707098 4.49863e-07" type="cylinder" />
+                    <body name="Tibia_2" pos="0.100001 -1e-06 0"
+                        quat="1 -3.26795e-07 3.26795e-07 -8.26795e-07">
+                        <inertial pos="0.102321 6e-06 -4e-06"
+                            quat="0.297981 0.509191 -0.520072 0.617622" mass="0.005"
+                            diaginertia="1.33917e-05 1.33912e-05 2.45476e-07" />
+                        <joint name="FL_joint2" pos="0 0 0" axis="0 0 1" />
+                        <geom size="0.0075 0.075" pos="0.075016 6e-06 -4e-06"
+                            quat="-0.707154 -2.45202e-06 0.707059 1.74491e-06" type="cylinder" />
+                        <geom size="0.015" pos="0.154014 5e-06 -4e-06"
+                            quat="-0.49999 0.499953 0.500009 0.500049" />
+                    </body>
+                </body>
+            </body>
+            <body name="Coxa_3" pos="-0.075 -3e-06 0.050001" quat="0.5 0.5 0.5 -0.5">
+                <inertial pos="0 0 0" mass="0.005" diaginertia="1.53846e-06 1.53846e-06 9.93595e-07" />
+                <joint name="TR_joint1" pos="0 0 0" axis="0 0 1" />
+                <geom size="0.02 0.025" quat="-4.76028e-07 -0.707107 0.707107 2.31079e-07"
+                    type="cylinder" />
+                <body name="Femur_3" pos="-0.031 0 0"
+                    quat="-4.76017e-07 9.38191e-07 0.707115 -0.707099">
+                    <inertial pos="0.049996 1e-06 -5e-06" mass="0.005"
+                        diaginertia="4.23653e-06 4.23653e-06 1.39724e-07" />
+                    <joint name="CR_joint1" pos="0 0 0" axis="0 0 1" />
+                    <geom size="0.0075 0.05" pos="0.049996 1e-06 -5e-06"
+                        quat="-0.707116 2.57244e-07 0.707098 4.49863e-07" type="cylinder" />
+                    <body name="Tibia_3" pos="0.100001 -1e-06 0"
+                        quat="1 -3.26795e-07 3.26795e-07 -8.26795e-07">
+                        <inertial pos="0.104039 7e-06 -4e-06"
+                            quat="0.999999 1.83426e-05 -7.3606e-05 -0.00133042" mass="0.005"
+                            diaginertia="1.4308e-05 1.43075e-05 2.45476e-07" />
+                        <joint name="FR_joint1" pos="0 0 0" axis="0 0 1" />
+                        <geom size="0.0075 0.075" pos="0.075016 6e-06 -4e-06"
+                            quat="-0.707154 -2.49292e-06 0.707059 1.78582e-06" type="cylinder" />
+                        <geom size="0.015" pos="0.158985 8e-06 -4e-06"
+                            quat="0.500021 -0.500037 0.499978 0.499965" />
+                    </body>
+                </body>
+            </body>
+            <body name="Coxa_4" pos="-0.324965 -2.1e-05 0.050001"
+                quat="-0.500001 -0.499999 -0.5 0.5">
+                <inertial pos="0 0 0" mass="0.005" diaginertia="1.53846e-06 1.53846e-06 9.93595e-07" />
+                <joint name="TR_joint2" pos="0 0 0" axis="0 0 1" />
+                <geom size="0.02 0.025" quat="-4.76028e-07 -0.707107 0.707107 2.31079e-07"
+                    type="cylinder" />
+                <body name="Femur_4" pos="-0.031 0 0"
+                    quat="-4.76017e-07 9.38191e-07 0.707115 -0.707099">
+                    <inertial pos="0.049996 1e-06 -5e-06" mass="0.005"
+                        diaginertia="4.23653e-06 4.23653e-06 1.39724e-07" />
+                    <joint name="CR_joint2" pos="0 0 0" axis="0 0 1" />
+                    <geom size="0.0075 0.05" pos="0.049996 1e-06 -5e-06"
+                        quat="-0.707116 2.57244e-07 0.707098 4.49863e-07" type="cylinder" />
+                    <body name="Tibia_4" pos="0.100001 -1e-06 0"
+                        quat="1 -3.26795e-07 3.26795e-07 -8.26795e-07">
+                        <inertial pos="0.104039 7e-06 -4e-06"
+                            quat="0.708055 -1.61861e-05 -2.70841e-05 0.706157" mass="0.005"
+                            diaginertia="1.4308e-05 1.43075e-05 2.45476e-07" />
+                        <joint name="FR_joint2" pos="0 0 0" axis="0 0 1" />
+                        <geom size="0.0075 0.075" pos="0.075016 6e-06 -5e-06"
+                            quat="-0.707154 -2.50127e-06 0.707059 1.79416e-06" type="cylinder" />
+                        <geom size="0.015" pos="0.158985 8e-06 -4e-06"
+                            quat="0.500021 -0.500037 0.499978 0.499964" />
+                    </body>
+                </body>
+            </body>
+        </body>
+        <body name="Coxa_5" pos="-1.29564 -0.100191 0.124977"
+            quat="0.737278 3.00011e-06 3.87051e-06 0.67559">
+            <inertial pos="0 0 0" mass="0.005" diaginertia="1.53846e-06 1.53846e-06 9.93595e-07" />
+            <joint name="TL_joint0" pos="0 0 0" axis="0 0 1" />
+            <geom size="0.02 0.025" quat="-0.707107 2.44949e-07 0 0.707107" type="cylinder" />
+            <body name="Femur_5" pos="0.031 0 0" quat="0.707115 0.707098 4.62141e-07 1.41422e-06">
+                <inertial pos="0.049996 1e-06 -5e-06" mass="0.005"
+                    diaginertia="4.23653e-06 4.23653e-06 1.39724e-07" />
+                <joint name="CL_joint0" pos="0 0 0" axis="0 0 1" />
+                <geom size="0.0075 0.05" pos="0.049996 1e-06 -5e-06"
+                    quat="-0.707116 2.57244e-07 0.707098 4.49863e-07" type="cylinder" />
+                <body name="Tibia_5" pos="0.100001 -1e-06 0"
+                    quat="1 -3.26795e-07 3.26795e-07 -8.26795e-07">
+                    <inertial pos="0.102322 6e-06 1e-06" quat="0.297755 0.508846 -0.519967 0.618104"
+                        mass="0.005" diaginertia="1.33914e-05 1.33909e-05 2.45476e-07" />
+                    <joint name="FL_joint0" pos="0 0 0" axis="0 0 1" />
+                    <geom size="0.0075 0.075" pos="0.075018 6e-06 -5e-06"
+                        quat="-0.707153 -1.03082e-06 0.707061 3.23714e-07" type="cylinder" />
+                    <geom size="0.015" pos="0.154014 6e-06 1.2e-05"
+                        quat="-0.49999 0.499953 0.500009 0.500049" />
+                </body>
+            </body>
+        </body>
+        <body name="Coxa_6" pos="-1.30435 -0.199811 0.124973"
+            quat="-1.71495e-06 0.737278 0.67559 -4.04921e-06">
+            <inertial pos="0 0 0" mass="0.005" diaginertia="1.53846e-06 1.53846e-06 9.93595e-07" />
+            <joint name="TR_joint0" pos="0 0 0" axis="0 0 1" />
+            <geom size="0.02 0.025" quat="-4.76028e-07 -0.707107 0.707107 2.31079e-07"
+                type="cylinder" />
+            <body name="Femur_6" pos="-0.031 0 0" quat="-4.76017e-07 9.38191e-07 0.707115 -0.707099">
+                <inertial pos="0.049996 1e-06 -5e-06" mass="0.005"
+                    diaginertia="4.23653e-06 4.23653e-06 1.39724e-07" />
+                <joint name="CR_joint0" pos="0 0 0" axis="0 0 1" />
+                <geom size="0.0075 0.05" pos="0.049996 1e-06 -5e-06"
+                    quat="-0.707116 2.57244e-07 0.707098 4.49863e-07" type="cylinder" />
+                <body name="Tibia_6" pos="0.100001 -1e-06 0"
+                    quat="1 -3.26795e-07 3.26795e-07 -8.26795e-07">
+                    <inertial pos="0.104038 7e-06 -7e-06"
+                        quat="0.705757 1.69107e-05 1.01312e-05 0.708454" mass="0.005"
+                        diaginertia="1.43079e-05 1.43075e-05 2.45476e-07" />
+                    <joint name="FR_joint0" pos="0 0 0" axis="0 0 1" />
+                    <geom size="0.0075 0.075" pos="0.075015 6e-06 -4e-06"
+                        quat="-0.707154 -2.52396e-06 0.707059 1.81685e-06" type="cylinder" />
+                    <geom size="0.015" pos="0.158985 8e-06 -1.1e-05"
+                        quat="0.500021 -0.500037 0.499978 0.499965" />
+                </body>
+            </body>
+        </body>
+
+
+        <light directional="true" diffuse=".4 .4 .4" specular="0.1 0.1 0.1" pos="0 0 5.0"
+            dir="0 0 -1" castshadow="false" />
+        <light directional="true" diffuse=".6 .6 .6" specular="0.2 0.2 0.2" pos="0 0 4" dir="0 0 -1" />
+
+
+        <geom name="ground" type="plane" size="0 0 1" pos="0 0 0" quat="1 0 0 0" material="matplane"
+            condim="1" />
+        <body mocap="true" pos="-.1 .05 0" zaxis=".5 0 1">
+        </body>
+    </worldbody>
+</mujoco>

@@ -1,0 +1,823 @@
+<?xml version="1.0"?>
+<robot name="Stick_insect">
+    <link name="robot_base">
+        <inertial>
+            <origin rpy="-1.570796 3.141593 1.570796" xyz="0.000000 0.000000 0.225002" />
+            <inertia ixx="1.8013999782172e-06" ixy="0.0" ixz="0.0" iyz="0.0" izz="1.5440571241862e-06" iyy="1.8013999782172e-06" />
+            <mass value="0.016333827429407" />
+        </inertial>
+        <collision name="Stick_insect">
+            <origin xyz="0.000000 0.000000 0.225002" rpy="-1.570796 3.141593 1.570796" />
+            <geometry>
+                <cylinder radius="0.01375" length="0.4265" />
+            </geometry>
+        </collision>
+        <visual name="Stick_insect">
+            <origin xyz="0.000000 0.000000 0.225002" rpy="-1.570796 3.141593 1.570796" />
+            <geometry>
+                <cylinder radius="0.01375" length="0.4265" />
+            </geometry>
+            <material name="robot_base_material">
+                <color rgba="0.850000 0.850000 1.000000 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint name="TR0" type="revolute">
+        <axis xyz="0 0 1" />
+        <limit lower="-1.7453292608261" upper="0.69813168048859" effort="6000000000.0" velocity="8.7266464233398" />
+        <parent link="robot_base" />
+        <child link="COXA_R0" />
+        <origin xyz="-0.179750 0.014997 0.225000" rpy="-3.141592 3.141593 -0.000000" />
+    </joint>
+    <link name="COXA_R0">
+        <inertial>
+            <origin rpy="-1.570774 3.141592 -2.617994" xyz="0.004237 -0.007339 -0.000000" />
+            <inertia ixx="0.001279999986738" ixy="0.0" ixz="0.0" iyz="0.0" izz="0.00063999999336898" iyy="0.001279999986738" />
+            <mass value="0.10000000149012" />
+        </inertial>
+        <collision name="COXA_R0">
+            <origin xyz="0.004237 -0.007339 -0.000000" rpy="-1.570774 3.141592 -2.617994" />
+            <geometry>
+                <cylinder radius="0.0075000002980232" length="0.016950000077486" />
+            </geometry>
+        </collision>
+        <visual name="COXA_R0">
+            <origin xyz="0.004237 -0.007339 -0.000000" rpy="-1.570774 3.141592 -2.617994" />
+            <geometry>
+                <cylinder radius="0.0075000002980232" length="0.016950000077486" />
+            </geometry>
+            <material name="COXA_R0_material">
+                <color rgba="0.850000 0.850000 1.000000 1.0" />
+            </material>
+        </visual>
+        <visual name="CR0_BALL">
+            <origin xyz="0.008475 -0.014679 -0.000001" rpy="-3.137573 3.034904 -3.137764" />
+            <geometry>
+                <sphere radius="0.010000000707805" />
+            </geometry>
+            <material name="CR0_BALL_material">
+                <color rgba="0.850000 0.850000 1.000000 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint name="CR0" type="revolute">
+        <axis xyz="0 0 1" />
+        <limit lower="-1.3962633907795" upper="1.0471975505352" effort="-6000000000.0" velocity="8.7266464233398" />
+        <parent link="COXA_R0" />
+        <child link="FEMUR_R0" />
+        <origin xyz="0.008475 -0.014679 -0.000001" rpy="1.311125 4.712385 -0.787527" />
+    </joint>
+    <link name="FEMUR_R0">
+        <inertial>
+            <origin rpy="-1.745329 1.570796 0.000000" xyz="0.014378 -0.081542 -0.000001" />
+            <inertia ixx="0.0037452799804595" ixy="0.0" ixz="0.0" iyz="0.0" izz="0.0018726399902298" iyy="0.0037452799804595" />
+            <mass value="0.2926000058651" />
+        </inertial>
+        <collision name="FEMUR_R0">
+            <origin xyz="0.014378 -0.081542 -0.000001" rpy="-1.745329 1.570796 0.000000" />
+            <geometry>
+                <cylinder radius="0.0075000002980232" length="0.16560000181198" />
+            </geometry>
+        </collision>
+        <visual name="FEMUR_R0">
+            <origin xyz="0.014378 -0.081542 -0.000001" rpy="-1.745329 1.570796 0.000000" />
+            <geometry>
+                <cylinder radius="0.0075000002980232" length="0.16560000181198" />
+            </geometry>
+            <material name="FEMUR_R0_material">
+                <color rgba="0.850000 0.850000 1.000000 1.0" />
+            </material>
+        </visual>
+        <visual name="FR0_BALL">
+            <origin xyz="0.028756 -0.163084 -0.000000" rpy="1.390836 2.100417 1.271230" />
+            <geometry>
+                <sphere radius="0.010000000707805" />
+            </geometry>
+            <material name="FR0_BALL_material">
+                <color rgba="0.850000 0.850000 1.000000 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint name="FR0" type="revolute">
+        <axis xyz="0 0 1" />
+        <limit lower="-1.2217301130295" upper="0.69813203811646" effort="-6000000000.0" velocity="8.7266464233398" />
+        <parent link="FEMUR_R0" />
+        <child link="TIBIA_R0" />
+        <origin xyz="0.028756 -0.163084 -0.000001" rpy="-3.141593 3.141592 -2.967061" />
+    </joint>
+    <link name="TIBIA_R0">
+        <inertial>
+            <origin rpy="-0.523646 1.570796 0.000000" xyz="-0.086705 -0.050063 0.000001" />
+            <inertia ixx="0.0045299197006281" ixy="0.0" ixz="0.0" iyz="0.0" izz="0.002264959850314" iyy="0.0045299197006281" />
+            <mass value="0.35389998555183" />
+        </inertial>
+        <collision name="TIBIA_R0">
+            <origin xyz="-0.086705 -0.050063 0.000001" rpy="-0.523646 1.570796 0.000000" />
+            <geometry>
+                <cylinder radius="0.0075000002980232" length="0.20024999976158" />
+            </geometry>
+        </collision>
+        <visual name="TIBIA_R0">
+            <origin xyz="-0.086705 -0.050063 0.000001" rpy="-0.523646 1.570796 0.000000" />
+            <geometry>
+                <cylinder radius="0.0075000002980232" length="0.20024999976158" />
+            </geometry>
+            <material name="TIBIA_R0_material">
+                <color rgba="0.850000 0.850000 1.000000 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint name="R0_fs" type="fixed">
+        <axis xyz="0 0 1" />
+        <parent link="TIBIA_R0" />
+        <child link="FOOT_R0" />
+        <origin xyz="-0.173409 -0.100127 0.000001" rpy="2.617947 1.570796 0.000000" />
+    </joint>
+    <link name="FOOT_R0">
+        <inertial>
+            <origin rpy="-0.784453 3.219649 0.072881" xyz="0.000000 0.000000 0.000000" />
+            <inertia ixx="0.00036000003456138" ixy="0.0" ixz="0.0" iyz="0.0" izz="0.00036000003456138" iyy="0.00036000003456138" />
+            <mass value="1.0" />
+        </inertial>
+        <collision name="FOOT_R0">
+            <origin xyz="0.000000 0.000000 0.000000" rpy="-0.784453 3.219649 0.072881" />
+            <geometry>
+                <sphere radius="0.0075000002980232" />
+            </geometry>
+        </collision>
+        <visual name="FOOT_R0">
+            <origin xyz="0.000000 0.000000 0.000000" rpy="-0.784453 3.219649 0.072881" />
+            <geometry>
+                <sphere radius="0.0075000002980232" />
+            </geometry>
+            <material name="FOOT_R0_material">
+                <color rgba="0.000000 0.570000 0.000000 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint name="TL0" type="revolute">
+        <axis xyz="0 0 1" />
+        <limit lower="-1.7453292608261" upper="0.69813168048859" effort="6000000000.0" velocity="8.7266464233398" />
+        <parent link="robot_base" />
+        <child link="COXA_L0" />
+        <origin xyz="-0.179750 -0.015004 0.225000" rpy="0.000000 3.141938 -0.000000" />
+    </joint>
+    <link name="COXA_L0">
+        <inertial>
+            <origin rpy="-1.570796 3.141593 0.523599" xyz="0.004238 -0.007340 0.000000" />
+            <inertia ixx="0.001279999986738" ixy="0.0" ixz="0.0" iyz="0.0" izz="0.00063999999336898" iyy="0.001279999986738" />
+            <mass value="0.10000000149012" />
+        </inertial>
+        <collision name="COXA_L0">
+            <origin xyz="0.004238 -0.007340 0.000000" rpy="-1.570796 3.141593 0.523599" />
+            <geometry>
+                <cylinder radius="0.0075000002980232" length="0.016950000077486" />
+            </geometry>
+        </collision>
+        <visual name="COXA_L0">
+            <origin xyz="0.004238 -0.007340 0.000000" rpy="-1.570796 3.141593 0.523599" />
+            <geometry>
+                <cylinder radius="0.0075000002980232" length="0.016950000077486" />
+            </geometry>
+            <material name="COXA_L0_material">
+                <color rgba="0.850000 0.850000 1.000000 1.0" />
+            </material>
+        </visual>
+        <visual name="CL0_BALL">
+            <origin xyz="0.008475 -0.014680 0.000000" rpy="0.003719 3.161360 3.137786" />
+            <geometry>
+                <sphere radius="0.010000000707805" />
+            </geometry>
+            <material name="CL0_BALL_material">
+                <color rgba="0.850000 0.850000 1.000000 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint name="CL0" type="revolute">
+        <axis xyz="0 0 1" />
+        <limit lower="-1.3962633907795" upper="1.0471975505352" effort="-6000000000.0" velocity="8.7266464233398" />
+        <parent link="COXA_L0" />
+        <child link="FEMUR_L0" />
+        <origin xyz="0.008475 -0.014680 0.000000" rpy="1.518465 4.712363 2.146726" />
+    </joint>
+    <link name="FEMUR_L0">
+        <inertial>
+            <origin rpy="-1.745329 1.570796 0.000000" xyz="-0.014378 0.081542 -0.000000" />
+            <inertia ixx="0.0037452799804595" ixy="0.0" ixz="0.0" iyz="0.0" izz="0.0018726399902298" iyy="0.0037452799804595" />
+            <mass value="0.2926000058651" />
+        </inertial>
+        <collision name="FEMUR_L0">
+            <origin xyz="-0.014378 0.081542 -0.000000" rpy="-1.745329 1.570796 0.000000" />
+            <geometry>
+                <cylinder radius="0.0075000002980232" length="0.16560000181198" />
+            </geometry>
+        </collision>
+        <visual name="FEMUR_L0">
+            <origin xyz="-0.014378 0.081542 -0.000000" rpy="-1.745329 1.570796 0.000000" />
+            <geometry>
+                <cylinder radius="0.0075000002980232" length="0.16560000181198" />
+            </geometry>
+            <material name="FEMUR_L0_material">
+                <color rgba="0.850000 0.850000 1.000000 1.0" />
+            </material>
+        </visual>
+        <visual name="FL0_BALL">
+            <origin xyz="-0.028761 0.163088 -0.000004" rpy="1.700014 4.003731 -2.084202" />
+            <geometry>
+                <sphere radius="0.010000000707805" />
+            </geometry>
+            <material name="FL0_BALL_material">
+                <color rgba="0.850000 0.850000 1.000000 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint name="FL0" type="revolute">
+        <axis xyz="0 0 1" />
+        <limit lower="-1.2217305898666" upper="0.6981315612793" effort="-6000000000.0" velocity="8.7266464233398" />
+        <parent link="FEMUR_L0" />
+        <child link="TIBIA_L0" />
+        <origin xyz="-0.028756 0.163084 -0.000000" rpy="3.141592 3.141594 -2.967061" />
+    </joint>
+    <link name="TIBIA_L0">
+        <inertial>
+            <origin rpy="-0.523604 1.570796 0.000000" xyz="0.086712 0.050061 0.000001" />
+            <inertia ixx="0.0045299197006281" ixy="0.0" ixz="0.0" iyz="0.0" izz="0.002264959850314" iyy="0.0045299197006281" />
+            <mass value="0.35389998555183" />
+        </inertial>
+        <collision name="TIBIA_L0">
+            <origin xyz="0.086712 0.050061 0.000001" rpy="-0.523604 1.570796 0.000000" />
+            <geometry>
+                <cylinder radius="0.0075000002980232" length="0.20024999976158" />
+            </geometry>
+        </collision>
+        <visual name="TIBIA_L0">
+            <origin xyz="0.086712 0.050061 0.000001" rpy="-0.523604 1.570796 0.000000" />
+            <geometry>
+                <cylinder radius="0.0075000002980232" length="0.20024999976158" />
+            </geometry>
+            <material name="TIBIA_L0_material">
+                <color rgba="0.850000 0.850000 1.000000 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint name="L0_fs" type="fixed">
+        <axis xyz="0 0 1" />
+        <parent link="TIBIA_L0" />
+        <child link="FOOT_L0" />
+        <origin xyz="0.173418 0.100121 0.000001" rpy="-0.523604 1.570796 0.000000" />
+    </joint>
+    <link name="FOOT_L0">
+        <inertial>
+            <origin rpy="3.141593 3.141593 -3.141593" xyz="0.000000 0.000000 0.000000" />
+            <inertia ixx="0.0014400001382455" ixy="0.0" ixz="0.0" iyz="0.0" izz="0.0014400001382455" iyy="0.0014400001382455" />
+            <mass value="1.0" />
+        </inertial>
+        <collision name="FOOT_L0">
+            <origin xyz="0.000000 0.000000 0.000000" rpy="3.141593 3.141593 -3.141593" />
+            <geometry>
+                <sphere radius="0.0075000002980232" />
+            </geometry>
+        </collision>
+        <visual name="FOOT_L0">
+            <origin xyz="0.000000 0.000000 0.000000" rpy="3.141593 3.141593 -3.141593" />
+            <geometry>
+                <sphere radius="0.0075000002980232" />
+            </geometry>
+            <material name="FOOT_L0_material">
+                <color rgba="0.000000 0.570000 0.000000 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint name="TR1" type="revolute">
+        <axis xyz="0 0 1" />
+        <limit lower="-1.2217304706573" upper="1.2217304706573" effort="6000000000.0" velocity="8.7266464233398" />
+        <parent link="robot_base" />
+        <child link="COXA_R1" />
+        <origin xyz="-0.097250 0.014998 0.225000" rpy="-3.141592 3.141593 -0.000000" />
+    </joint>
+    <link name="COXA_R1">
+        <inertial>
+            <origin rpy="-1.570777 3.141593 -3.141592" xyz="0.000000 -0.011150 0.000000" />
+            <inertia ixx="0.001279999986738" ixy="0.0" ixz="0.0" iyz="0.0" izz="0.00063999999336898" iyy="0.001279999986738" />
+            <mass value="0.10000000149012" />
+        </inertial>
+        <collision name="COXA_R1">
+            <origin xyz="0.000000 -0.011150 0.000000" rpy="-1.570777 3.141593 -3.141592" />
+            <geometry>
+                <cylinder radius="0.0075000002980232" length="0.022299999371171" />
+            </geometry>
+        </collision>
+        <visual name="COXA_R1">
+            <origin xyz="0.000000 -0.011150 0.000000" rpy="-1.570777 3.141593 -3.141592" />
+            <geometry>
+                <cylinder radius="0.0075000002980232" length="0.022299999371171" />
+            </geometry>
+            <material name="COXA_R1_material">
+                <color rgba="0.850000 0.850000 1.000000 1.0" />
+            </material>
+        </visual>
+        <visual name="CR1_BALL">
+            <origin xyz="-0.000000 -0.022300 -0.000000" rpy="-3.138031 3.122185 -3.137789" />
+            <geometry>
+                <sphere radius="0.010000000707805" />
+            </geometry>
+            <material name="CR1_BALL_material">
+                <color rgba="0.850000 0.850000 1.000000 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint name="CR1" type="revolute">
+        <axis xyz="0 0 1" />
+        <limit lower="-1.2217304706573" upper="1.2217304706573" effort="-6000000000.0" velocity="8.7266464233398" />
+        <parent link="COXA_R1" />
+        <child link="FEMUR_R1" />
+        <origin xyz="0.000000 -0.022300 -0.000000" rpy="1.385241 4.712382 -1.385241" />
+    </joint>
+    <link name="FEMUR_R1">
+        <inertial>
+            <origin rpy="-1.570798 1.570796 0.000000" xyz="0.000000 -0.053926 0.000000" />
+            <inertia ixx="0.0024396798471209" ixy="0.0" ixz="0.0" iyz="0.0" izz="0.0012198399235605" iyy="0.0024396798471209" />
+            <mass value="0.19059999287128" />
+        </inertial>
+        <collision name="FEMUR_R1">
+            <origin xyz="0.000000 -0.053926 0.000000" rpy="-1.570798 1.570796 0.000000" />
+            <geometry>
+                <cylinder radius="0.0075000002980232" length="0.10785000026226" />
+            </geometry>
+        </collision>
+        <visual name="FEMUR_R1">
+            <origin xyz="0.000000 -0.053926 0.000000" rpy="-1.570798 1.570796 0.000000" />
+            <geometry>
+                <cylinder radius="0.0075000002980232" length="0.10785000026226" />
+            </geometry>
+            <material name="FEMUR_R1_material">
+                <color rgba="0.850000 0.850000 1.000000 1.0" />
+            </material>
+        </visual>
+        <visual name="FR1_BALL">
+            <origin xyz="-0.000000 -0.107850 0.000000" rpy="-0.189982 1.590574 -0.455410" />
+            <geometry>
+                <sphere radius="0.010000000707805" />
+            </geometry>
+            <material name="FR1_BALL_material">
+                <color rgba="0.850000 0.850000 1.000000 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint name="FR1" type="revolute">
+        <axis xyz="0 0 1" />
+        <limit lower="-1.396263718605" upper="1.0471972227097" effort="-6000000000.0" velocity="8.7266464233398" />
+        <parent link="FEMUR_R1" />
+        <child link="TIBIA_R1" />
+        <origin xyz="0.000000 -0.107851 0.000000" rpy="-3.141593 3.141593 -3.141592" />
+    </joint>
+    <link name="TIBIA_R1">
+        <inertial>
+            <origin rpy="-0.523552 1.570796 0.000000" xyz="-0.066232 -0.038234 -0.000000" />
+            <inertia ixx="0.0034598399241938" ixy="0.0" ixz="0.0" iyz="0.0" izz="0.0017299199620969" iyy="0.0034598399241938" />
+            <mass value="0.27030000090599" />
+        </inertial>
+        <collision name="TIBIA_R1">
+            <origin xyz="-0.066232 -0.038234 -0.000000" rpy="-0.523552 1.570796 0.000000" />
+            <geometry>
+                <cylinder radius="0.0075000002980232" length="0.15295000374317" />
+            </geometry>
+        </collision>
+        <visual name="TIBIA_R1">
+            <origin xyz="-0.066232 -0.038234 -0.000000" rpy="-0.523552 1.570796 0.000000" />
+            <geometry>
+                <cylinder radius="0.0075000002980232" length="0.15295000374317" />
+            </geometry>
+            <material name="TIBIA_R1_material">
+                <color rgba="0.850000 0.850000 1.000000 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint name="R1_fs" type="fixed">
+        <axis xyz="0 0 1" />
+        <parent link="TIBIA_R1" />
+        <child link="FOOT_R1" />
+        <origin xyz="-0.132463 -0.076469 -0.000000" rpy="2.618040 1.570796 0.000000" />
+    </joint>
+    <link name="FOOT_R1">
+        <inertial>
+            <origin rpy="-3.141593 3.141593 3.141593" xyz="-0.000001 0.000000 -0.000000" />
+            <inertia ixx="0.00036000003456138" ixy="0.0" ixz="0.0" iyz="0.0" izz="0.00036000003456138" iyy="0.00036000003456138" />
+            <mass value="1.0" />
+        </inertial>
+        <collision name="FOOT_R1">
+            <origin xyz="-0.000001 0.000000 -0.000000" rpy="-3.141593 3.141593 3.141593" />
+            <geometry>
+                <sphere radius="0.0075000002980232" />
+            </geometry>
+        </collision>
+        <visual name="FOOT_R1">
+            <origin xyz="-0.000001 0.000000 -0.000000" rpy="-3.141593 3.141593 3.141593" />
+            <geometry>
+                <sphere radius="0.0075000002980232" />
+            </geometry>
+            <material name="FOOT_R1_material">
+                <color rgba="0.000000 0.570000 0.000000 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint name="TL1" type="revolute">
+        <axis xyz="0 0 1" />
+        <limit lower="-1.2217304706573" upper="1.2217304706573" effort="6000000000.0" velocity="8.7266464233398" />
+        <parent link="robot_base" />
+        <child link="COXA_L1" />
+        <origin xyz="-0.097249 -0.015002 0.225000" rpy="-0.000001 3.141592 3.141593" />
+    </joint>
+    <link name="COXA_L1">
+        <inertial>
+            <origin rpy="-1.570796 3.141593 -3.141593" xyz="-0.000000 0.011150 -0.000000" />
+            <inertia ixx="0.001279999986738" ixy="0.0" ixz="0.0" iyz="0.0" izz="0.00063999999336898" iyy="0.001279999986738" />
+            <mass value="0.10000000149012" />
+        </inertial>
+        <collision name="COXA_L1">
+            <origin xyz="-0.000000 0.011150 -0.000000" rpy="-1.570796 3.141593 -3.141593" />
+            <geometry>
+                <cylinder radius="0.0075000002980232" length="0.022299999371171" />
+            </geometry>
+        </collision>
+        <visual name="COXA_L1">
+            <origin xyz="-0.000000 0.011150 -0.000000" rpy="-1.570796 3.141593 -3.141593" />
+            <geometry>
+                <cylinder radius="0.0075000002980232" length="0.022299999371171" />
+            </geometry>
+            <material name="COXA_L1_material">
+                <color rgba="0.850000 0.850000 1.000000 1.0" />
+            </material>
+        </visual>
+        <visual name="CL1_BALL">
+            <origin xyz="0.000000 0.022300 0.000000" rpy="0.003691 3.161000 -0.003806" />
+            <geometry>
+                <sphere radius="0.010000000707805" />
+            </geometry>
+            <material name="CL1_BALL_material">
+                <color rgba="0.850000 0.850000 1.000000 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint name="CL1" type="revolute">
+        <axis xyz="0 0 1" />
+        <limit lower="-1.2217304706573" upper="1.2217304706573" effort="-6000000000.0" velocity="8.7266464233398" />
+        <parent link="COXA_L1" />
+        <child link="FEMUR_L1" />
+        <origin xyz="-0.000000 0.022300 -0.000000" rpy="1.521490 4.712363 -1.521491" />
+    </joint>
+    <link name="FEMUR_L1">
+        <inertial>
+            <origin rpy="-1.570798 1.570796 0.000000" xyz="0.000000 0.053925 0.000000" />
+            <inertia ixx="0.0024396798471209" ixy="0.0" ixz="0.0" iyz="0.0" izz="0.0012198399235605" iyy="0.0024396798471209" />
+            <mass value="0.19059999287128" />
+        </inertial>
+        <collision name="FEMUR_L1">
+            <origin xyz="0.000000 0.053925 0.000000" rpy="-1.570798 1.570796 0.000000" />
+            <geometry>
+                <cylinder radius="0.0075000002980232" length="0.10785000026226" />
+            </geometry>
+        </collision>
+        <visual name="FEMUR_L1">
+            <origin xyz="0.000000 0.053925 0.000000" rpy="-1.570798 1.570796 0.000000" />
+            <geometry>
+                <cylinder radius="0.0075000002980232" length="0.10785000026226" />
+            </geometry>
+            <material name="FEMUR_L1_material">
+                <color rgba="0.850000 0.850000 1.000000 1.0" />
+            </material>
+        </visual>
+        <visual name="FL1_BALL">
+            <origin xyz="-0.000000 0.107849 0.000000" rpy="2.951658 4.692611 3.073358" />
+            <geometry>
+                <sphere radius="0.010000000707805" />
+            </geometry>
+            <material name="FL1_BALL_material">
+                <color rgba="0.850000 0.850000 1.000000 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint name="FL1" type="revolute">
+        <axis xyz="0 0 1" />
+        <limit lower="-1.3962638378143" upper="1.0471971035004" effort="-6000000000.0" velocity="1.7453292608261" />
+        <parent link="FEMUR_L1" />
+        <child link="TIBIA_L1" />
+        <origin xyz="0.000000 0.107850 0.000000" rpy="-3.141593 3.141593 -3.141592" />
+    </joint>
+    <link name="TIBIA_L1">
+        <inertial>
+            <origin rpy="-1.797575 1.570798 -1.274016" xyz="0.066231 0.038233 -0.000000" />
+            <inertia ixx="0.0034598399241938" ixy="0.0" ixz="0.0" iyz="0.0" izz="0.0017299199620969" iyy="0.0034598399241938" />
+            <mass value="0.27030000090599" />
+        </inertial>
+        <collision name="TIBIA_L1">
+            <origin xyz="0.066231 0.038233 -0.000000" rpy="-1.797575 1.570798 -1.274016" />
+            <geometry>
+                <cylinder radius="0.0075000002980232" length="0.15295000374317" />
+            </geometry>
+        </collision>
+        <visual name="TIBIA_L1">
+            <origin xyz="0.066231 0.038233 -0.000000" rpy="-1.797575 1.570798 -1.274016" />
+            <geometry>
+                <cylinder radius="0.0075000002980232" length="0.15295000374317" />
+            </geometry>
+            <material name="TIBIA_L1_material">
+                <color rgba="0.850000 0.850000 1.000000 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint name="L1_fs" type="fixed">
+        <axis xyz="0 0 1" />
+        <parent link="TIBIA_L1" />
+        <child link="FOOT_L1" />
+        <origin xyz="0.132462 0.076468 0.000000" rpy="-1.797575 1.570798 -1.274016" />
+    </joint>
+    <link name="FOOT_L1">
+        <inertial>
+            <origin rpy="-3.141593 3.141593 3.141593" xyz="-0.000000 0.000000 0.000500" />
+            <inertia ixx="0.00036000003456138" ixy="0.0" ixz="0.0" iyz="0.0" izz="0.00036000003456138" iyy="0.00036000003456138" />
+            <mass value="1.0" />
+        </inertial>
+        <collision name="FOOT_L1">
+            <origin xyz="-0.000000 0.000000 0.000500" rpy="-3.141593 3.141593 3.141593" />
+            <geometry>
+                <sphere radius="0.0075000002980232" />
+            </geometry>
+        </collision>
+        <visual name="FOOT_L1">
+            <origin xyz="-0.000000 0.000000 0.000500" rpy="-3.141593 3.141593 3.141593" />
+            <geometry>
+                <sphere radius="0.0075000002980232" />
+            </geometry>
+            <material name="FOOT_L1_material">
+                <color rgba="0.000000 0.570000 0.000000 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint name="TR2" type="revolute">
+        <axis xyz="0 0 1" />
+        <limit lower="-0.52359879016876" upper="1.9198621511459" effort="6000000000.0" velocity="8.7266464233398" />
+        <parent link="robot_base" />
+        <child link="COXA_R2" />
+        <origin xyz="-0.032748 0.014996 0.224999" rpy="-3.141592 3.141593 -0.003818" />
+    </joint>
+    <link name="COXA_R2">
+        <inertial>
+            <origin rpy="-1.570777 3.141593 2.443461" xyz="-0.004934 -0.005879 0.000000" />
+            <inertia ixx="0.001279999986738" ixy="0.0" ixz="0.0" iyz="0.0" izz="0.00063999999336898" iyy="0.001279999986738" />
+            <mass value="0.10000000149012" />
+        </inertial>
+        <collision name="COXA_R2">
+            <origin xyz="-0.004934 -0.005879 0.000000" rpy="-1.570777 3.141593 2.443461" />
+            <geometry>
+                <cylinder radius="0.0075000002980232" length="0.015350000932813" />
+            </geometry>
+        </collision>
+        <visual name="COXA_R2">
+            <origin xyz="-0.004934 -0.005879 0.000000" rpy="-1.570777 3.141593 2.443461" />
+            <geometry>
+                <cylinder radius="0.0075000002980232" length="0.015350000932813" />
+            </geometry>
+            <material name="COXA_R2_material">
+                <color rgba="0.850000 0.850000 1.000000 1.0" />
+            </material>
+        </visual>
+        <visual name="CR2_BALL">
+            <origin xyz="-0.009867 -0.011759 -0.000000" rpy="-3.137933 3.122186 -3.137788" />
+            <geometry>
+                <sphere radius="0.010000000707805" />
+            </geometry>
+            <material name="CR2_BALL_material">
+                <color rgba="0.850000 0.850000 1.000000 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint name="CR2" type="revolute">
+        <axis xyz="0 0 1" />
+        <limit lower="-1.3962633907795" upper="1.0471975505352" effort="-6000000000.0" velocity="8.7266464233398" />
+        <parent link="COXA_R2" />
+        <child link="FEMUR_R2" />
+        <origin xyz="-0.009867 -0.011759 -0.000000" rpy="1.364193 4.712382 -2.062325" />
+    </joint>
+    <link name="FEMUR_R2">
+        <inertial>
+            <origin rpy="-1.745331 1.570796 0.000000" xyz="0.011487 -0.065145 0.000000" />
+            <inertia ixx="0.0029926398474953" ixy="0.0" ixz="0.0" iyz="0.0" izz="0.0014963199237476" iyy="0.0029926398474953" />
+            <mass value="0.23379999399185" />
+        </inertial>
+        <collision name="FEMUR_R2">
+            <origin xyz="0.011487 -0.065145 0.000000" rpy="-1.745331 1.570796 0.000000" />
+            <geometry>
+                <cylinder radius="0.0075000002980232" length="0.1322999894619" />
+            </geometry>
+        </collision>
+        <visual name="FEMUR_R2">
+            <origin xyz="0.011487 -0.065145 0.000000" rpy="-1.745331 1.570796 0.000000" />
+            <geometry>
+                <cylinder radius="0.0075000002980232" length="0.1322999894619" />
+            </geometry>
+            <material name="FEMUR_R2_material">
+                <color rgba="0.850000 0.850000 1.000000 1.0" />
+            </material>
+        </visual>
+        <visual name="FR2_BALL">
+            <origin xyz="0.022974 -0.130290 -0.000000" rpy="-1.544189 2.272956 -1.889815" />
+            <geometry>
+                <sphere radius="0.010000000707805" />
+            </geometry>
+            <material name="FR2_BALL_material">
+                <color rgba="0.850000 0.850000 1.000000 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint name="FR2" type="revolute">
+        <axis xyz="0 0 1" />
+        <limit lower="-1.3962639570236" upper="1.0471969842911" effort="-6000000000.0" velocity="8.7266464233398" />
+        <parent link="FEMUR_R2" />
+        <child link="TIBIA_R2" />
+        <origin xyz="0.022974 -0.130290 -0.000000" rpy="-3.141592 3.141593 -2.967059" />
+    </joint>
+    <link name="TIBIA_R2">
+        <inertial>
+            <origin rpy="-0.523522 1.570796 0.000000" xyz="-0.090893 -0.052468 -0.000000" />
+            <inertia ixx="0.0047475199453752" ixy="0.0" ixz="0.0" iyz="0.0" izz="0.0023737599726876" iyy="0.0047475199453752" />
+            <mass value="0.37090000510216" />
+        </inertial>
+        <collision name="TIBIA_R2">
+            <origin xyz="-0.090893 -0.052468 -0.000000" rpy="-0.523522 1.570796 0.000000" />
+            <geometry>
+                <cylinder radius="0.0075000002980232" length="0.20989999175072" />
+            </geometry>
+        </collision>
+        <visual name="TIBIA_R2">
+            <origin xyz="-0.090893 -0.052468 -0.000000" rpy="-0.523522 1.570796 0.000000" />
+            <geometry>
+                <cylinder radius="0.0075000002980232" length="0.20989999175072" />
+            </geometry>
+            <material name="TIBIA_R2_material">
+                <color rgba="0.850000 0.850000 1.000000 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint name="R2_fs" type="fixed">
+        <axis xyz="0 0 1" />
+        <parent link="TIBIA_R2" />
+        <child link="FOOT_R2" />
+        <origin xyz="-0.181786 -0.104936 -0.000000" rpy="2.618071 1.570796 0.000000" />
+    </joint>
+    <link name="FOOT_R2">
+        <inertial>
+            <origin rpy="3.141593 3.141593 3.141593" xyz="0.000000 -0.000001 -0.000000" />
+            <inertia ixx="0.00036000003456138" ixy="0.0" ixz="0.0" iyz="0.0" izz="0.00036000003456138" iyy="0.00036000003456138" />
+            <mass value="1.0" />
+        </inertial>
+        <collision name="FOOT_R2">
+            <origin xyz="0.000000 -0.000001 -0.000000" rpy="3.141593 3.141593 3.141593" />
+            <geometry>
+                <sphere radius="0.0075000002980232" />
+            </geometry>
+        </collision>
+        <visual name="FOOT_R2">
+            <origin xyz="0.000000 -0.000001 -0.000000" rpy="3.141593 3.141593 3.141593" />
+            <geometry>
+                <sphere radius="0.0075000002980232" />
+            </geometry>
+            <material name="FOOT_R2_material">
+                <color rgba="0.000000 0.570000 0.000000 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint name="TL2" type="revolute">
+        <axis xyz="0 0 1" />
+        <limit lower="-0.52359879016876" upper="1.9198621511459" effort="6000000000.0" velocity="8.7266464233398" />
+        <parent link="robot_base" />
+        <child link="COXA_L2" />
+        <origin xyz="-0.032749 -0.015004 0.225000" rpy="-0.000001 3.141592 3.137775" />
+    </joint>
+    <link name="COXA_L2">
+        <inertial>
+            <origin rpy="-1.570765 3.141593 2.443461" xyz="0.004934 0.005879 -0.000000" />
+            <inertia ixx="0.001279999986738" ixy="0.0" ixz="0.0" iyz="0.0" izz="0.00063999999336898" iyy="0.001279999986738" />
+            <mass value="0.10000000149012" />
+        </inertial>
+        <collision name="COXA_L2">
+            <origin xyz="0.004934 0.005879 -0.000000" rpy="-1.570765 3.141593 2.443461" />
+            <geometry>
+                <cylinder radius="0.0075000002980232" length="0.015350000932813" />
+            </geometry>
+        </collision>
+        <visual name="COXA_L2">
+            <origin xyz="0.004934 0.005879 -0.000000" rpy="-1.570765 3.141593 2.443461" />
+            <geometry>
+                <cylinder radius="0.0075000002980232" length="0.015350000932813" />
+            </geometry>
+            <material name="COXA_L2_material">
+                <color rgba="0.850000 0.850000 1.000000 1.0" />
+            </material>
+        </visual>
+        <visual name="CL2_BALL">
+            <origin xyz="0.009867 0.011759 0.000001" rpy="-1.550972 2.447391 0.897923" />
+            <geometry>
+                <sphere radius="0.010000000707805" />
+            </geometry>
+            <material name="CL2_BALL_material">
+                <color rgba="0.850000 0.850000 1.000000 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint name="CL2" type="revolute">
+        <axis xyz="0 0 1" />
+        <limit lower="-1.3962633907795" upper="1.0471975505352" effort="-6000000000.0" velocity="8.7266464233398" />
+        <parent link="COXA_L2" />
+        <child link="FEMUR_L2" />
+        <origin xyz="0.009867 0.011759 0.000000" rpy="-1.426203 4.712383 0.728071" />
+    </joint>
+    <link name="FEMUR_L2">
+        <inertial>
+            <origin rpy="-1.745330 1.570796 0.000000" xyz="-0.011487 0.065145 0.000000" />
+            <inertia ixx="0.0029926398474953" ixy="0.0" ixz="0.0" iyz="0.0" izz="0.0014963199237476" iyy="0.0029926398474953" />
+            <mass value="0.23379999399185" />
+        </inertial>
+        <collision name="FEMUR_L2">
+            <origin xyz="-0.011487 0.065145 0.000000" rpy="-1.745330 1.570796 0.000000" />
+            <geometry>
+                <cylinder radius="0.0075000002980232" length="0.1322999894619" />
+            </geometry>
+        </collision>
+        <visual name="FEMUR_L2">
+            <origin xyz="-0.011487 0.065145 0.000000" rpy="-1.745330 1.570796 0.000000" />
+            <geometry>
+                <cylinder radius="0.0075000002980232" length="0.1322999894619" />
+            </geometry>
+            <material name="FEMUR_L2_material">
+                <color rgba="0.850000 0.850000 1.000000 1.0" />
+            </material>
+        </visual>
+        <visual name="FL2_BALL">
+            <origin xyz="-0.022974 0.130290 0.000000" rpy="-1.590440 4.017836 1.252061" />
+            <geometry>
+                <sphere radius="0.010000000707805" />
+            </geometry>
+            <material name="FL2_BALL_material">
+                <color rgba="0.850000 0.850000 1.000000 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint name="FL2" type="revolute">
+        <axis xyz="0 0 1" />
+        <limit lower="-1.3962638378143" upper="1.0471971035004" effort="-6000000000.0" velocity="8.7266464233398" />
+        <parent link="FEMUR_L2" />
+        <child link="TIBIA_L2" />
+        <origin xyz="-0.022974 0.130290 0.000000" rpy="3.141592 3.141593 -2.967060" />
+    </joint>
+    <link name="TIBIA_L2">
+        <inertial>
+            <origin rpy="-1.843784 1.570798 -1.320227" xyz="0.090893 0.052469 0.000000" />
+            <inertia ixx="0.0047475199453752" ixy="0.0" ixz="0.0" iyz="0.0" izz="0.0023737599726876" iyy="0.0047475199453752" />
+            <mass value="0.37090000510216" />
+        </inertial>
+        <collision name="TIBIA_L2">
+            <origin xyz="0.090893 0.052469 0.000000" rpy="-1.843784 1.570798 -1.320227" />
+            <geometry>
+                <cylinder radius="0.0075000002980232" length="0.20989999175072" />
+            </geometry>
+        </collision>
+        <visual name="TIBIA_L2">
+            <origin xyz="0.090893 0.052469 0.000000" rpy="-1.843784 1.570798 -1.320227" />
+            <geometry>
+                <cylinder radius="0.0075000002980232" length="0.20989999175072" />
+            </geometry>
+            <material name="TIBIA_L2_material">
+                <color rgba="0.850000 0.850000 1.000000 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint name="L2_fs" type="fixed">
+        <axis xyz="0 0 1" />
+        <parent link="TIBIA_L2" />
+        <child link="FOOT_L2" />
+        <origin xyz="0.181784 0.104940 0.000000" rpy="-1.843784 1.570798 -1.320227" />
+    </joint>
+    <link name="FOOT_L2">
+        <inertial>
+            <origin rpy="-3.141593 3.141593 3.141593" xyz="0.000000 0.000000 -0.000000" />
+            <inertia ixx="0.00036000000545755" ixy="0.0" ixz="0.0" iyz="0.0" izz="0.00036000000545755" iyy="0.00036000000545755" />
+            <mass value="1.0" />
+        </inertial>
+        <collision name="FOOT_L2">
+            <origin xyz="0.000000 0.000000 -0.000000" rpy="-3.141593 3.141593 3.141593" />
+            <geometry>
+                <sphere radius="0.0075000002980232" />
+            </geometry>
+        </collision>
+        <visual name="FOOT_L2">
+            <origin xyz="0.000000 0.000000 -0.000000" rpy="-3.141593 3.141593 3.141593" />
+            <geometry>
+                <sphere radius="0.0075000002980232" />
+            </geometry>
+            <material name="FOOT_L2_material">
+                <color rgba="0.000000 0.570000 0.000000 1.0" />
+            </material>
+        </visual>
+    </link>
+</robot>

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<robot name="Wall">
+    <link name="robot_base">
+        <visual name="Wall">
+            <origin xyz="-0.254070 -0.064155 1.064366" rpy="3.141591 3.141600 1.570839" />
+            <geometry>
+                <box size="8.000000 0.400000 4.000000" />
+            </geometry>
+            <material name="robot_base_material">
+                <color rgba="0.720000 0.720000 0.720000 1.0" />
+            </material>
+        </visual>
+    </link>
+</robot>

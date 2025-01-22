@@ -1,0 +1,405 @@
+<?xml version="1.0"?>
+<robot name="Body">
+    <link name="robot_base">
+        <inertial>
+            <origin xyz="0.471000 0.044000 0.110000" rpy="0.000003 3.141590 1.570802" />
+            <inertia ixy="0.0" ixz="0.0" iyz="0.0" ixx="0.00042937508220319" izz="0.00084375011944212" iyy="0.00042937508220319" />
+            <mass value="0.2250000089407" />
+        </inertial>
+        <collision name="Body">
+            <origin xyz="0.471000 0.044000 0.110000" rpy="0.000003 3.141590 1.570802" />
+            <geometry>
+                <box size="0.150000 0.150000 0.020000" />
+            </geometry>
+        </collision>
+        <visual name="Body">
+            <origin xyz="0.471000 0.044000 0.110000" rpy="0.000003 3.141590 1.570802" />
+            <geometry>
+                <box size="0.150000 0.150000 0.020000" />
+            </geometry>
+            <material name="robot_base_material">
+                <color rgba="0.310000 0.310000 0.310000 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint type="continuous" name="direction_joint">
+        <axis xyz="0 0 1" />
+        <parent link="robot_base" />
+        <child link="wheel_cover" />
+        <origin xyz="0.421000 0.094000 0.098500" rpy="3.141589 3.141594 -1.570817" />
+    </joint>
+    <link name="wheel_cover">
+        <inertial>
+            <origin xyz="0.000038 -0.000017 -0.017631" rpy="-3.141591 3.141649 1.570797" />
+            <inertia ixy="-8.0121787156622e-09" ixz="-5.317599417882e-09" iyz="-1.6794693903706e-11" ixx="1.1977553358807e-05" izz="1.4427704011722e-05" iyy="8.2964219457032e-06" />
+            <mass value="0.019436288625002" />
+        </inertial>
+        <collision name="wheel_cover">
+            <origin xyz="0.000101 0.020624 -0.040796" rpy="-3.141318 3.141652 1.570807" />
+            <geometry>
+                <box size="0.005626 0.020000 0.065318" />
+            </geometry>
+        </collision>
+        <collision name="wheel_cover">
+            <origin xyz="0.000101 -0.020719 -0.040794" rpy="-3.141318 3.141652 1.570807" />
+            <geometry>
+                <box size="0.005626 0.020000 0.065318" />
+            </geometry>
+        </collision>
+        <collision name="wheel_cover">
+            <origin xyz="0.000000 0.000001 -0.003548" rpy="-2.387357 4.712309 -0.754235" />
+            <geometry>
+                <box size="0.010001 0.046877 0.051564" />
+            </geometry>
+        </collision>
+        <visual name="wheel_cover_visual">
+            <origin xyz="0.000047 -0.000048 -0.038000" rpy="-3.141591 3.141640 1.570797" />
+            <geometry>
+                <mesh filename="./swerve_wheel_wheel_cover_visual_vis_1.dae" />
+            </geometry>
+            <material name="wheel_cover_visual_material">
+                <color rgba="1.000000 0.300000 0.300000 1.0" />
+            </material>
+        </visual>
+        <visual name="wheel_cover_visual">
+            <origin xyz="0.000047 -0.000048 -0.038000" rpy="-3.141591 3.141640 1.570797" />
+            <geometry>
+                <mesh filename="./swerve_wheel_wheel_cover_visual_vis_2.dae" />
+            </geometry>
+            <material name="wheel_cover_visual_material">
+                <color rgba="0.900000 0.900000 0.900000 1.0" />
+            </material>
+        </visual>
+        <visual name="wheel_cover_visual">
+            <origin xyz="0.000047 -0.000048 -0.038000" rpy="-3.141591 3.141640 1.570797" />
+            <geometry>
+                <mesh filename="./swerve_wheel_wheel_cover_visual_vis_3.dae" />
+            </geometry>
+            <material name="wheel_cover_visual_material">
+                <color rgba="1.000000 0.300000 0.300000 1.0" />
+            </material>
+        </visual>
+        <visual name="shaft_visual">
+            <origin xyz="0.000049 -0.000048 -0.058000" rpy="-1.570851 3.141651 -3.141592" />
+            <geometry>
+                <mesh filename="./swerve_wheel_shaft_visual_vis_1.dae" />
+            </geometry>
+            <material name="shaft_visual_material">
+                <color rgba="0.394118 0.394118 0.394118 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint type="continuous" name="driven_joint">
+        <axis xyz="0 0 1" />
+        <parent link="wheel_cover" />
+        <child link="magnet_wheel" />
+        <origin xyz="0.000049 -0.000048 -0.058000" rpy="-1.570742 3.141534 0.000001" />
+    </joint>
+    <link name="magnet_wheel">
+        <inertial>
+            <origin xyz="-0.000000 0.000000 0.000000" rpy="0.000000 3.141593 0.000001" />
+            <inertia ixy="1.9433376286295e-22" ixz="1.8070109297079e-17" iyz="6.0547485942873e-16" ixx="2.175467758953e-05" izz="3.4905877084869e-05" iyy="2.175467758953e-05" />
+            <mass value="0.057356551289558" />
+        </inertial>
+        <collision name="magnet_wheel">
+            <origin xyz="-0.000000 0.000000 0.000000" rpy="0.000000 3.141593 0.000001" />
+            <geometry>
+                <cylinder length="0.029999999329448" radius="0.035000000149012" />
+            </geometry>
+        </collision>
+        <visual name="magnet_wheel">
+            <origin xyz="-0.000000 0.000000 0.000000" rpy="0.000000 3.141593 0.000001" />
+            <geometry>
+                <cylinder length="0.029999999329448" radius="0.035000000149012" />
+            </geometry>
+            <material name="magnet_wheel_material">
+                <color rgba="0.340000 0.340000 0.340000 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint type="continuous" name="direction_joint_2">
+        <axis xyz="0 0 1" />
+        <parent link="robot_base" />
+        <child link="wheel_cover_2" />
+        <origin xyz="0.421002 -0.005998 0.098500" rpy="3.141589 3.141594 -1.570817" />
+    </joint>
+    <link name="wheel_cover_2">
+        <inertial>
+            <origin xyz="0.000038 -0.000017 -0.017631" rpy="-3.141591 3.141649 1.570797" />
+            <inertia ixy="-8.0121787156622e-09" ixz="-5.317599417882e-09" iyz="-1.6794693903706e-11" ixx="1.1977553358807e-05" izz="1.4427704011722e-05" iyy="8.2964219457032e-06" />
+            <mass value="0.019436288625002" />
+        </inertial>
+        <collision name="wheel_cover">
+            <origin xyz="0.000101 0.020624 -0.040796" rpy="-3.141318 3.141652 1.570807" />
+            <geometry>
+                <box size="0.005626 0.020000 0.065318" />
+            </geometry>
+        </collision>
+        <collision name="wheel_cover">
+            <origin xyz="0.000101 -0.020719 -0.040794" rpy="-3.141318 3.141652 1.570807" />
+            <geometry>
+                <box size="0.005626 0.020000 0.065318" />
+            </geometry>
+        </collision>
+        <collision name="wheel_cover">
+            <origin xyz="0.000000 0.000001 -0.003548" rpy="-2.387357 4.712309 -0.754235" />
+            <geometry>
+                <box size="0.010001 0.046877 0.051564" />
+            </geometry>
+        </collision>
+        <visual name="wheel_cover_visual">
+            <origin xyz="0.000047 -0.000048 -0.038000" rpy="-3.141591 3.141640 1.570797" />
+            <geometry>
+                <mesh filename="./swerve_wheel_wheel_cover_visual_2_vis_1.dae" />
+            </geometry>
+            <material name="wheel_cover_visual_2_material">
+                <color rgba="1.000000 0.300000 0.300000 1.0" />
+            </material>
+        </visual>
+        <visual name="wheel_cover_visual">
+            <origin xyz="0.000047 -0.000048 -0.038000" rpy="-3.141591 3.141640 1.570797" />
+            <geometry>
+                <mesh filename="./swerve_wheel_wheel_cover_visual_2_vis_2.dae" />
+            </geometry>
+            <material name="wheel_cover_visual_2_material">
+                <color rgba="0.900000 0.900000 0.900000 1.0" />
+            </material>
+        </visual>
+        <visual name="wheel_cover_visual">
+            <origin xyz="0.000047 -0.000048 -0.038000" rpy="-3.141591 3.141640 1.570797" />
+            <geometry>
+                <mesh filename="./swerve_wheel_wheel_cover_visual_2_vis_3.dae" />
+            </geometry>
+            <material name="wheel_cover_visual_2_material">
+                <color rgba="1.000000 0.300000 0.300000 1.0" />
+            </material>
+        </visual>
+        <visual name="shaft_visual">
+            <origin xyz="0.000049 -0.000048 -0.058000" rpy="-1.570851 3.141651 -3.141592" />
+            <geometry>
+                <mesh filename="./swerve_wheel_shaft_visual_2_vis_1.dae" />
+            </geometry>
+            <material name="shaft_visual_2_material">
+                <color rgba="0.394118 0.394118 0.394118 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint type="continuous" name="driven_joint_2">
+        <axis xyz="0 0 1" />
+        <parent link="wheel_cover_2" />
+        <child link="magnet_wheel_2" />
+        <origin xyz="0.000049 -0.000048 -0.058000" rpy="-1.570742 3.141534 0.000001" />
+    </joint>
+    <link name="magnet_wheel_2">
+        <inertial>
+            <origin xyz="-0.000000 0.000000 0.000000" rpy="0.000000 3.141593 0.000000" />
+            <inertia ixy="-5.1796319770041e-13" ixz="9.7387222573974e-17" iyz="-1.2321564264132e-15" ixx="2.1754679084882e-05" izz="3.4905879351995e-05" iyy="2.1754682258688e-05" />
+            <mass value="0.057356555014849" />
+        </inertial>
+        <collision name="magnet_wheel">
+            <origin xyz="-0.000000 0.000000 0.000000" rpy="0.000000 3.141593 0.000000" />
+            <geometry>
+                <cylinder length="0.030000001192093" radius="0.035000000149012" />
+            </geometry>
+        </collision>
+        <visual name="magnet_wheel">
+            <origin xyz="-0.000000 0.000000 0.000000" rpy="0.000000 3.141593 0.000000" />
+            <geometry>
+                <cylinder length="0.030000001192093" radius="0.035000000149012" />
+            </geometry>
+            <material name="magnet_wheel_2_material">
+                <color rgba="0.340000 0.340000 0.340000 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint type="continuous" name="direction_joint_3">
+        <axis xyz="0 0 1" />
+        <parent link="robot_base" />
+        <child link="wheel_cover_3" />
+        <origin xyz="0.521000 0.094001 0.098500" rpy="3.141589 3.141594 -1.570817" />
+    </joint>
+    <link name="wheel_cover_3">
+        <inertial>
+            <origin xyz="0.000038 0.000030 -0.017631" rpy="-3.141591 3.141649 1.570797" />
+            <inertia ixy="-8.0121787156622e-09" ixz="-5.317599417882e-09" iyz="-1.6794693903706e-11" ixx="1.1977553358807e-05" izz="1.4427704011722e-05" iyy="8.2964219457032e-06" />
+            <mass value="0.019436288625002" />
+        </inertial>
+        <collision name="wheel_cover">
+            <origin xyz="0.000101 0.020671 -0.040796" rpy="-3.141318 3.141652 1.570807" />
+            <geometry>
+                <box size="0.005626 0.020000 0.065318" />
+            </geometry>
+        </collision>
+        <collision name="wheel_cover">
+            <origin xyz="0.000101 -0.020672 -0.040794" rpy="-3.141318 3.141652 1.570807" />
+            <geometry>
+                <box size="0.005626 0.020000 0.065318" />
+            </geometry>
+        </collision>
+        <collision name="wheel_cover">
+            <origin xyz="-0.000000 0.000048 -0.003548" rpy="-2.387357 4.712309 -0.754235" />
+            <geometry>
+                <box size="0.010001 0.046877 0.051564" />
+            </geometry>
+        </collision>
+        <visual name="wheel_cover_visual">
+            <origin xyz="0.000000 -0.000000 -0.038000" rpy="-3.141591 3.141640 1.570797" />
+            <geometry>
+                <mesh filename="./swerve_wheel_wheel_cover_visual_3_vis_1.dae" />
+            </geometry>
+            <material name="wheel_cover_visual_3_material">
+                <color rgba="1.000000 1.000000 1.000000 1.0" />
+            </material>
+        </visual>
+        <visual name="wheel_cover_visual">
+            <origin xyz="0.000000 -0.000000 -0.038000" rpy="-3.141591 3.141640 1.570797" />
+            <geometry>
+                <mesh filename="./swerve_wheel_wheel_cover_visual_3_vis_2.dae" />
+            </geometry>
+            <material name="wheel_cover_visual_3_material">
+                <color rgba="0.900000 0.900000 0.900000 1.0" />
+            </material>
+        </visual>
+        <visual name="wheel_cover_visual">
+            <origin xyz="0.000000 -0.000000 -0.038000" rpy="-3.141591 3.141640 1.570797" />
+            <geometry>
+                <mesh filename="./swerve_wheel_wheel_cover_visual_3_vis_3.dae" />
+            </geometry>
+            <material name="wheel_cover_visual_3_material">
+                <color rgba="1.000000 1.000000 1.000000 1.0" />
+            </material>
+        </visual>
+        <visual name="shaft_visual">
+            <origin xyz="0.000000 -0.000000 -0.058000" rpy="-1.570851 3.141651 -3.141592" />
+            <geometry>
+                <mesh filename="./swerve_wheel_shaft_visual_3_vis_1.dae" />
+            </geometry>
+            <material name="shaft_visual_3_material">
+                <color rgba="0.394118 0.394118 0.394118 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint type="continuous" name="driven_joint_3">
+        <axis xyz="0 0 1" />
+        <parent link="wheel_cover_3" />
+        <child link="magnet_wheel_3" />
+        <origin xyz="0.000000 -0.000000 -0.058000" rpy="-1.570741 3.141534 0.000001" />
+    </joint>
+    <link name="magnet_wheel_3">
+        <inertial>
+            <origin xyz="0.000000 0.000000 -0.000000" rpy="-0.000000 3.141593 0.000001" />
+            <inertia ixy="-5.1796319770041e-13" ixz="9.7387222573974e-17" iyz="-1.2321564264132e-15" ixx="2.1754679084882e-05" izz="3.4905879351995e-05" iyy="2.1754682258688e-05" />
+            <mass value="0.057356555014849" />
+        </inertial>
+        <collision name="magnet_wheel">
+            <origin xyz="0.000000 0.000000 -0.000000" rpy="-0.000000 3.141593 0.000001" />
+            <geometry>
+                <cylinder length="0.030000001192093" radius="0.035000000149012" />
+            </geometry>
+        </collision>
+        <visual name="magnet_wheel">
+            <origin xyz="0.000000 0.000000 -0.000000" rpy="-0.000000 3.141593 0.000001" />
+            <geometry>
+                <cylinder length="0.030000001192093" radius="0.035000000149012" />
+            </geometry>
+            <material name="magnet_wheel_3_material">
+                <color rgba="0.340000 0.340000 0.340000 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint type="continuous" name="direction_joint_4">
+        <axis xyz="0 0 1" />
+        <parent link="robot_base" />
+        <child link="wheel_cover_4" />
+        <origin xyz="0.520999 -0.005998 0.098500" rpy="3.141589 3.141594 -1.570817" />
+    </joint>
+    <link name="wheel_cover_4">
+        <inertial>
+            <origin xyz="0.000038 -0.000017 -0.017631" rpy="-3.141591 3.141649 1.570797" />
+            <inertia ixy="-8.0121787156622e-09" ixz="-5.317599417882e-09" iyz="-1.6794693903706e-11" ixx="1.1977553358807e-05" izz="1.4427704011722e-05" iyy="8.2964219457032e-06" />
+            <mass value="0.019436288625002" />
+        </inertial>
+        <collision name="wheel_cover">
+            <origin xyz="0.000101 0.020624 -0.040796" rpy="-3.141318 3.141652 1.570807" />
+            <geometry>
+                <box size="0.005626 0.020000 0.065318" />
+            </geometry>
+        </collision>
+        <collision name="wheel_cover">
+            <origin xyz="0.000101 -0.020719 -0.040794" rpy="-3.141318 3.141652 1.570807" />
+            <geometry>
+                <box size="0.005626 0.020000 0.065318" />
+            </geometry>
+        </collision>
+        <collision name="wheel_cover">
+            <origin xyz="0.000000 0.000001 -0.003548" rpy="-2.387357 4.712309 -0.754235" />
+            <geometry>
+                <box size="0.010001 0.046877 0.051564" />
+            </geometry>
+        </collision>
+        <visual name="wheel_cover_visual">
+            <origin xyz="0.000047 -0.000048 -0.038000" rpy="-3.141591 3.141640 1.570797" />
+            <geometry>
+                <mesh filename="./swerve_wheel_wheel_cover_visual_4_vis_1.dae" />
+            </geometry>
+            <material name="wheel_cover_visual_4_material">
+                <color rgba="1.000000 1.000000 1.000000 1.0" />
+            </material>
+        </visual>
+        <visual name="wheel_cover_visual">
+            <origin xyz="0.000047 -0.000048 -0.038000" rpy="-3.141591 3.141640 1.570797" />
+            <geometry>
+                <mesh filename="./swerve_wheel_wheel_cover_visual_4_vis_2.dae" />
+            </geometry>
+            <material name="wheel_cover_visual_4_material">
+                <color rgba="0.900000 0.900000 0.900000 1.0" />
+            </material>
+        </visual>
+        <visual name="wheel_cover_visual">
+            <origin xyz="0.000047 -0.000048 -0.038000" rpy="-3.141591 3.141640 1.570797" />
+            <geometry>
+                <mesh filename="./swerve_wheel_wheel_cover_visual_4_vis_3.dae" />
+            </geometry>
+            <material name="wheel_cover_visual_4_material">
+                <color rgba="1.000000 1.000000 1.000000 1.0" />
+            </material>
+        </visual>
+        <visual name="shaft_visual">
+            <origin xyz="0.000049 -0.000048 -0.058000" rpy="-1.570851 3.141651 -3.141592" />
+            <geometry>
+                <mesh filename="./swerve_wheel_shaft_visual_4_vis_1.dae" />
+            </geometry>
+            <material name="shaft_visual_4_material">
+                <color rgba="0.394118 0.394118 0.394118 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint type="continuous" name="driven_joint_4">
+        <axis xyz="0 0 1" />
+        <parent link="wheel_cover_4" />
+        <child link="magnet_wheel_4" />
+        <origin xyz="0.000049 -0.000048 -0.058000" rpy="-1.570742 3.141534 0.000001" />
+    </joint>
+    <link name="magnet_wheel_4">
+        <inertial>
+            <origin xyz="0.000000 0.000000 0.000000" rpy="-0.000000 3.141593 0.000000" />
+            <inertia ixy="-5.1796319770041e-13" ixz="9.7387222573974e-17" iyz="-1.2321564264132e-15" ixx="2.1754679084882e-05" izz="3.4905879351995e-05" iyy="2.1754682258688e-05" />
+            <mass value="0.057356555014849" />
+        </inertial>
+        <collision name="magnet_wheel">
+            <origin xyz="0.000000 -0.000000 0.000000" rpy="-0.000000 3.141593 0.000000" />
+            <geometry>
+                <cylinder length="0.030000001192093" radius="0.035000000149012" />
+            </geometry>
+        </collision>
+        <visual name="magnet_wheel">
+            <origin xyz="0.000000 -0.000000 0.000000" rpy="-0.000000 3.141593 0.000000" />
+            <geometry>
+                <cylinder length="0.030000001192093" radius="0.035000000149012" />
+            </geometry>
+            <material name="magnet_wheel_4_material">
+                <color rgba="0.340000 0.340000 0.340000 1.0" />
+            </material>
+        </visual>
+    </link>
+</robot>

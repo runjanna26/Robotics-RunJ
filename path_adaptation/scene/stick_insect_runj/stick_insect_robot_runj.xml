@@ -1,0 +1,283 @@
+<mujoco>
+    <compiler meshdir="assets" texturedir="assets" />
+    <statistic extent="1.5" meansize=".05" />
+
+    <option timestep="0.005" jacobian="sparse" />
+
+    <visual>
+        <rgba haze="0.15 0.25 0.35 1" />
+        <quality shadowsize="4096" />
+        <map stiffness="700" shadowscale="0.5" fogstart="10" fogend="15" zfar="40" haze="0.3" />
+    </visual>
+
+    <asset>
+        <texture type="skybox" builtin="gradient" rgb1="0.3 0.5 0.7" rgb2="0 0 0" width="512"
+            height="512" />
+        <texture name="texplane" type="2d" builtin="checker" rgb1=".2 .3 .4" rgb2=".1 0.15 0.2"
+            width="512" height="512" mark="cross" markrgb=".8 .8 .8" />
+        <material name="matplane" reflectance="0.3" texture="texplane" texrepeat="1 1"
+            texuniform="true" />
+    </asset>
+
+    <asset>
+        <mesh name="ak60-6_motor_frame_1" file="ak60-6_motor_frame_1.stl" />
+        <mesh name="ak60-6_motor_frame_2" file="ak60-6_motor_frame_2.stl" />
+        <mesh name="ak_80-6" file="ak_80-6.stl" />
+        <mesh name="body_part" file="body_part.stl" />
+        <mesh name="leg_link_1" file="leg_link_1.stl" />
+        <mesh name="leg_link_2" file="leg_link_2.stl" />
+        <mesh name="leg_link_3" file="leg_link_3.stl" />
+    </asset>
+
+    <worldbody>
+
+        <body name="stick_insect_robot" pos="0 0 1.0">
+            <freejoint name="space" />
+            <geom pos="0.495543 0.160534 -0.219748" quat="0.707107 9.03779e-09 3.70752e-10 0.707107"
+                type="mesh" rgba="0.615686 0.811765 0.929412 1" mesh="ak60-6_motor_frame_1" contype="1" conaffinity="1"/>
+            <geom pos="0.629543 0.160534 -0.185748"
+                quat="0.707107 -3.70752e-10 9.03779e-09 -0.707107"
+                type="mesh" rgba="0.615686 0.811765 0.929412 1" mesh="ak60-6_motor_frame_2" contype="1" conaffinity="1"/>
+            <geom pos="0.495543 -0.0894658 -0.219748"
+                quat="0.707107 9.03779e-09 3.70752e-10 0.707107"
+                type="mesh" rgba="0.615686 0.811765 0.929412 1" mesh="ak60-6_motor_frame_1" contype="1" conaffinity="1"/>
+            <geom pos="0.495543 0.410534 -0.219748" quat="0.707107 9.03779e-09 3.70752e-10 0.707107"
+                type="mesh" rgba="0.615686 0.811765 0.929412 1" mesh="ak60-6_motor_frame_1" contype="1" conaffinity="1"/>
+            <geom pos="0.629543 0.410534 -0.215748" quat="1 6.12852e-09 6.65284e-09 0" type="mesh"
+                rgba="0.615686 0.811765 0.929412 1" mesh="ak_80-6" contype="1" conaffinity="1"/>
+            <geom pos="0.495543 0.160534 -0.214748" quat="1 6.12852e-09 6.65284e-09 0" type="mesh"
+                rgba="0.615686 0.811765 0.929412 1" mesh="ak_80-6" contype="1" conaffinity="1"/>
+            <geom pos="0.495543 -0.0894658 -0.214748" quat="1 6.12852e-09 6.65284e-09 0" type="mesh"
+                rgba="0.615686 0.811765 0.929412 1" mesh="ak_80-6" contype="1" conaffinity="1"/>
+            <geom pos="0.629543 -0.0894658 -0.215748" quat="1 6.12852e-09 6.65284e-09 0" type="mesh"
+                rgba="0.615686 0.811765 0.929412 1" mesh="ak_80-6" contype="1" conaffinity="1"/>
+            <geom pos="0.629543 0.160534 -0.215748" quat="1 6.12852e-09 6.65284e-09 0" type="mesh"
+                rgba="0.615686 0.811765 0.929412 1" mesh="ak_80-6" contype="1" conaffinity="1"/>
+            <geom pos="0.629543 -0.0894658 -0.185748"
+                quat="0.707107 -3.70752e-10 9.03779e-09 -0.707107"
+                type="mesh" rgba="0.615686 0.811765 0.929412 1" mesh="ak60-6_motor_frame_2" contype="1" conaffinity="1"/>
+            <geom pos="0.495543 0.410534 -0.214748" quat="1 6.12852e-09 6.65284e-09 0" type="mesh"
+                rgba="0.615686 0.811765 0.929412 1" mesh="ak_80-6" contype="1" conaffinity="1"/>
+            <geom pos="0.629543 0.410534 -0.185748"
+                quat="0.707107 -3.70752e-10 9.03779e-09 -0.707107"
+                type="mesh" rgba="0.615686 0.811765 0.929412 1" mesh="ak60-6_motor_frame_2" contype="1" conaffinity="1"/>
+            <geom pos="0.562543 0.460534 -0.203748"
+                quat="0.707107 0.707107 4.70427e-09 -4.70427e-09"
+                type="mesh" rgba="0.615686 0.811765 0.929412 1" mesh="body_part" contype="1" conaffinity="1"/>
+            <body name="marine_link_1" pos="0.629543 -0.0894658 -0.215748"
+                quat="0.707107 -3.70752e-10 9.03779e-09 -0.707107">
+                <inertial pos="-0.00307987 0.0973785 0.0137137"
+                    quat="0.674254 0.738442 0.00600332 0.00702786" mass="1.52194"
+                    diaginertia="0.00145125 0.00108735 0.000782168" />
+                <joint name="leg1_1" pos="0 0 0" axis="0 0 1" actuatorfrcrange="-1 1" />
+                <geom pos="0.016 0.1 0.014" quat="0 -0.707107 0 0.707107" type="mesh"
+                    rgba="0.615686 0.811765 0.929412 1" mesh="ak_80-6" contype="0" conaffinity="0"/>
+                <geom pos="0 0 -0.006" quat="0 1 0 0" type="mesh"
+                    rgba="0.615686 0.811765 0.929412 1"
+                    mesh="leg_link_1" contype="0" conaffinity="0"/>
+                <body name="marine_link_2" pos="0.016 0.1 0.014" quat="0.707107 0 -0.707107 0">
+                    <inertial pos="-8.33674e-09 0.195522 0.0139407"
+                        quat="0.503796 0.496175 -0.496175 0.503796" mass="1.76873"
+                        diaginertia="0.00537117 0.00508675 0.000940409" />
+                    <joint name="leg1_2" pos="0 0 0" axis="0 0 1" actuatorfrcrange="-1 1" />
+                    <geom pos="0 0 -0.005" quat="0 1 0 0" type="mesh"
+                        rgba="0.615686 0.811765 0.929412 1" mesh="leg_link_2" contype="0" conaffinity="0"/>
+                    <geom pos="0 0.214 -0.006" quat="0 0 0 -1" type="mesh"
+                        rgba="0.615686 0.811765 0.929412 1" mesh="ak_80-6" contype="0" conaffinity="0"/>
+                    <body name="leg_link_3" pos="0 0.214 -0.006">
+                        <inertial pos="-3.22304e-08 0.165468 0.0188479"
+                            quat="0.704426 0.709778 -8.40284e-07 8.33948e-07" mass="0.427669"
+                            diaginertia="0.00339961 0.00320716 0.000321355" />
+                        <joint name="leg1_3" pos="0 0 0" axis="0 0 1" actuatorfrcrange="-1 1" />
+                        <geom pos="0 0 -0.005" quat="0 1 0 0" type="mesh"
+                            rgba="0.615686 0.811765 0.929412 1" mesh="leg_link_3" contype="1" conaffinity="1"/>
+                    </body>
+                </body>
+            </body>
+            <body name="marine_link_1_2" pos="0.495543 -0.0894658 -0.214748"
+                quat="0.707107 9.03779e-09 3.70752e-10 0.707107">
+                <inertial pos="-0.00307987 0.0973785 0.0137137"
+                    quat="0.674254 0.738442 0.00600332 0.00702786" mass="1.52194"
+                    diaginertia="0.00145125 0.00108735 0.000782168" />
+                <joint name="leg2_1" pos="0 0 0" axis="0 0 1" actuatorfrcrange="-1 1" />
+                <geom pos="0.016 0.1 0.014" quat="0 -0.707107 0 0.707107" type="mesh"
+                    rgba="0.615686 0.811765 0.929412 1" mesh="ak_80-6" contype="0" conaffinity="0"/>
+                <geom pos="0 0 -0.006" quat="0 1 0 0" type="mesh"
+                    rgba="0.615686 0.811765 0.929412 1"
+                    mesh="leg_link_1" contype="0" conaffinity="0"/>
+                <body name="marine_link_2_2" pos="0.016 0.1 0.014" quat="0.707107 0 -0.707107 0">
+                    <inertial pos="-8.33674e-09 0.195522 0.0139407"
+                        quat="0.503796 0.496175 -0.496175 0.503796" mass="1.76873"
+                        diaginertia="0.00537117 0.00508675 0.000940409" />
+                    <joint name="leg2_2" pos="0 0 0" axis="0 0 1" actuatorfrcrange="-1 1" />
+                    <geom pos="0 0 -0.005" quat="0 -1 0 0" type="mesh"
+                        rgba="0.615686 0.811765 0.929412 1" mesh="leg_link_2" contype="0" conaffinity="0"/>
+                    <geom pos="0 0.214 -0.006" quat="0 0 0 1" type="mesh"
+                        rgba="0.615686 0.811765 0.929412 1" mesh="ak_80-6" contype="0" conaffinity="0"/>
+                    <body name="leg_link_3_2" pos="0 0.214 -0.006" quat="1 0 0 0">
+                        <inertial pos="-3.22304e-08 0.165468 0.0188479"
+                            quat="0.704426 0.709778 -8.40284e-07 8.33948e-07" mass="0.427669"
+                            diaginertia="0.00339961 0.00320716 0.000321355" />
+                        <joint name="leg2_3" pos="0 0 0" axis="0 0 1" actuatorfrcrange="-1 1" />
+                        <geom pos="0 0 -0.005" quat="0 -1 0 0" type="mesh"
+                            rgba="0.615686 0.811765 0.929412 1" mesh="leg_link_3" contype="1" conaffinity="1"/>
+                    </body>
+                </body>
+            </body>
+            <body name="marine_link_1_3" pos="0.629543 0.160534 -0.215748"
+                quat="0.707107 -3.70752e-10 9.03779e-09 -0.707107">
+                <inertial pos="-0.00307987 0.0973785 0.0137137"
+                    quat="0.674254 0.738442 0.00600332 0.00702786" mass="1.52194"
+                    diaginertia="0.00145125 0.00108735 0.000782168" />
+                <joint name="leg3_1" pos="0 0 0" axis="0 0 1" actuatorfrcrange="-1 1" />
+                <geom pos="0.016 0.1 0.014" quat="0 -0.707107 0 0.707107" type="mesh"
+                    rgba="0.615686 0.811765 0.929412 1" mesh="ak_80-6" contype="0" conaffinity="0"/>
+                <geom pos="0 0 -0.006" quat="0 -1 0 0" type="mesh"
+                    rgba="0.615686 0.811765 0.929412 1"
+                    mesh="leg_link_1" contype="0" conaffinity="0"/>
+                <body name="marine_link_2_3" pos="0.016 0.1 0.014" quat="0.707107 0 -0.707107 0">
+                    <inertial pos="-8.33674e-09 0.195522 0.0139407"
+                        quat="0.503796 0.496175 -0.496175 0.503796" mass="1.76873"
+                        diaginertia="0.00537117 0.00508675 0.000940409" />
+                    <joint name="leg3_2" pos="0 0 0" axis="0 0 1" actuatorfrcrange="-1 1" />
+                    <geom pos="0 0 -0.005" quat="0 -1 0 0" type="mesh"
+                        rgba="0.615686 0.811765 0.929412 1" mesh="leg_link_2" contype="0" conaffinity="0"/>
+                    <geom pos="0 0.214 -0.006" quat="0 0 0 1" type="mesh"
+                        rgba="0.615686 0.811765 0.929412 1" mesh="ak_80-6" contype="0" conaffinity="0"/>
+                    <body name="leg_link_3_3" pos="0 0.214 -0.006">
+                        <inertial pos="-3.22304e-08 0.165468 0.0188479"
+                            quat="0.704426 0.709778 -8.40284e-07 8.33948e-07" mass="0.427669"
+                            diaginertia="0.00339961 0.00320716 0.000321355" />
+                        <joint name="leg3_3" pos="0 0 0" axis="0 0 1" actuatorfrcrange="-1 1" />
+                        <geom pos="0 0 -0.005" quat="0 -1 0 0" type="mesh"
+                            rgba="0.615686 0.811765 0.929412 1" mesh="leg_link_3" contype="1" conaffinity="1"/>
+                    </body>
+                </body>
+            </body>
+            <body name="marine_link_1_4" pos="0.495543 0.160534 -0.214748"
+                quat="0.707107 9.03779e-09 3.70752e-10 0.707107">
+                <inertial pos="-0.00307987 0.0973785 0.0137137"
+                    quat="0.674254 0.738442 0.00600332 0.00702786" mass="1.52194"
+                    diaginertia="0.00145125 0.00108735 0.000782168" />
+                <joint name="leg4_1" pos="0 0 0" axis="0 0 1" actuatorfrcrange="-1 1" />
+                <geom pos="0.016 0.1 0.014" quat="0 -0.707107 0 0.707107" type="mesh"
+                    rgba="0.615686 0.811765 0.929412 1" mesh="ak_80-6" contype="0" conaffinity="0"/>
+                <geom pos="0 0 -0.006" quat="0 1 0 0" type="mesh"
+                    rgba="0.615686 0.811765 0.929412 1"
+                    mesh="leg_link_1" contype="0" conaffinity="0"/>
+                <body name="marine_link_2_4" pos="0.016 0.1 0.014" quat="0.707107 0 -0.707107 0">
+                    <inertial pos="-8.33674e-09 0.195522 0.0139407"
+                        quat="0.503796 0.496175 -0.496175 0.503796" mass="1.76873"
+                        diaginertia="0.00537117 0.00508675 0.000940409" />
+                    <joint name="leg4_2" pos="0 0 0" axis="0 0 1" actuatorfrcrange="-1 1" />
+                    <geom pos="0 0 -0.005" quat="0 1 0 0" type="mesh"
+                        rgba="0.615686 0.811765 0.929412 1" mesh="leg_link_2" contype="0" conaffinity="0"/>
+                    <geom pos="0 0.214 -0.006" quat="0 0 0 -1" type="mesh"
+                        rgba="0.615686 0.811765 0.929412 1" mesh="ak_80-6" contype="0" conaffinity="0"/>
+                    <body name="leg_link_3_4" pos="0 0.214 -0.0059" quat="1 0 0 -9.31688e-09">
+                        <inertial pos="-3.22304e-08 0.165468 0.0188479"
+                            quat="0.704426 0.709778 -8.40284e-07 8.33948e-07" mass="0.427669"
+                            diaginertia="0.00339961 0.00320716 0.000321355" />
+                        <joint name="leg4_3" pos="0 0 0" axis="0 0 1" actuatorfrcrange="-1 1" />
+                        <geom pos="0 0 -0.005" quat="0 -1 0 0" type="mesh"
+                            rgba="0.615686 0.811765 0.929412 1" mesh="leg_link_3" contype="1" conaffinity="1"/>
+                    </body>
+                </body>
+            </body>
+            <body name="marine_link_1_5" pos="0.629543 0.410534 -0.215648"
+                quat="0.707107 -3.70752e-10 9.03779e-09 -0.707107">
+                <inertial pos="-0.00307987 0.0973785 0.0137137"
+                    quat="0.674254 0.738442 0.00600332 0.00702786" mass="1.52194"
+                    diaginertia="0.00145125 0.00108735 0.000782168" />
+                <joint name="leg5_1" pos="0 0 0" axis="0 0 1" actuatorfrcrange="-1 1" />
+                <geom pos="0.016 0.1 0.014" quat="0 0.707107 0 -0.707107" type="mesh"
+                    rgba="0.615686 0.811765 0.929412 1" mesh="ak_80-6" contype="0" conaffinity="0"/>
+                <geom pos="0 0 -0.006" quat="0 1 0 0" type="mesh"
+                    rgba="0.615686 0.811765 0.929412 1"
+                    mesh="leg_link_1" contype="0" conaffinity="0"/>
+                <body name="marine_link_2_5" pos="0.016 0.1 0.014" quat="0.707107 0 -0.707107 0">
+                    <inertial pos="-8.33674e-09 0.195522 0.0139407"
+                        quat="0.503796 0.496175 -0.496175 0.503796" mass="1.76873"
+                        diaginertia="0.00537117 0.00508675 0.000940409" />
+                    <joint name="leg5_2" pos="0 0 0" axis="0 0 1" actuatorfrcrange="-1 1" />
+                    <geom pos="0 0 -0.005" quat="0 -1 0 0" type="mesh"
+                        rgba="0.615686 0.811765 0.929412 1" mesh="leg_link_2" contype="0" conaffinity="0"/>
+                    <geom pos="0 0.214 -0.006" quat="0 0 0 1" type="mesh"
+                        rgba="0.615686 0.811765 0.929412 1" mesh="ak_80-6" contype="0" conaffinity="0"/>
+                    <body name="leg_link_3_5" pos="0 0.214 -0.006">
+                        <inertial pos="-3.22304e-08 0.165468 0.0188479"
+                            quat="0.704426 0.709778 -8.40284e-07 8.33948e-07" mass="0.427669"
+                            diaginertia="0.00339961 0.00320716 0.000321355" />
+                        <joint name="leg5_3" pos="0 0 0" axis="0 0 1" actuatorfrcrange="-1 1" />
+                        <geom pos="0 0 -0.005" quat="0 1 0 0" type="mesh"
+                            rgba="0.615686 0.811765 0.929412 1" mesh="leg_link_3" contype="1" conaffinity="1"/>
+                    </body>
+                </body>
+            </body>
+            <body name="marine_link_1_6" pos="0.495543 0.410534 -0.214748"
+                quat="0.707107 9.03779e-09 3.70752e-10 0.707107">
+                <inertial pos="-0.00307987 0.0973785 0.0137137"
+                    quat="0.674254 0.738442 0.00600332 0.00702786" mass="1.52194"
+                    diaginertia="0.00145125 0.00108735 0.000782168" />
+                <joint name="leg6_1" pos="0 0 0" axis="0 0 1" actuatorfrcrange="-1 1" />
+                <geom pos="0.016 0.1 0.014" quat="0 0.707107 0 -0.707107" type="mesh"
+                    rgba="0.615686 0.811765 0.929412 1" mesh="ak_80-6" contype="0" conaffinity="0"/>
+                <geom pos="0 0 -0.006" quat="0 1 0 0" type="mesh"
+                    rgba="0.615686 0.811765 0.929412 1"
+                    mesh="leg_link_1" contype="0" conaffinity="0"/>
+                <body name="marine_link_2_6" pos="0.016 0.1 0.014" quat="0.707107 0 -0.707107 0">
+                    <inertial pos="-8.33674e-09 0.195522 0.0139407"
+                        quat="0.503796 0.496175 -0.496175 0.503796" mass="1.76873"
+                        diaginertia="0.00537117 0.00508675 0.000940409" />
+                    <joint name="leg6_2" pos="0 0 0" axis="0 0 1" actuatorfrcrange="-1 1" />
+                    <geom pos="0 0 -0.005" quat="0 1 0 0" type="mesh"
+                        rgba="0.615686 0.811765 0.929412 1" mesh="leg_link_2" contype="0" conaffinity="0"/>
+                    <geom pos="0 0.214 -0.006" quat="0 0 0 -1" type="mesh"
+                        rgba="0.615686 0.811765 0.929412 1" mesh="ak_80-6" contype="0" conaffinity="0"/>
+                    <body name="leg_link_3_6" pos="0 0.214 -0.0059" quat="1 0 0 0">
+                        <inertial pos="-3.22304e-08 0.165468 0.0188479"
+                            quat="0.704426 0.709778 -8.40284e-07 8.33948e-07" mass="0.427669"
+                            diaginertia="0.00339961 0.00320716 0.000321355" />
+                        <joint name="leg6_3" pos="0 0 0" axis="0 0 1" actuatorfrcrange="-1 1" />
+                        <geom pos="0 0 -0.005" quat="0 1 0 0" type="mesh"
+                            rgba="0.615686 0.811765 0.929412 1" mesh="leg_link_3" contype="1" conaffinity="1"/>
+                    </body>
+                </body>
+            </body>
+        </body>
+
+        <light directional="true" diffuse=".4 .4 .4" specular="0.1 0.1 0.1" pos="0 0 5.0"
+            dir="0 0 -1" castshadow="false" />
+        <light directional="true" diffuse=".6 .6 .6" specular="0.2 0.2 0.2" pos="0 0 4" dir="0 0 -1" />
+
+        <geom name="ground" type="plane" size="0 0 1" pos="0 0 0" quat="1 0 0 0" material="matplane"
+            condim="1" friction="0.9 0.1 0.01" />
+        <body mocap="true" pos="-.1 .05 0" zaxis=".5 0 1">
+        </body>
+    </worldbody>
+
+
+    <actuator>
+        <motor name="space" joint="space" />
+
+        <position name="TR0" joint="leg2_1" kp="5" kv="0.1" />
+        <position name="CR0" joint="leg2_2" kp="5000" kv="500" />
+        <position name="FR0" joint="leg2_3" kp="5" kv="0.1" />
+        <position name="TL0" joint="leg1_1" kp="5" kv="0.1" />
+        <position name="CL0" joint="leg1_2" kp="5" kv="0.1" />
+        <position name="FL0" joint="leg1_3" kp="5" kv="0.1" />
+        <position name="TR1" joint="leg4_1" kp="5" kv="0.1" />
+        <position name="CR1" joint="leg4_2" kp="5000" kv="500" />
+        <position name="FR1" joint="leg4_3" kp="5" kv="0.1" />
+        <position name="TL1" joint="leg3_1" kp="5" kv="0.1" />
+        <position name="CL1" joint="leg3_2" kp="5" kv="0.1" />
+        <position name="FL1" joint="leg3_3" kp="5" kv="0.1" />
+        <position name="TR2" joint="leg6_1" kp="5" kv="0.1" />
+        <position name="CR2" joint="leg6_2" kp="5000" kv="500" />
+        <position name="FR2" joint="leg6_3" kp="5" kv="0.1" />
+        <position name="TL2" joint="leg5_1" kp="5" kv="0.1" />
+        <position name="CL2" joint="leg5_2" kp="5" kv="0.1" />
+        <position name="FL2" joint="leg5_3" kp="5" kv="0.1" />
+    </actuator>
+
+</mujoco>

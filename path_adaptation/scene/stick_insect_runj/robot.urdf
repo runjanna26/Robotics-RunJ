@@ -1,0 +1,962 @@
+<robot name="stick_insect_runj">
+<link name="marine_body">
+<visual>
+<origin xyz="0.49554269847897802759 0.16053417498772720728 -0.21974789051679632923" rpy="1.3305681734714802891e-08 -1.225703761843755699e-08 1.570796326794896558" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/ak60-6_motor_frame_1.stl"/>
+</geometry>
+<material name="ak60-6_motor_frame_1_material">
+<color rgba="0.61568627450980395466 0.81176470588235294379 0.92941176470588238168 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0.49554269847897802759 0.16053417498772720728 -0.21974789051679632923" rpy="1.3305681734714802891e-08 -1.225703761843755699e-08 1.570796326794896558" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/ak60-6_motor_frame_1.stl"/>
+</geometry>
+</collision>
+<visual>
+<origin xyz="0.62954269893137126957 0.16053417457098789756 -0.18574789229975763316" rpy="-1.3305681734714776421e-08 1.2257037618437558644e-08 -1.57079632679489678" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/ak60-6_motor_frame_2.stl"/>
+</geometry>
+<material name="ak60-6_motor_frame_2_material">
+<color rgba="0.61568627450980395466 0.81176470588235294379 0.92941176470588238168 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0.62954269893137126957 0.16053417457098789756 -0.18574789229975763316" rpy="-1.3305681734714776421e-08 1.2257037618437558644e-08 -1.57079632679489678" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/ak60-6_motor_frame_2.stl"/>
+</geometry>
+</collision>
+<visual>
+<origin xyz="0.49554269847897802759 -0.089465825012272834349 -0.219747893581055731" rpy="1.3305681734714796274e-08 -1.2257037618437555335e-08 1.570796326794896558" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/ak60-6_motor_frame_1.stl"/>
+</geometry>
+<material name="ak60-6_motor_frame_1_material">
+<color rgba="0.61568627450980395466 0.81176470588235294379 0.92941176470588238168 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0.49554269847897802759 -0.089465825012272834349 -0.219747893581055731" rpy="1.3305681734714796274e-08 -1.2257037618437555335e-08 1.570796326794896558" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/ak60-6_motor_frame_1.stl"/>
+</geometry>
+</collision>
+<visual>
+<origin xyz="0.49554269847897780554 0.41053417498772720728 -0.21974788745253695521" rpy="1.3305681734714835978e-08 -1.225703761843755699e-08 1.570796326794896558" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/ak60-6_motor_frame_1.stl"/>
+</geometry>
+<material name="ak60-6_motor_frame_1_material">
+<color rgba="0.61568627450980395466 0.81176470588235294379 0.92941176470588238168 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0.49554269847897780554 0.41053417498772720728 -0.21974788745253695521" rpy="1.3305681734714835978e-08 -1.225703761843755699e-08 1.570796326794896558" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/ak60-6_motor_frame_1.stl"/>
+</geometry>
+</collision>
+<visual>
+<origin xyz="0.62954269853220112818 0.41053417493869903687 -0.21574788923549828579" rpy="1.2257037618437566916e-08 1.3305681734714796274e-08 5.5511153706836529512e-17" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/ak_80-6.stl"/>
+</geometry>
+<material name="ak_80-6_material">
+<color rgba="0.61568627450980395466 0.81176470588235294379 0.92941176470588238168 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0.62954269853220112818 0.41053417493869903687 -0.21574788923549828579" rpy="1.2257037618437566916e-08 1.3305681734714796274e-08 5.5511153706836529512e-17" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/ak_80-6.stl"/>
+</geometry>
+</collision>
+<visual>
+<origin xyz="0.49554269854550642149 0.16053417492644200815 -0.21474789051679632479" rpy="1.2257037618437566916e-08 1.3305681734714796274e-08 5.5511153706836529512e-17" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/ak_80-6.stl"/>
+</geometry>
+<material name="ak_80-6_material">
+<color rgba="0.61568627450980395466 0.81176470588235294379 0.92941176470588238168 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0.49554269854550642149 0.16053417492644200815 -0.21474789051679632479" rpy="1.2257037618437566916e-08 1.3305681734714796274e-08 5.5511153706836529512e-17" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/ak_80-6.stl"/>
+</geometry>
+</collision>
+<visual>
+<origin xyz="0.49554269854550642149 -0.089465825073558019609 -0.21474789358105572656" rpy="1.2257037618437566916e-08 1.3305681734714796274e-08 5.5511153706836529512e-17" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/ak_80-6.stl"/>
+</geometry>
+<material name="ak_80-6_material">
+<color rgba="0.61568627450980395466 0.81176470588235294379 0.92941176470588238168 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0.49554269854550642149 -0.089465825073558019609 -0.21474789358105572656" rpy="1.2257037618437566916e-08 1.3305681734714796274e-08 5.5511153706836529512e-17" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/ak_80-6.stl"/>
+</geometry>
+</collision>
+<visual>
+<origin xyz="0.62954269853220079511 -0.089465825061300990884 -0.21574789536401708934" rpy="1.2257037618437566916e-08 1.3305681734714796274e-08 5.5511153706836529512e-17" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/ak_80-6.stl"/>
+</geometry>
+<material name="ak_80-6_material">
+<color rgba="0.61568627450980395466 0.81176470588235294379 0.92941176470588238168 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0.62954269853220079511 -0.089465825061300990884 -0.21574789536401708934" rpy="1.2257037618437566916e-08 1.3305681734714796274e-08 5.5511153706836529512e-17" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/ak_80-6.stl"/>
+</geometry>
+</collision>
+<visual>
+<origin xyz="0.62954269853220079511 0.16053417493869903687 -0.21574789229975768756" rpy="1.2257037618437566916e-08 1.3305681734714796274e-08 5.5511153706836529512e-17" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/ak_80-6.stl"/>
+</geometry>
+<material name="ak_80-6_material">
+<color rgba="0.61568627450980395466 0.81176470588235294379 0.92941176470588238168 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0.62954269853220079511 0.16053417493869903687 -0.21574789229975768756" rpy="1.2257037618437566916e-08 1.3305681734714796274e-08 5.5511153706836529512e-17" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/ak_80-6.stl"/>
+</geometry>
+</collision>
+<visual>
+<origin xyz="0.62954269893137115854 -0.089465825429012116321 -0.18574789536401703494" rpy="-1.3305681734714776421e-08 1.2257037618437558644e-08 -1.57079632679489678" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/ak60-6_motor_frame_2.stl"/>
+</geometry>
+<material name="ak60-6_motor_frame_2_material">
+<color rgba="0.61568627450980395466 0.81176470588235294379 0.92941176470588238168 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0.62954269893137115854 -0.089465825429012116321 -0.18574789536401703494" rpy="-1.3305681734714776421e-08 1.2257037618437558644e-08 -1.57079632679489678" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/ak60-6_motor_frame_2.stl"/>
+</geometry>
+</collision>
+<visual>
+<origin xyz="0.49554269854550619945 0.41053417492644200815 -0.21474788745253692301" rpy="1.2257037618437566916e-08 1.3305681734714796274e-08 5.5511153706836529512e-17" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/ak_80-6.stl"/>
+</geometry>
+<material name="ak_80-6_material">
+<color rgba="0.61568627450980395466 0.81176470588235294379 0.92941176470588238168 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0.49554269854550619945 0.41053417492644200815 -0.21474788745253692301" rpy="1.2257037618437566916e-08 1.3305681734714796274e-08 5.5511153706836529512e-17" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/ak_80-6.stl"/>
+</geometry>
+</collision>
+<visual>
+<origin xyz="0.62954269893137126957 0.41053417457098795307 -0.18574788923549812036" rpy="-1.3305681734714776421e-08 1.2257037618437558644e-08 -1.57079632679489678" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/ak60-6_motor_frame_2.stl"/>
+</geometry>
+<material name="ak60-6_motor_frame_2_material">
+<color rgba="0.61568627450980395466 0.81176470588235294379 0.92941176470588238168 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0.62954269893137126957 0.41053417457098795307 -0.18574788923549812036" rpy="-1.3305681734714776421e-08 1.2257037618437558644e-08 -1.57079632679489678" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/ak60-6_motor_frame_2.stl"/>
+</geometry>
+</collision>
+<visual>
+<origin xyz="0.5625426986918690142 0.46053417479161462555 -0.20374788773116569995" rpy="1.5707963390519341651 1.330568185036300705e-08 5.5511155124340948949e-17" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/body_part.stl"/>
+</geometry>
+<material name="body_part_material">
+<color rgba="0.61568627450980395466 0.81176470588235294379 0.92941176470588238168 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0.5625426986918690142 0.46053417479161462555 -0.20374788773116569995" rpy="1.5707963390519341651 1.330568185036300705e-08 5.5511155124340948949e-17" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/body_part.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="0.56254269878464435717 0.16053417470615088947 -0.19677526840596648583" rpy="0 0 0"/>
+<mass value="9.8052614872362795495" />
+<inertia ixx="0.40721496581039423601" ixy="-3.4962272021055413331e-12"  ixz="0.00028523962509390292028" iyy="0.04410019131074768145" iyz="-4.9589905612922480928e-09" izz="0.44868331468884170565" />
+</inertial>
+</link>
+
+<link name="marine_link_1">
+<visual>
+<origin xyz="0.015999999999999944822 0.099999999999999977796 0.013999999999999929168" rpy="-3.1415926535897922278 1.570796326794896558 0" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/ak_80-6.stl"/>
+</geometry>
+<material name="ak_80-6_material">
+<color rgba="0.61568627450980395466 0.81176470588235294379 0.92941176470588238168 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0.015999999999999944822 0.099999999999999977796 0.013999999999999929168" rpy="-3.1415926535897922278 1.570796326794896558 0" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/ak_80-6.stl"/>
+</geometry>
+</collision>
+<visual>
+<origin xyz="-1.3877787807814456755e-17 0 -0.0060000000000000053291" rpy="3.141592653589793116 -1.0697889891861386437e-25 3.65050456951868538e-32" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/leg_link_1.stl"/>
+</geometry>
+<material name="leg_link_1_material">
+<color rgba="0.61568627450980395466 0.81176470588235294379 0.92941176470588238168 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="-1.3877787807814456755e-17 0 -0.0060000000000000053291" rpy="3.141592653589793116 -1.0697889891861386437e-25 3.65050456951868538e-32" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/leg_link_1.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="-0.003079867455268380308 0.097378484809245130505 0.013713671493597888451" rpy="0 0 0"/>
+<mass value="1.5219446759767925048" />
+<inertia ixx="0.0014510247696950756644" ixy="1.2288058522573831177e-05"  ixz="1.3421327695365534447e-06" iyy="0.00078490304555341237729" iyz="-2.753599898644256265e-05" izz="0.0010848479241112583306" />
+</inertial>
+</link>
+
+<link name="marine_link_2">
+<visual>
+<origin xyz="-2.7755575615628913511e-17 0 -0.0050000000000000044409" rpy="3.141592653589793116 -7.4376673055560418017e-25 -6.0746132443043036773e-33" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/leg_link_2.stl"/>
+</geometry>
+<material name="leg_link_2_material">
+<color rgba="0.61568627450980395466 0.81176470588235294379 0.92941176470588238168 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="-2.7755575615628913511e-17 0 -0.0050000000000000044409" rpy="3.141592653589793116 -7.4376673055560418017e-25 -6.0746132443043036773e-33" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/leg_link_2.stl"/>
+</geometry>
+</collision>
+<visual>
+<origin xyz="-2.7755575615628913511e-17 0.21399999999999996803 -0.0060000000000000192069" rpy="-3.3306690738754641979e-16 -2.2204460609926013323e-16 -3.141592653589793116" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/ak_80-6.stl"/>
+</geometry>
+<material name="ak_80-6_material">
+<color rgba="0.61568627450980395466 0.81176470588235294379 0.92941176470588238168 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="-2.7755575615628913511e-17 0.21399999999999996803 -0.0060000000000000192069" rpy="-3.3306690738754641979e-16 -2.2204460609926013323e-16 -3.141592653589793116" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/ak_80-6.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="-8.3367393509718289613e-09 0.19552184531056762684 0.013940732635970872269" rpy="0 0 0"/>
+<mass value="1.7687316482567319031" />
+<inertia ixx="0.0050867491706552449282" ixy="-7.1050280532120018949e-10"  ixz="5.9357133909882572598e-10" iyy="0.0009414387688410585887" iyz="6.7525784112206494575e-05" izz="0.0053701448403779151325" />
+</inertial>
+</link>
+
+<link name="leg_link_3">
+<visual>
+<origin xyz="0 0 -0.0049999999999999905631" rpy="3.141592653589793116 8.0361348176900220237e-25 -6.2314092412225088035e-33" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/leg_link_3.stl"/>
+</geometry>
+<material name="leg_link_3_material">
+<color rgba="0.61568627450980395466 0.81176470588235294379 0.92941176470588238168 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0 -0.0049999999999999905631" rpy="3.141592653589793116 8.0361348176900220237e-25 -6.2314092412225088035e-33" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/leg_link_3.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="-3.2230404266991602092e-08 0.16546849448399042481 0.018847935716785849114" rpy="0 0 0"/>
+<mass value="0.42766929955741023184" />
+<inertia ixx="0.0033996134873447241519" ixy="-1.2242578620013189789e-10"  ixz="4.5477348300680707396e-10" iyy="0.00032151983771756017898" iyz="-2.1840639475865687041e-05" izz="0.0032069954193416180983" />
+</inertial>
+</link>
+
+<joint name="leg1_3" type="revolute">
+<origin xyz="-2.7755575615628913511e-17 0.21399999999999996803 -0.0060000000000000192069" rpy="3.3306690738754237687e-16 2.2204460903736927137e-16 1.6543612188746611647e-24" />
+<parent link="marine_link_2" />
+<child link="leg_link_3" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<joint name="leg1_2" type="revolute">
+<origin xyz="0.015999999999999944822 0.099999999999999977796 0.013999999999999929168" rpy="-1.0297707144057653159e-15 -1.5707963134892146684 0" />
+<parent link="marine_link_1" />
+<child link="marine_link_2" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<joint name="leg1_1" type="revolute">
+<origin xyz="0.62954269853220079511 -0.089465825061300990884 -0.21574789536401708934" rpy="-1.3305681734714807854e-08 1.2257037618437565262e-08 -1.5707963267948958919" />
+<parent link="marine_body" />
+<child link="marine_link_1" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<link name="marine_link_1_2">
+<visual>
+<origin xyz="0.015999999999999042766 0.099999999999999977796 0.013999999999999929168" rpy="-3.141592653589793116 1.570796326794896558 0" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/ak_80-6.stl"/>
+</geometry>
+<material name="ak_80-6_material">
+<color rgba="0.61568627450980395466 0.81176470588235294379 0.92941176470588238168 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0.015999999999999042766 0.099999999999999977796 0.013999999999999929168" rpy="-3.141592653589793116 1.570796326794896558 0" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/ak_80-6.stl"/>
+</geometry>
+</collision>
+<visual>
+<origin xyz="-1.3877787807814456755e-17 0 -0.0060000000000000330846" rpy="3.141592653589793116 -7.5393456993408425876e-25 2.917602418913989383e-32" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/leg_link_1.stl"/>
+</geometry>
+<material name="leg_link_1_material">
+<color rgba="0.61568627450980395466 0.81176470588235294379 0.92941176470588238168 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="-1.3877787807814456755e-17 0 -0.0060000000000000330846" rpy="3.141592653589793116 -7.5393456993408425876e-25 2.917602418913989383e-32" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/leg_link_1.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="-0.0030798674552687073033 0.097378484809245116627 0.013713671493597886716" rpy="0 0 0"/>
+<mass value="1.5219446759767925048" />
+<inertia ixx="0.0014510247696950171175" ixy="1.2288058522576624692e-05"  ixz="1.3421327695366989226e-06" iyy="0.00078490304555335404721" iyz="-2.7535998986442660906e-05" izz="0.0010848479241112312255" />
+</inertial>
+</link>
+
+<link name="marine_link_2_2">
+<visual>
+<origin xyz="0 0 -0.0049999999999999905631" rpy="-3.141592653589793116 6.864584346453913776e-25 -1.5117196032702463348e-33" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/leg_link_2.stl"/>
+</geometry>
+<material name="leg_link_2_material">
+<color rgba="0.61568627450980395466 0.81176470588235294379 0.92941176470588238168 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0 -0.0049999999999999905631" rpy="-3.141592653589793116 6.864584346453913776e-25 -1.5117196032702463348e-33" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/leg_link_2.stl"/>
+</geometry>
+</collision>
+<visual>
+<origin xyz="0 0.21400000000000005129 -0.0059999999999999359401" rpy="-3.3306690738754701143e-16 6.6613381488208584693e-16 3.141592653589793116" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/ak_80-6.stl"/>
+</geometry>
+<material name="ak_80-6_material">
+<color rgba="0.61568627450980395466 0.81176470588235294379 0.92941176470588238168 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0.21400000000000005129 -0.0059999999999999359401" rpy="-3.3306690738754701143e-16 6.6613381488208584693e-16 3.141592653589793116" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/ak_80-6.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="-8.3367393232162533457e-09 0.19552184531056768235 0.013940732635970912168" rpy="0 0 0"/>
+<mass value="1.7687316482567319031" />
+<inertia ixx="0.0050867491706552353872" ixy="-7.1050280532120122346e-10"  ixz="5.935713397170393193e-10" iyy="0.00094143876884104384355" iyz="6.7525784112205667871e-05" izz="0.0053701448403779159999" />
+</inertial>
+</link>
+
+<link name="leg_link_3_2">
+<visual>
+<origin xyz="0 0 -0.0049999999999999905631" rpy="-3.141592653589793116 4.2537504216873527989e-25 -5.170011011294480178e-33" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/leg_link_3.stl"/>
+</geometry>
+<material name="leg_link_3_material">
+<color rgba="0.61568627450980395466 0.81176470588235294379 0.92941176470588238168 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0 -0.0049999999999999905631" rpy="-3.141592653589793116 4.2537504216873527989e-25 -5.170011011294480178e-33" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/leg_link_3.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="-3.2230404266991602092e-08 0.16546849448399042481 0.018847935716785849114" rpy="0 0 0"/>
+<mass value="0.42766929955741023184" />
+<inertia ixx="0.0033996134873447241519" ixy="-1.2242578620013189789e-10"  ixz="4.5477348300680707396e-10" iyy="0.00032151983771756017898" iyz="-2.1840639475865687041e-05" izz="0.0032069954193416180983" />
+</inertial>
+</link>
+
+<joint name="leg2_3" type="revolute">
+<origin xyz="0 0.21400000000000005129 -0.0059999999999999359401" rpy="3.3306690738754602535e-16 -6.6613381269537081323e-16 -4.2147865943526321321e-32" />
+<parent link="marine_link_2_2" />
+<child link="leg_link_3_2" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<joint name="leg2_2" type="revolute">
+<origin xyz="0.015999999999999042766 0.099999999999999977796 0.013999999999999929168" rpy="-1.1102230246251358328e-16 -1.5707963134892148904 0" />
+<parent link="marine_link_1_2" />
+<child link="marine_link_2_2" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<joint name="leg2_1" type="revolute">
+<origin xyz="0.49554269854550642149 -0.089465825073558019609 -0.21474789358105572656" rpy="1.3305681734715122183e-08 -1.2257037618437547064e-08 1.570796326794896558" />
+<parent link="marine_body" />
+<child link="marine_link_1_2" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<link name="marine_link_1_3">
+<visual>
+<origin xyz="0.015999999999999542366 0.10000000000000008882 0.013999999999999956923" rpy="-3.141592653589793116 1.570796326794896558 0" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/ak_80-6.stl"/>
+</geometry>
+<material name="ak_80-6_material">
+<color rgba="0.61568627450980395466 0.81176470588235294379 0.92941176470588238168 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0.015999999999999542366 0.10000000000000008882 0.013999999999999956923" rpy="-3.141592653589793116 1.570796326794896558 0" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/ak_80-6.stl"/>
+</geometry>
+</collision>
+<visual>
+<origin xyz="0 0 -0.0060000000000000053291" rpy="-3.141592653589793116 1.0952177031047265357e-25 2.5869652728735385059e-24" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/leg_link_1.stl"/>
+</geometry>
+<material name="leg_link_1_material">
+<color rgba="0.61568627450980395466 0.81176470588235294379 0.92941176470588238168 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0 -0.0060000000000000053291" rpy="-3.141592653589793116 1.0952177031047265357e-25 2.5869652728735385059e-24" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/leg_link_1.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="-0.0030798674552685290605 0.097378484809245227649 0.013713671493597916207" rpy="0 0 0"/>
+<mass value="1.5219446759767925048" />
+<inertia ixx="0.0014510247696950502941" ixy="1.2288058522575977558e-05"  ixz="1.3421327695366271365e-06" iyy="0.00078490304555338679011" iyz="-2.7535998986442704952e-05" izz="0.0010848479241112472717" />
+</inertial>
+</link>
+
+<link name="marine_link_2_3">
+<visual>
+<origin xyz="-2.7755575615628913511e-17 0 -0.0050000000000000044409" rpy="-3.141592653589793116 1.3907307573403654665e-24 2.0285433583972228492e-25" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/leg_link_2.stl"/>
+</geometry>
+<material name="leg_link_2_material">
+<color rgba="0.61568627450980395466 0.81176470588235294379 0.92941176470588238168 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="-2.7755575615628913511e-17 0 -0.0050000000000000044409" rpy="-3.141592653589793116 1.3907307573403654665e-24 2.0285433583972228492e-25" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/leg_link_2.stl"/>
+</geometry>
+</collision>
+<visual>
+<origin xyz="-5.5511151231257827021e-17 0.21400000000000019007 -0.0060000000000000053291" rpy="-3.3306690885949711911e-16 -2.2204460385778545698e-16 3.141592653589793116" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/ak_80-6.stl"/>
+</geometry>
+<material name="ak_80-6_material">
+<color rgba="0.61568627450980395466 0.81176470588235294379 0.92941176470588238168 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="-5.5511151231257827021e-17 0.21400000000000019007 -0.0060000000000000053291" rpy="-3.3306690885949711911e-16 -2.2204460385778545698e-16 3.141592653589793116" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/ak_80-6.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="-8.3367393732408578489e-09 0.19552184531056776562 0.013940732635970882677" rpy="0 0 0"/>
+<mass value="1.7687316482567319031" />
+<inertia ixx="0.0050867491706552570713" ixy="-7.1050280459338661257e-10"  ixz="5.9357133906809400167e-10" iyy="0.00094143876884105880554" iyz="6.7525784112206453918e-05" izz="0.0053701448403779272756" />
+</inertial>
+</link>
+
+<link name="leg_link_3_3">
+<visual>
+<origin xyz="-2.7755575615628913511e-17 0 -0.0049999999999999766853" rpy="-3.141592653589793116 6.966362740402553954e-25 2.7749145379640475013e-25" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/leg_link_3.stl"/>
+</geometry>
+<material name="leg_link_3_material">
+<color rgba="0.61568627450980395466 0.81176470588235294379 0.92941176470588238168 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="-2.7755575615628913511e-17 0 -0.0049999999999999766853" rpy="-3.141592653589793116 6.966362740402553954e-25 2.7749145379640475013e-25" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/leg_link_3.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="-3.2230404294747177707e-08 0.16546849448399042481 0.018847935716785866461" rpy="0 0 0"/>
+<mass value="0.42766929955741023184" />
+<inertia ixx="0.0033996134873447241519" ixy="-1.2242578620013189789e-10"  ixz="4.5477348300680712566e-10" iyy="0.00032151983771756017898" iyz="-2.1840639475865690429e-05" izz="0.0032069954193416189657" />
+</inertial>
+</link>
+
+<joint name="leg3_3" type="revolute">
+<origin xyz="-5.5511151231257827021e-17 0.21400000000000019007 -0.0060000000000000053291" rpy="3.2897757207906240735e-16 2.1740346064075694008e-16 1.5775077551595413785e-16" />
+<parent link="marine_link_2_3" />
+<child link="leg_link_3_3" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<joint name="leg3_2" type="revolute">
+<origin xyz="0.015999999999999542366 0.10000000000000008882 0.013999999999999956923" rpy="-1.1102230042829666546e-16 -1.5707963121762660297 0" />
+<parent link="marine_link_1_3" />
+<child link="marine_link_2_3" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<joint name="leg3_1" type="revolute">
+<origin xyz="0.62954269853220079511 0.16053417493869903687 -0.21574789229975768756" rpy="-1.3305681809745279144e-08 1.2257037388934383595e-08 -1.5707963440434054014" />
+<parent link="marine_body" />
+<child link="marine_link_1_3" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<link name="marine_link_1_4">
+<visual>
+<origin xyz="0.015999999999999042766 0.10000000000000003331 0.013999999999999956923" rpy="-3.141592653589793116 1.570796326794896558 0" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/ak_80-6.stl"/>
+</geometry>
+<material name="ak_80-6_material">
+<color rgba="0.61568627450980395466 0.81176470588235294379 0.92941176470588238168 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0.015999999999999042766 0.10000000000000003331 0.013999999999999956923" rpy="-3.141592653589793116 1.570796326794896558 0" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/ak_80-6.stl"/>
+</geometry>
+</collision>
+<visual>
+<origin xyz="0 5.5511151231257827021e-17 -0.0060000000000000053291" rpy="3.141592653589793116 -1.668211952592687238e-25 1.6053017636499942982e-32" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/leg_link_1.stl"/>
+</geometry>
+<material name="leg_link_1_material">
+<color rgba="0.61568627450980395466 0.81176470588235294379 0.92941176470588238168 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 5.5511151231257827021e-17 -0.0060000000000000053291" rpy="3.141592653589793116 -1.668211952592687238e-25 1.6053017636499942982e-32" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/leg_link_1.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="-0.0030798674552687068696 0.097378484809245172138 0.013713671493597916207" rpy="0 0 0"/>
+<mass value="1.5219446759767925048" />
+<inertia ixx="0.0014510247696950171175" ixy="1.2288058522576677208e-05"  ixz="1.34213276953670464e-06" iyy="0.00078490304555335404721" iyz="-2.7535998986442660906e-05" izz="0.0010848479241112316592" />
+</inertial>
+</link>
+
+<link name="marine_link_2_4">
+<visual>
+<origin xyz="0 0 -0.0049999999999999766853" rpy="3.141592653589793116 -5.9851547942136553154e-26 -5.7154402598272642465e-25" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/leg_link_2.stl"/>
+</geometry>
+<material name="leg_link_2_material">
+<color rgba="0.61568627450980395466 0.81176470588235294379 0.92941176470588238168 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0 -0.0049999999999999766853" rpy="3.141592653589793116 -5.9851547942136553154e-26 -5.7154402598272642465e-25" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/leg_link_2.stl"/>
+</geometry>
+</collision>
+<visual>
+<origin xyz="2.7755575615628913511e-17 0.21399999999999996803 -0.0059999999999999498179" rpy="-3.3306690738754706073e-16 6.6613381477510565856e-16 -3.141592653589793116" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/ak_80-6.stl"/>
+</geometry>
+<material name="ak_80-6_material">
+<color rgba="0.61568627450980395466 0.81176470588235294379 0.92941176470588238168 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="2.7755575615628913511e-17 0.21399999999999996803 -0.0059999999999999498179" rpy="-3.3306690738754706073e-16 6.6613381477510565856e-16 -3.141592653589793116" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/ak_80-6.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="-8.3367393009472261124e-09 0.19552184531056762684 0.013940732635970903494" rpy="0 0 0"/>
+<mass value="1.7687316482567319031" />
+<inertia ixx="0.0050867491706552327851" ixy="-7.1050280604901655814e-10"  ixz="5.935713397477713538e-10" iyy="0.00094143876884104601196" iyz="6.752578411220630484e-05" izz="0.005370144840377911663" />
+</inertial>
+</link>
+
+<link name="leg_link_3_4">
+<visual>
+<origin xyz="-2.7755575615628913511e-17 2.7755575615628913511e-17 -0.0049999999999999766853" rpy="-3.141592653589793116 -1.8683188381277295455e-24 -2.8607443409091804138e-24" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/leg_link_3.stl"/>
+</geometry>
+<material name="leg_link_3_material">
+<color rgba="0.61568627450980395466 0.81176470588235294379 0.92941176470588238168 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="-2.7755575615628913511e-17 2.7755575615628913511e-17 -0.0049999999999999766853" rpy="-3.141592653589793116 -1.8683188381277295455e-24 -2.8607443409091804138e-24" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/leg_link_3.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="-3.2230404294747177707e-08 0.16546849448399045257 0.018847935716785862992" rpy="0 0 0"/>
+<mass value="0.42766929955741023184" />
+<inertia ixx="0.0033996134873447241519" ixy="-1.2242578620013189789e-10"  ixz="4.5477348300680707396e-10" iyy="0.00032151983771756017898" iyz="-2.1840639475865687041e-05" izz="0.0032069954193416180983" />
+</inertial>
+</link>
+
+<joint name="leg4_3" type="revolute">
+<origin xyz="0 0.21399999999999996803 -0.0058999999999999608313" rpy="3.330669198001233236e-16 -6.6613380671725655711e-16 -1.8633760118236322817e-08" />
+<parent link="marine_link_2_4" />
+<child link="leg_link_3_4" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<joint name="leg4_2" type="revolute">
+<origin xyz="0.015999999999999042766 0.10000000000000003331 0.013999999999999956923" rpy="-1.1102230246251375585e-16 -1.570796301276968121 0" />
+<parent link="marine_link_1_4" />
+<child link="marine_link_2_4" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<joint name="leg4_1" type="revolute">
+<origin xyz="0.49554269854550642149 0.16053417492644200815 -0.21474789051679632479" rpy="1.3305681734715113911e-08 -1.2257037618437547064e-08 1.570796326794896558" />
+<parent link="marine_body" />
+<child link="marine_link_1_4" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<link name="marine_link_1_5">
+<visual>
+<origin xyz="0.01599999999999901501 0.099999999999999866773 0.013999999999999956923" rpy="3.141592653589793116 1.570796326794896558 0" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/ak_80-6.stl"/>
+</geometry>
+<material name="ak_80-6_material">
+<color rgba="0.61568627450980395466 0.81176470588235294379 0.92941176470588238168 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0.01599999999999901501 0.099999999999999866773 0.013999999999999956923" rpy="3.141592653589793116 1.570796326794896558 0" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/ak_80-6.stl"/>
+</geometry>
+</collision>
+<visual>
+<origin xyz="-1.1102230246251565404e-16 -1.1102230246251565404e-16 -0.0060000000000000053291" rpy="3.141592653589793116 5.3997677209687746852e-25 -1.5198795551881781573e-32" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/leg_link_1.stl"/>
+</geometry>
+<material name="leg_link_1_material">
+<color rgba="0.61568627450980395466 0.81176470588235294379 0.92941176470588238168 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="-1.1102230246251565404e-16 -1.1102230246251565404e-16 -0.0060000000000000053291" rpy="3.141592653589793116 5.3997677209687746852e-25 -1.5198795551881781573e-32" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/leg_link_1.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="-0.0030798674552687237832 0.097378484809245005605 0.013713671493597917941" rpy="0 0 0"/>
+<mass value="1.5219446759767925048" />
+<inertia ixx="0.0014510247696950149491" ixy="1.2288058522576338394e-05"  ixz="1.3421327695366199367e-06" iyy="0.00078490304555335838402" iyz="-2.7535998986442674458e-05" izz="0.0010848479241112338276" />
+</inertial>
+</link>
+
+<link name="marine_link_2_5">
+<visual>
+<origin xyz="-2.7755575615628913511e-17 0 -0.0050000000000000044409" rpy="-3.141592653589793116 -1.566545694851067642e-25 2.1949138965686868994e-33" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/leg_link_2.stl"/>
+</geometry>
+<material name="leg_link_2_material">
+<color rgba="0.61568627450980395466 0.81176470588235294379 0.92941176470588238168 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="-2.7755575615628913511e-17 0 -0.0050000000000000044409" rpy="-3.141592653589793116 -1.566545694851067642e-25 2.1949138965686868994e-33" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/leg_link_2.stl"/>
+</geometry>
+</collision>
+<visual>
+<origin xyz="-2.7755575615628913511e-17 0.21400000000000007905 -0.0060000000000000053291" rpy="-3.33066907387546617e-16 -2.2204460503201228532e-16 3.141592653589793116" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/ak_80-6.stl"/>
+</geometry>
+<material name="ak_80-6_material">
+<color rgba="0.61568627450980395466 0.81176470588235294379 0.92941176470588238168 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="-2.7755575615628913511e-17 0.21400000000000007905 -0.0060000000000000053291" rpy="-3.33066907387546617e-16 -2.2204460503201228532e-16 3.141592653589793116" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/ak_80-6.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="-8.3367393509718289613e-09 0.19552184531056768235 0.013940732635970882677" rpy="0 0 0"/>
+<mass value="1.7687316482567319031" />
+<inertia ixx="0.0050867491706552509997" ixy="-7.1050280532120153366e-10"  ixz="5.9357133909882551919e-10" iyy="0.0009414387688410585887" iyz="6.752578411220625063e-05" izz="0.0053701448403779203367" />
+</inertial>
+</link>
+
+<link name="leg_link_3_5">
+<visual>
+<origin xyz="-2.7755575615628913511e-17 0 -0.0050000000000000044409" rpy="3.141592653589793116 -2.6363553916238460517e-25 2.0381343325391673179e-33" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/leg_link_3.stl"/>
+</geometry>
+<material name="leg_link_3_material">
+<color rgba="0.61568627450980395466 0.81176470588235294379 0.92941176470588238168 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="-2.7755575615628913511e-17 0 -0.0050000000000000044409" rpy="3.141592653589793116 -2.6363553916238460517e-25 2.0381343325391673179e-33" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/leg_link_3.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="-3.2230404294747177707e-08 0.16546849448399042481 0.018847935716785835236" rpy="0 0 0"/>
+<mass value="0.42766929955741023184" />
+<inertia ixx="0.0033996134873447241519" ixy="-1.2242578620013189789e-10"  ixz="4.5477348300680707396e-10" iyy="0.00032151983771756017898" iyz="-2.1840639475865687041e-05" izz="0.0032069954193416180983" />
+</inertial>
+</link>
+
+<joint name="leg5_3" type="revolute">
+<origin xyz="-2.7755575615628913511e-17 0.21400000000000007905 -0.0060000000000000053291" rpy="3.3306690738754282061e-16 2.2204460466139783926e-16 -9.6569478820098474956e-32" />
+<parent link="marine_link_2_5" />
+<child link="leg_link_3_5" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<joint name="leg5_2" type="revolute">
+<origin xyz="0.01599999999999901501 0.099999999999999866773 0.013999999999999956923" rpy="6.4157844600066747648e-33 -1.5707963134892146684 0" />
+<parent link="marine_link_1_5" />
+<child link="marine_link_2_5" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<joint name="leg5_1" type="revolute">
+<origin xyz="0.62954269853353173048 0.41053417493747335065 -0.2156478892354982968" rpy="-1.3305681734715105639e-08 1.225703761843755699e-08 -1.57079632679489678" />
+<parent link="marine_body" />
+<child link="marine_link_1_5" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<link name="marine_link_1_6">
+<visual>
+<origin xyz="0.015999999999999903189 0.10000000000000003331 0.013999999999999984679" rpy="3.141592653589793116 1.570796326794896558 0" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/ak_80-6.stl"/>
+</geometry>
+<material name="ak_80-6_material">
+<color rgba="0.61568627450980395466 0.81176470588235294379 0.92941176470588238168 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0.015999999999999903189 0.10000000000000003331 0.013999999999999984679" rpy="3.141592653589793116 1.570796326794896558 0" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/ak_80-6.stl"/>
+</geometry>
+</collision>
+<visual>
+<origin xyz="-5.5511151231257827021e-17 0 -0.0060000000000000053291" rpy="3.141592653589793116 5.8711337467473334219e-25 -1.582696786617694222e-30" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/leg_link_1.stl"/>
+</geometry>
+<material name="leg_link_1_material">
+<color rgba="0.61568627450980395466 0.81176470588235294379 0.92941176470588238168 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="-5.5511151231257827021e-17 0 -0.0060000000000000053291" rpy="3.141592653589793116 5.8711337467473334219e-25 -1.582696786617694222e-30" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/leg_link_1.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="-0.0030798674552684579368 0.097378484809245172138 0.013713671493597942228" rpy="0 0 0"/>
+<mass value="1.5219446759767925048" />
+<inertia ixx="0.0014510247696950797844" ixy="1.2288058522575735307e-05"  ixz="1.3421327695365316336e-06" iyy="0.00078490304555341367833" iyz="-2.7535998986442796431e-05" izz="0.0010848479241112578969" />
+</inertial>
+</link>
+
+<link name="marine_link_2_6">
+<visual>
+<origin xyz="0 0 -0.005000000000000059952" rpy="3.141592653589793116 6.8645569322546947274e-25 -1.5116644668380660983e-33" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/leg_link_2.stl"/>
+</geometry>
+<material name="leg_link_2_material">
+<color rgba="0.61568627450980395466 0.81176470588235294379 0.92941176470588238168 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0 -0.005000000000000059952" rpy="3.141592653589793116 6.8645569322546947274e-25 -1.5116644668380660983e-33" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/leg_link_2.stl"/>
+</geometry>
+</collision>
+<visual>
+<origin xyz="0 0.21400000000000007905 -0.0059999999999999498179" rpy="-3.3306690738753897491e-16 6.6613381653644717064e-16 -3.141592653589793116" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/ak_80-6.stl"/>
+</geometry>
+<material name="ak_80-6_material">
+<color rgba="0.61568627450980395466 0.81176470588235294379 0.92941176470588238168 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0.21400000000000007905 -0.0059999999999999498179" rpy="-3.3306690738753897491e-16 6.6613381653644717064e-16 -3.141592653589793116" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/ak_80-6.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="-8.3367393232162533457e-09 0.19552184531056768235 0.013940732635970887882" rpy="0 0 0"/>
+<mass value="1.7687316482567319031" />
+<inertia ixx="0.0050867491706552362546" ixy="-7.1050280532120153366e-10"  ixz="5.9357133971703869891e-10" iyy="0.00094143876884104384355" iyz="6.7525784112204231303e-05" izz="0.0053701448403779168672" />
+</inertial>
+</link>
+
+<link name="leg_link_3_6">
+<visual>
+<origin xyz="0 0 -0.0049999999999999489297" rpy="3.141592653589793116 4.2537445692179961875e-25 -5.1700131995909954257e-33" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/leg_link_3.stl"/>
+</geometry>
+<material name="leg_link_3_material">
+<color rgba="0.61568627450980395466 0.81176470588235294379 0.92941176470588238168 1.0"/>
+</material>
+</visual>
+<collision>
+<origin xyz="0 0 -0.0049999999999999489297" rpy="3.141592653589793116 4.2537445692179961875e-25 -5.1700131995909954257e-33" />
+<geometry>
+<mesh filename="package://quadruped_description/quadruped/leg_link_3.stl"/>
+</geometry>
+</collision>
+<inertial>
+<origin xyz="-3.2230404266991602092e-08 0.16546849448399042481 0.018847935716785890747" rpy="0 0 0"/>
+<mass value="0.42766929955741023184" />
+<inertia ixx="0.0033996134873447241519" ixy="-1.2242578620013189789e-10"  ixz="4.5477348300680707396e-10" iyy="0.00032151983771756017898" iyz="-2.1840639475865687041e-05" izz="0.0032069954193416180983" />
+</inertial>
+</link>
+
+<joint name="leg6_3" type="revolute">
+<origin xyz="-2.7755575615628913511e-17 0.21400000000000007905 -0.0058999999999999608313" rpy="3.3306690738754119358e-16 -6.6613381600409385509e-16 3.3087224327162111062e-24" />
+<parent link="marine_link_2_6" />
+<child link="leg_link_3_6" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<joint name="leg6_2" type="revolute">
+<origin xyz="0.015999999999999903189 0.10000000000000003331 0.013999999999999984679" rpy="9.0669751618562304133e-30 -1.5707963134892148904 0" />
+<parent link="marine_link_1_6" />
+<child link="marine_link_2_6" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+<joint name="leg6_1" type="revolute">
+<origin xyz="0.49554269854550619945 0.41053417492644200815 -0.21474788745253692301" rpy="1.3305681734714096479e-08 -1.2257037618438294835e-08 1.5707963267949522912" />
+<parent link="marine_body" />
+<child link="marine_link_1_6" />
+<axis xyz="0 0 1"/>
+<limit effort="1" velocity="20" />
+<joint_properties friction="0.0"/>
+</joint>
+
+
+</robot>

@@ -1,3 +1,35 @@
+/**    HOW TO SETUP FOR ESP32S3
+ * 1. clone to components directory:
+ * 		git clone -b jazzy git@github.com:micro-ROS/micro_ros_espidf_component.git
+ * 2. edit these files:
+ * 		2.1 go to @file colcon.meta in micro_ros_espidf_component
+ * 			line 14:
+ * 			"rcutils": {
+        	    "cmake-args": [
+        	        "-DBUILD_SHARED=OFF",
+        	        "-DENABLE_TESTING=OFF",
+        	        "-DRCUTILS_NO_FILESYSTEM=ON",
+        	        "-DRCUTILS_NO_THREAD_SUPPORT=ON",
+        	        "-DRCUTILS_NO_64_ATOMIC=OFF",
+        	        "-DRCUTILS_AVOID_DYNAMIC_ALLOCATION=ON"
+        	    ]
+        	},
+ * 			line 24: 
+ * 			"microxrcedds_client": {
+   			  	"cmake-args": [
+   			  	    "-DUCLIENT_PIC=OFF",
+   			  	    "-DUCLIENT_PROFILE_DISCOVERY=ON",
+   			  	    "-DUCLIENT_PROFILE_UDP=ON",
+   			  	    "-DUCLIENT_PROFILE_CUSTOM_TRANSPORT=ON",
+   			  	    "-DUCLIENT_PROFILE_SERIAL=OFF",
+   			  	    "-DUCLIENT_PROFILE_TCP=OFF",
+   			  	    "-DUCLIENT_MIN_HEARTBEAT_TIME_INTERVAL=1"
+   			  	]}
+		2.2 go to @file libmicroros.mk in micro_ros_espidf_component and edit esp32s2 to esp32s3
+			line 114: 
+				ifeq ($(IDF_TARGET),$(filter $(IDF_TARGET),esp32s3 esp32c3 esp32c6))
+ */
+
 #include <string.h>
 #include <stdio.h>
 #include <unistd.h>

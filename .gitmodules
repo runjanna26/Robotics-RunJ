@@ -1,3 +1,0 @@
-[submodule "esp32_project/esp-idf/esp32c3_uros_esp_idf/components/esp32_project/esp-idf/esp32c3_uros_esp_idf/components/micro_ros_espidf_component"]
-	path = esp32_project/esp-idf/esp32c3_uros_esp_idf/components/esp32_project/esp-idf/esp32c3_uros_esp_idf/components/micro_ros_espidf_component
-	url = git@github.com:micro-ROS/micro_ros_espidf_component.git

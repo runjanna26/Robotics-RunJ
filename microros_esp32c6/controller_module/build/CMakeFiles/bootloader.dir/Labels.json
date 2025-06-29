@@ -1,0 +1,43 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/runj/BRAIN/Robotics-RunJ/microros_esp32c6/controller_module/build/CMakeFiles/bootloader"
+		},
+		{
+			"file" : "/home/runj/BRAIN/Robotics-RunJ/microros_esp32c6/controller_module/build/CMakeFiles/bootloader.rule"
+		},
+		{
+			"file" : "/home/runj/BRAIN/Robotics-RunJ/microros_esp32c6/controller_module/build/CMakeFiles/bootloader-complete.rule"
+		},
+		{
+			"file" : "/home/runj/BRAIN/Robotics-RunJ/microros_esp32c6/controller_module/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule"
+		},
+		{
+			"file" : "/home/runj/BRAIN/Robotics-RunJ/microros_esp32c6/controller_module/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule"
+		},
+		{
+			"file" : "/home/runj/BRAIN/Robotics-RunJ/microros_esp32c6/controller_module/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule"
+		},
+		{
+			"file" : "/home/runj/BRAIN/Robotics-RunJ/microros_esp32c6/controller_module/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule"
+		},
+		{
+			"file" : "/home/runj/BRAIN/Robotics-RunJ/microros_esp32c6/controller_module/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule"
+		},
+		{
+			"file" : "/home/runj/BRAIN/Robotics-RunJ/microros_esp32c6/controller_module/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule"
+		},
+		{
+			"file" : "/home/runj/BRAIN/Robotics-RunJ/microros_esp32c6/controller_module/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"bootloader"
+		],
+		"name" : "bootloader"
+	}
+}

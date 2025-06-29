@@ -1,0 +1,2 @@
+source /home/runj/BRAIN/Robotics-RunJ/microros_esp32c6/controller_module/build/bootloader/gdbinit/symbols
+source /home/runj/BRAIN/Robotics-RunJ/microros_esp32c6/controller_module/build/bootloader/gdbinit/connect

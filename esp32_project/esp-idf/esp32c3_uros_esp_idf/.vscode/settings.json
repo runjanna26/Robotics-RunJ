@@ -3,12 +3,12 @@
   "idf.espIdfPath": "/home/runj/esp/esp-idf",
   "idf.pythonInstallPath": "/usr/bin/python3",
   "idf.openOcdConfigs": [
-    "board/esp32s3-builtin.cfg"
+    "board/esp32c3-builtin.cfg"
   ],
-  "idf.port": "/dev/ttyACM0",
+  "idf.port": "/dev/ttyUSB0",
   "idf.toolsPath": "/home/runj/.espressif",
   "idf.customExtraVars": {
-    "IDF_TARGET": "esp32s3"
+    "IDF_TARGET": "esp32c3"
   },
   "idf.flashType": "UART",
   "files.associations": {
@@ -21,7 +21,6 @@
     "ostream": "c",
     "config.h": "c",
     "uros_network_interfaces.h": "c",
-    "watchdog_timer.h": "c",
-    "stdio.h": "c"
+    "watchdog_timer.h": "c"
   }
 }

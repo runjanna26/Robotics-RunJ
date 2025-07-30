@@ -44,14 +44,8 @@
 #include "esp_log.h"
 #include "esp_system.h"
 
+#include "watchdog_timer.h"
 
-/**
- * ====================================
- *        	  UROS Setup
- * ====================================
- */
-
-// #define USED_UROS 
 #define PROJECT_NAME "REFINE"
 #define MODULE_NAME "front"
 
@@ -62,41 +56,9 @@
 #define EXECUTE_EVERY_N_MS(MS, X) do { static volatile int64_t init = -1; if (init == -1) { init = uxr_millis(); } if (uxr_millis() - init > MS) { X; init = uxr_millis(); } } while (0)
 
 
-/**
- * ====================================
- *        Watchdog Timer Setup
- * ====================================
- */
-
 // #define USED_CONNECTION_CHECK 1
-#include "watchdog_timer.h"
 WatchdogTimer watchdogtimer;
 WatchdogTimer watchdogtimer_restartESP;
-
-
-/**
- * ====================================
- *        	  Encoder Setup
- * ====================================
- */
-#define SPI_HOST    SPI2_HOST  // Use SPI2_HOST for ESP32-C6
-#define PIN_MOSI    11
-#define PIN_MISO    13
-#define PIN_SCLK    14
-#define PIN_CS      10        // Change this to your actual CS pin
-#define SPI_CLOCK_SPEED_HZ 1000000 
-
-#include "AS5X47.h"
-spi_t enc;
-float encoder_angle;
-float encoder_angle_offset = 5.19;  // radian
-
-void encoder_read()
-{
-	encoder_angle = AS5X47_readAngle(&enc) * 0.0174532925 - encoder_angle_offset;    // radian
-	// ESP_LOGI("ENCODER", "angle: %f", encoder_angle);
-}
-
 
 
 #endif // CONFIG_H

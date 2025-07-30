@@ -4,4 +4,5 @@ idf_component_register(SRCS "main.c" "config.h" "micro_ros_setup.h"
                     INCLUDE_DIRS "."
 
                     REQUIRES watchdog_timer
+                    REQUIRES AS5X47
                     )

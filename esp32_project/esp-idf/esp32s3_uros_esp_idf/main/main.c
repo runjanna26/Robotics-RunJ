@@ -2,6 +2,7 @@
  * Task List:
  * [/] Micro-ROS pub/sub
  * [/] Reconnect when its lost
+ * [ ] RS485 with Dynamixel motors 
  * [ ] CAN BUS with AK motors
  * [ ] IMU
  * [ ] Camera read
@@ -12,6 +13,7 @@
 
 #include <config.h>
 #include <micro_ros_setup.h>
+                                // Uses Dynamixel SDK library
 
 void setup()
 {

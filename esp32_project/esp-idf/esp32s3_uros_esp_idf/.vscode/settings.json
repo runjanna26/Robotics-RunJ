@@ -22,6 +22,13 @@
     "config.h": "c",
     "uros_network_interfaces.h": "c",
     "watchdog_timer.h": "c",
-    "stdio.h": "c"
+    "stdio.h": "c",
+    "uart_periph.h": "c",
+    "gpio.h": "c",
+    "uart_types.h": "c",
+    "uart_hal.h": "c",
+    "esp_log.h": "c",
+    "dynamixel_sdk.h": "c",
+    "port_handler.h": "c"
   }
 }

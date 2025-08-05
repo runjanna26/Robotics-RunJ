@@ -32,13 +32,35 @@ void setup()
 													PIN_SCLK, 
 													PIN_CS, 
 													SPI_CLOCK_SPEED_HZ));
+
+	ESP_ERROR_CHECK_WITHOUT_ABORT(dynamixel_init(motor_ids, sizeof(motor_ids) / sizeof(motor_ids[0])));
+	num_points = generate_symmetric_trajectory(0.0f, PI, 1000, &traj);
 }
 
+int i = 0;
 void loop()
 {
+	if (num_points > 0) 
+	{
+		printf("Step %3d: %f rad\n", i, traj[i]);
+
+		goal_positions[0] = (int32_t)(traj[i]/UNIT_TO_RAD);  // Set goal position for the motor
+		set_goal_position(motor_ids, goal_positions, sizeof(motor_ids) / sizeof(motor_ids[0]));
+		i++;
+		if (i >= num_points) 
+		{
+			num_points = 0;
+			free(traj);
+		}
+	}
+
+
+
+	get_present_positions(port_num, motor_ids, sizeof(motor_ids) / sizeof(motor_ids[0]), present_positions);
+	// ESP_LOGI("DYNAMIXEL", "Present position %.3f rad", (float)present_positions[0] * UNIT_TO_RAD);
+
 
     EXECUTE_EVERY_N_MS(10, encoder_read());
-
 
 
 	// micro-ros loop
@@ -50,12 +72,6 @@ void loop()
 	#ifdef USED_UROS
 		rclc_executor_spin_some(&executor, RCL_MS_TO_NS(1)); 
 	#endif
-
-
-
-
-	
-    vTaskDelay(pdMS_TO_TICKS(10));
 }
 
 
@@ -69,4 +85,5 @@ void app_main(void)
 	{
 		loop();
 	}
+	closePort(port_num);
 }

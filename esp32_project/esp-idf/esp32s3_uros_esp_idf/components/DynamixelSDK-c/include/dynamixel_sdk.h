@@ -28,5 +28,8 @@
 #include "packet_handler.h"
 #include "port_handler.h"
 
+PacketData *packetData = NULL;
+int g_used_port_num = 0;
+uint8_t *g_is_using = NULL;
 
 #endif /* DYNAMIXEL_SDK_INCLUDE_DYNAMIXEL_SDK_DYNAMIXELSDK_C_H_ */

@@ -67,8 +67,8 @@ void command_subscription_callback(const void * msgin)
 
 void publish_clamp_wheel_module_feedback()
 {
-    clamp_wheel_module_state_msg.data.data[0] = 1.0;
-    clamp_wheel_module_state_msg.data.data[1] = 2.0;
+    clamp_wheel_module_state_msg.data.data[0] = (float)present_positions[0] * UNIT_TO_RAD;
+    clamp_wheel_module_state_msg.data.data[1] = encoder_angle;
     clamp_wheel_module_state_msg.data.data[2] = 3.0;
     clamp_wheel_module_state_msg.data.data[3] = 4.0;
     clamp_wheel_module_state_msg.data.data[4] = 5.0;
@@ -126,14 +126,14 @@ esp_err_t create_entities()
         &custom_qos));
     ESP_LOGI("uROS", "init publisher: %s", topic_name);
 
-    snprintf(topic_name, sizeof(topic_name), "%s/%s/imu_feedback", PROJECT_NAME, MODULE_NAME);
-	RCCHECK(rclc_publisher_init(
-		&imu_publisher,
-		&node,
-		ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Float32MultiArray),
-		topic_name,
-        &custom_qos));
-    ESP_LOGI("uROS", "init publisher: %s", topic_name);
+    // snprintf(topic_name, sizeof(topic_name), "%s/%s/imu_feedback", PROJECT_NAME, MODULE_NAME);
+	// RCCHECK(rclc_publisher_init(
+	// 	&imu_publisher,
+	// 	&node,
+	// 	ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Float32MultiArray),
+	// 	topic_name,
+    //     &custom_qos));
+    // ESP_LOGI("uROS", "init publisher: %s", topic_name);
 
     snprintf(topic_name, sizeof(topic_name), "%s/%s/controller_connection", PROJECT_NAME, MODULE_NAME);
     RCCHECK(rclc_publisher_init_best_effort(
@@ -144,13 +144,13 @@ esp_err_t create_entities()
 
 
     // ========== Create subscribers ==========
-    snprintf(topic_name, sizeof(topic_name), "%s/%s/command", PROJECT_NAME, MODULE_NAME);
-    RCCHECK(rclc_subscription_init_best_effort(
-        &command_subscriber,
-        &node,
-        ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Float32MultiArray),
-        topic_name));
-    ESP_LOGI("uROS", "init subscriber: %s", topic_name);
+    // snprintf(topic_name, sizeof(topic_name), "%s/%s/command", PROJECT_NAME, MODULE_NAME);
+    // RCCHECK(rclc_subscription_init_best_effort(
+    //     &command_subscriber,
+    //     &node,
+    //     ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Float32MultiArray),
+    //     topic_name));
+    // ESP_LOGI("uROS", "init subscriber: %s", topic_name);
 
 
 

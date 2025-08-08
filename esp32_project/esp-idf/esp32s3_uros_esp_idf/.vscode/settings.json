@@ -29,6 +29,7 @@
     "uart_hal.h": "c",
     "esp_log.h": "c",
     "dynamixel_sdk.h": "c",
-    "port_handler.h": "c"
+    "port_handler.h": "c",
+    "esp_system.h": "c"
   }
 }

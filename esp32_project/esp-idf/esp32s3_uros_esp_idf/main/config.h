@@ -44,7 +44,37 @@
 #include "esp_log.h"
 #include "esp_system.h"
 #include "esp_timer.h"
+#include "driver/gpio.h"
 
+
+/**
+ * ====================================
+ *        	    GPIO Setup
+ * ====================================
+ */
+#define GREEN_SW    38
+#define BLUE_SW     39
+#define ESP_INTR_FLAG_DEFAULT 0
+
+int green_sw_state;
+int blue_sw_state;
+int prev_green_sw_state;
+int prev_blue_sw_state;
+
+int pressing_state = 0;
+
+esp_err_t init_gpio_inputs()
+{
+    gpio_config_t io_conf = {
+        .pin_bit_mask = (1ULL << GREEN_SW) | (1ULL << BLUE_SW),
+        .mode = GPIO_MODE_INPUT,
+        .pull_up_en = 1,
+        .pull_down_en = GPIO_PULLDOWN_DISABLE,
+        .intr_type = GPIO_INTR_DISABLE
+    };
+    gpio_config(&io_conf);
+    return ESP_OK;
+}
 
 /**
  * ====================================
@@ -52,11 +82,11 @@
  * ====================================
  */
 
-// #define USED_UROS 
+#define USED_UROS 
 #define PROJECT_NAME "REFINE"
 #define MODULE_NAME "front"
 
-#define MICRO_ROS_AGENT_IP "10.10.0.2"
+#define MICRO_ROS_AGENT_IP "10.10.0.167"
 #define MICRO_ROS_AGENT_PORT "8888"
 #define EXECUTOR_HANDLE_NUMBER 10
 
@@ -95,7 +125,7 @@ float encoder_angle_offset = 5.19;  // radian
 void encoder_read()
 {
 	encoder_angle = AS5X47_readAngle(&enc) * 0.0174532925 - encoder_angle_offset;    // radian
-	ESP_LOGI("ENCODER", "angle: %f", encoder_angle);
+	// ESP_LOGI("ENCODER", "angle: %f", encoder_angle);
 }
 
 
@@ -106,8 +136,8 @@ void encoder_read()
  */
 #include <dynamixel_sdk.h>  
 
-int motor_ids[] = {5};
-int32_t goal_positions[] = {50000};
+int motor_ids[] = {5, 41};
+int32_t goal_positions[] = {0, 0};
 uint32_t present_positions[sizeof(motor_ids) / sizeof(motor_ids[0])] = {};
 
 #define PROTOCOL_VERSION                2                 // See which protocol version is used in the Dynamixel

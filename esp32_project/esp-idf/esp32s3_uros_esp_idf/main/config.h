@@ -82,9 +82,9 @@ esp_err_t init_gpio_inputs()
  * ====================================
  */
 
-#define USED_UROS 
-#define PROJECT_NAME "REFINE"
-#define MODULE_NAME "front"
+
+#define PROJECT_NAME ""
+#define MODULE_NAME ""
 
 #define MICRO_ROS_AGENT_IP "10.10.0.167"
 #define MICRO_ROS_AGENT_PORT "8888"
@@ -99,7 +99,7 @@ esp_err_t init_gpio_inputs()
  * ====================================
  */
 
-// #define USED_CONNECTION_CHECK 1
+
 #include "watchdog_timer.h"
 WatchdogTimer watchdogtimer;
 WatchdogTimer watchdogtimer_restartESP;

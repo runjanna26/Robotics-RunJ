@@ -56,7 +56,7 @@ std_msgs__msg__Bool connection_publisher_msg;
 void command_subscription_callback(const void * msgin)
 {
 	const std_msgs__msg__Float32MultiArray * msg = (const std_msgs__msg__Float32MultiArray *)msgin;
-	printf("Command messages are received:\n");
+	// printf("Command messages are received:\n");
 
     #ifdef USED_CONNECTION_CHECK
         watchdog_timer_restart(&watchdogtimer);
@@ -67,10 +67,10 @@ void command_subscription_callback(const void * msgin)
 
 void publish_clamp_wheel_module_feedback()
 {
-    clamp_wheel_module_state_msg.data.data[0] = 1.0;
-    clamp_wheel_module_state_msg.data.data[1] = 2.0;
-    clamp_wheel_module_state_msg.data.data[2] = 3.0;
-    clamp_wheel_module_state_msg.data.data[3] = 4.0;
+    clamp_wheel_module_state_msg.data.data[0] = (float)goal_positions[0] * UNIT_TO_RAD;
+    clamp_wheel_module_state_msg.data.data[1] = (float)present_positions[0] * UNIT_TO_RAD;
+    clamp_wheel_module_state_msg.data.data[2] = (float)goal_positions[1] * UNIT_TO_RAD;
+    clamp_wheel_module_state_msg.data.data[3] = (float)encoder_angle;
     clamp_wheel_module_state_msg.data.data[4] = 5.0;
     clamp_wheel_module_state_msg.data.data[5] = 6.0;
     clamp_wheel_module_state_msg.data.data[6] = 7.0;
@@ -117,7 +117,7 @@ esp_err_t create_entities()
     custom_qos.depth = 5;  
     custom_qos.reliability = RMW_QOS_POLICY_RELIABILITY_BEST_EFFORT;
 
-    snprintf(topic_name, sizeof(topic_name), "%s/%s/module_feedback", PROJECT_NAME, MODULE_NAME);
+    snprintf(topic_name, sizeof(topic_name), "%s%smodule_feedback", PROJECT_NAME, MODULE_NAME);
 	RCCHECK(rclc_publisher_init(
 		&module_publisher,
 		&node,
@@ -126,7 +126,7 @@ esp_err_t create_entities()
         &custom_qos));
     ESP_LOGI("uROS", "init publisher: %s", topic_name);
 
-    snprintf(topic_name, sizeof(topic_name), "%s/%s/imu_feedback", PROJECT_NAME, MODULE_NAME);
+    snprintf(topic_name, sizeof(topic_name), "%s%simu_feedback", PROJECT_NAME, MODULE_NAME);
 	RCCHECK(rclc_publisher_init(
 		&imu_publisher,
 		&node,
@@ -135,7 +135,7 @@ esp_err_t create_entities()
         &custom_qos));
     ESP_LOGI("uROS", "init publisher: %s", topic_name);
 
-    snprintf(topic_name, sizeof(topic_name), "%s/%s/controller_connection", PROJECT_NAME, MODULE_NAME);
+    snprintf(topic_name, sizeof(topic_name), "%s%scontroller_connection", PROJECT_NAME, MODULE_NAME);
     RCCHECK(rclc_publisher_init_best_effort(
         &board_connection_publisher,
         &node,
@@ -144,7 +144,7 @@ esp_err_t create_entities()
 
 
     // ========== Create subscribers ==========
-    snprintf(topic_name, sizeof(topic_name), "%s/%s/command", PROJECT_NAME, MODULE_NAME);
+    snprintf(topic_name, sizeof(topic_name), "%s%scommand", PROJECT_NAME, MODULE_NAME);
     RCCHECK(rclc_subscription_init_best_effort(
         &command_subscriber,
         &node,

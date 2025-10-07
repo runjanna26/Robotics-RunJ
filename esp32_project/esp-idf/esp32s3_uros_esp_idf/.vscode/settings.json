@@ -30,6 +30,12 @@
     "esp_log.h": "c",
     "dynamixel_sdk.h": "c",
     "port_handler.h": "c",
-    "esp_system.h": "c"
+    "esp_system.h": "c",
+    "twai.h": "c",
+    "array": "c",
+    "string": "c",
+    "string_view": "c",
+    "span": "c",
+    "akmotors.h": "c"
   }
 }

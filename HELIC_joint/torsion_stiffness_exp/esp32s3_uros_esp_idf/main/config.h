@@ -28,7 +28,9 @@
 		2.2 go to @file "libmicroros.mk" in micro_ros_espidf_component and edit "esp32s2" to "esp32s3"
 			line 114: 
 				ifeq ($(IDF_TARGET),$(filter $(IDF_TARGET),esp32s3 esp32c3 esp32c6))
- * 3. Replace /components/micro_ros_espidf_component/include with old include folder 
+ * 5. Add "libmicroros.a" 
+ * 4. Replace /components/micro_ros_espidf_component/include with old include folder 
+  
  */
 
 
@@ -87,7 +89,7 @@ esp_err_t init_gpio_inputs()
 #define PROJECT_NAME ""
 #define MODULE_NAME ""
 
-#define MICRO_ROS_AGENT_IP "10.10.0.2"
+#define MICRO_ROS_AGENT_IP "10.10.0.167"
 #define MICRO_ROS_AGENT_PORT "8888"
 #define EXECUTOR_HANDLE_NUMBER 10
 
@@ -129,29 +131,6 @@ void encoder_read()
 	// ESP_LOGI("ENCODER", "angle: %f", encoder_angle);
 }
 
-/**
- * ====================================
- *        RMD Motor CAN  Setup
- * ====================================
- */
-#include <AKMotors.h>  
-#define HIP_MOTOR 1
-
-twai_message_t msg_rx;
-uint32_t alerts;
-
-struct motor_feedback  hip_motor_fb       = {.id = HIP_MOTOR};
-
-
-#define NUM_MOTORS 3
-
-int can_ids[NUM_MOTORS] = {HIP_MOTOR};
-int num_ids = sizeof(can_ids) / sizeof(can_ids[0]);
-
-#define MOTOR_CONNECTION_TIMEOUT 100000     // 10 sec
-
-
-
 
 /**
  * ====================================
@@ -160,7 +139,7 @@ int num_ids = sizeof(can_ids) / sizeof(can_ids[0]);
  */
 #include <dynamixel_sdk.h>  
 
-int motor_ids[] = {5};
+int motor_ids[] = {5, 41};
 int32_t goal_positions[] = {0, 0};
 uint32_t present_positions[sizeof(motor_ids) / sizeof(motor_ids[0])] = {};
 uint32_t present_currents[sizeof(motor_ids) / sizeof(motor_ids[0])] = {};

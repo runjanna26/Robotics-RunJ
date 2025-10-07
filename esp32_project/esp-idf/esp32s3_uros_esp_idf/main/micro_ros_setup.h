@@ -46,7 +46,7 @@ rcl_publisher_t board_connection_publisher;
 
 rcl_subscription_t command_subscriber;
 
-std_msgs__msg__Float32MultiArray clamp_wheel_module_state_msg;
+std_msgs__msg__Float32MultiArray module_feedback_msg;
 std_msgs__msg__Float32MultiArray command_recv_msg;
 
 std_msgs__msg__Bool connection_publisher_msg;
@@ -65,16 +65,15 @@ void command_subscription_callback(const void * msgin)
 }
 
 
-void publish_clamp_wheel_module_feedback()
+void publish_module_feedback()
 {
-    clamp_wheel_module_state_msg.data.data[0] = (float)goal_positions[0] * UNIT_TO_RAD;
-    clamp_wheel_module_state_msg.data.data[1] = (float)present_positions[0] * UNIT_TO_RAD;
-    clamp_wheel_module_state_msg.data.data[2] = (float)goal_positions[1] * UNIT_TO_RAD;
-    clamp_wheel_module_state_msg.data.data[3] = (float)encoder_angle;
-    clamp_wheel_module_state_msg.data.data[4] = 5.0;
-    clamp_wheel_module_state_msg.data.data[5] = 6.0;
-    clamp_wheel_module_state_msg.data.data[6] = 7.0;
-    RCSOFTCHECK(rcl_publish(&module_publisher, &clamp_wheel_module_state_msg, NULL));
+    module_feedback_msg.data.data[0] = (float)hip_motor_fb.position;
+    module_feedback_msg.data.data[1] = (float)hip_motor_fb.velocity;
+    module_feedback_msg.data.data[2] = (float)hip_motor_fb.torque;
+    module_feedback_msg.data.data[3] = (float)hip_motor_fb.voltage;
+    module_feedback_msg.data.data[4] = (float)hip_motor_fb.current;
+    module_feedback_msg.data.data[5] = (float)hip_motor_fb.temperature;
+    RCSOFTCHECK(rcl_publish(&module_publisher, &module_feedback_msg, NULL));
 }
 
 void publisher_callback(rcl_timer_t * timer, int64_t last_call_time)
@@ -83,7 +82,7 @@ void publisher_callback(rcl_timer_t * timer, int64_t last_call_time)
 
 	if (timer != NULL) 
     {
-        publish_clamp_wheel_module_feedback();
+        publish_module_feedback();
         RCSOFTCHECK(rcl_publish(&board_connection_publisher, &connection_publisher_msg, NULL));
 
 	}
@@ -193,10 +192,10 @@ void destroy_entities()
 esp_err_t setup_multiarray_publisher_msg()
 {
     size_t data_len;
-    data_len = 7;
-    clamp_wheel_module_state_msg.data.data = (float_t *)malloc(sizeof(float) * data_len);
-    clamp_wheel_module_state_msg.data.size = data_len;
-    clamp_wheel_module_state_msg.data.capacity = data_len;
+    data_len = 6;
+    module_feedback_msg.data.data = (float_t *)malloc(sizeof(float) * data_len);
+    module_feedback_msg.data.size = data_len;
+    module_feedback_msg.data.capacity = data_len;
 
     // data_len = 3;
     // motor_temperature_msg.data.data = (uint8_t *)malloc(sizeof(uint8_t) * data_len);

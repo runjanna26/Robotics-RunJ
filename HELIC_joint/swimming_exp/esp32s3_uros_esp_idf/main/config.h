@@ -87,7 +87,7 @@ esp_err_t init_gpio_inputs()
 #define PROJECT_NAME ""
 #define MODULE_NAME ""
 
-#define MICRO_ROS_AGENT_IP "10.10.0.2"
+#define MICRO_ROS_AGENT_IP "10.10.0.167"
 #define MICRO_ROS_AGENT_PORT "8888"
 #define EXECUTOR_HANDLE_NUMBER 10
 
@@ -129,29 +129,6 @@ void encoder_read()
 	// ESP_LOGI("ENCODER", "angle: %f", encoder_angle);
 }
 
-/**
- * ====================================
- *        RMD Motor CAN  Setup
- * ====================================
- */
-#include <AKMotors.h>  
-#define HIP_MOTOR 1
-
-twai_message_t msg_rx;
-uint32_t alerts;
-
-struct motor_feedback  hip_motor_fb       = {.id = HIP_MOTOR};
-
-
-#define NUM_MOTORS 3
-
-int can_ids[NUM_MOTORS] = {HIP_MOTOR};
-int num_ids = sizeof(can_ids) / sizeof(can_ids[0]);
-
-#define MOTOR_CONNECTION_TIMEOUT 100000     // 10 sec
-
-
-
 
 /**
  * ====================================
@@ -160,7 +137,7 @@ int num_ids = sizeof(can_ids) / sizeof(can_ids[0]);
  */
 #include <dynamixel_sdk.h>  
 
-int motor_ids[] = {5};
+int motor_ids[] = {41};
 int32_t goal_positions[] = {0, 0};
 uint32_t present_positions[sizeof(motor_ids) / sizeof(motor_ids[0])] = {};
 uint32_t present_currents[sizeof(motor_ids) / sizeof(motor_ids[0])] = {};
@@ -174,7 +151,7 @@ uint32_t present_currents[sizeof(motor_ids) / sizeof(motor_ids[0])] = {};
 // XM540-W270
 // https://emanual.robotis.com/docs/en/dxl/x/xm540-w270/
 #define UNIT_TO_RAD  (0.088f * M_PI / 180.0f)
-#define CUR_UNIT_TO_TOR_NM (0.00269) * (5.0/2.1)
+#define CUR_UNIT_TO_TOR_NM (1/(2*2047))
 
 #define ADDR_OPERATING_MODE       11
 #define OPERATING_MODE_EXTENDED_POSITION  4
@@ -404,7 +381,7 @@ int set_goal_position(const int* ids, const int32_t* goal_positions, int num_ids
 
 int32_t get_position(int port_num, int id, uint32_t* present_position) 
 {
-  uint32_t pos    = read4ByteTxRx(port_num, PROTOCOL_VERSION, 5, ADDR_PRESENT_POSITION);
+  uint32_t pos    = read4ByteTxRx(port_num, PROTOCOL_VERSION, id, ADDR_PRESENT_POSITION);
   int comm_result = getLastTxRxResult(port_num, PROTOCOL_VERSION);
   int err         = getLastRxPacketError(port_num, PROTOCOL_VERSION);
 
@@ -438,9 +415,9 @@ int get_present_positions(int port_num, int* dxl_ids, int num_motors, uint32_t* 
 }
 
 
-int32_t get_current(int port_num, int id, uint32_t* present_torque)
+uint32_t get_current(int port_num, int id, uint32_t* present_torque)
 {
-  uint32_t cur    = read4ByteTxRx(port_num, PROTOCOL_VERSION, 5, ADDR_PRESENT_CURRENT);
+  uint32_t cur    = read4ByteTxRx(port_num, PROTOCOL_VERSION, id, ADDR_PRESENT_CURRENT);
   int comm_result = getLastTxRxResult(port_num, PROTOCOL_VERSION);
   int err         = getLastRxPacketError(port_num, PROTOCOL_VERSION);
 
@@ -474,6 +451,7 @@ int get_present_currents(int port_num, int* dxl_ids, int num_motors, uint32_t* t
 }
 
 
+int i = 0;
 
 float* traj;
 int num_points;
@@ -519,5 +497,17 @@ int generate_sine_trajectory(float amplitude, float offset, int steps, float** t
     *trajectory_out = trajectory;
     return steps;
 }
+
+
+void update_i()
+{
+	i++;
+
+	if (i > num_points)
+	{
+		i = 0;
+	}
+}
+
 
 #endif // CONFIG_H

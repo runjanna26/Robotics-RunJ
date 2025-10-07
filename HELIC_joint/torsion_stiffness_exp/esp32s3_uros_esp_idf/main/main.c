@@ -11,11 +11,11 @@
  * [ ] Current Sensors
  */
 
-#define USED_UROS 
+// #define USED_UROS 
 // #define USED_CONNECTION_CHECK 
 #define USED_DYNAMIXEL 
-#define USED_ENCODER 
-#define USED_LIMIT_SWITCHES
+// #define USED_ENCODER 
+// #define USED_LIMIT_SWITCHES
 
 #include <config.h>
 #include <micro_ros_setup.h>
@@ -51,13 +51,11 @@ void setup()
 	ESP_ERROR_CHECK_WITHOUT_ABORT(dynamixel_init(motor_ids, sizeof(motor_ids) / sizeof(motor_ids[0])));
 #endif
 
-	generate_symmetric_trajectory(7.85, 7.85, 5000, &traj);  // radians 7.85
+	generate_symmetric_trajectory(0.0f, 11.78, 5000, &traj);  // radians 7.85
 	// generate_sine_trajectory(1.0, 0.0, 5000, &traj);
 }
 
 int i = 0;
-bool started = false;
-bool runned = false;
 
 void loop()
 {
@@ -68,25 +66,6 @@ void loop()
 
 	if (green_sw_state == 0 && prev_green_sw_state == 1) 
 	{
-		if (!started && !runned) 
-		{
-			started = true; 
-			i = 0; 
-			ESP_LOGI("MAIN", "Start trajectory");
-		}
-		else if (started && !runned) 
-		{
-			started = false; 
-			i = 0; 
-			ESP_LOGI("MAIN", "Stop trajectory");
-		}
-		else if (!started && runned) 
-		{
-			runned = false; 
-			i = 0; 
-			ESP_LOGI("MAIN", "Reset, ready for new trajectory");
-		}
-
 	}
 
 	if (blue_sw_state == 0 && prev_blue_sw_state == 1) 
@@ -98,23 +77,14 @@ void loop()
 #endif
 
 #ifdef USED_DYNAMIXEL
-
-	if (started) i++;
-	if (i >= num_points) 
-	{
-		i = 0; 
-		started = false; 
-		runned = true;
-	}
-
 	goal_positions[0] = -1*(int32_t)(traj[i]/UNIT_TO_RAD);  	// Set goal position  (+) Pulling , (-) Pushing
 	set_goal_position(motor_ids, goal_positions, sizeof(motor_ids) / sizeof(motor_ids[0]));
 
 	EXECUTE_EVERY_N_MS(10, get_present_positions(port_num, motor_ids, sizeof(motor_ids) / sizeof(motor_ids[0]), present_positions));
-	// EXECUTE_EVERY_N_MS(10, get_present_currents(port_num, motor_ids, sizeof(motor_ids) / sizeof(motor_ids[0]), present_currents));
+	EXECUTE_EVERY_N_MS(10, get_present_currents(port_num, motor_ids, sizeof(motor_ids) / sizeof(motor_ids[0]), present_currents));
 
 	ESP_LOGI("DYNAMIXEL", "Present position 0 %.3f rad", (float)present_positions[0] * UNIT_TO_RAD);
-	// ESP_LOGI("DYNAMIXEL", "Present Torque 0 %.3f Nm", (float)present_currents[0] * CUR_UNIT_TO_TOR_NM);
+	ESP_LOGI("DYNAMIXEL", "Present Torque 0 %.3f Nm", (float)present_currents[0] * CUR_UNIT_TO_TOR_NM);
 
 #endif
 

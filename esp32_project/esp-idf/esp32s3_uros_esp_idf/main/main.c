@@ -3,19 +3,20 @@
  * [/] Micro-ROS pub/sub
  * [/] Reconnect when its lost
  * [/] RS485 with Dynamixel motors 
- * [ ] CAN BUS with AK motors
+ * [/] CAN BUS with motors
+ * [/] Encoder
  * [ ] IMU
  * [ ] Camera read
- * [/] Encoder
  * [ ] Force Sensors
  * [ ] Current Sensors
  */
 
 #define USED_UROS 
-// #define USED_CONNECTION_CHECK 
+// #define USED_CONNECTION_CHECK แไแ
 // #define USED_DYNAMIXEL 
-// #define USED_ENCODER 
+#define USED_ENCODER 
 // #define USED_LIMIT_SWITCHES
+#define USED_RMD_MOTOR
 
 #include <config.h>
 #include <micro_ros_setup.h>
@@ -51,13 +52,36 @@ void setup()
 	ESP_ERROR_CHECK_WITHOUT_ABORT(dynamixel_init(motor_ids, sizeof(motor_ids) / sizeof(motor_ids[0])));
 #endif
 
-	num_points = generate_symmetric_trajectory(0.0f, 11.78, 5000, &traj);  // radians 7.85
+
+#ifdef USED_RMD_MOTOR
+    ESP_ERROR_CHECK_WITHOUT_ABORT(CAN_Init());                	// CAN Initialization
+	motor_reboot(HIP_MOTOR);  										// Reboot motor with ID 1
+#endif
+	// num_points = generate_sine_trajectory(_PI/6, 0.0, 5000, &traj);  // radians 7.85
 }
 
 int i = 0;
-
+bool started = false;
+bool runned = false;
 void loop()
 {
+	
+	// send_mit_force_command(HIP_MOTOR, RMD_X4_10, 0.0, 0.0f, 5.0f, 1.0f, 0.0f);
+
+	// motor_update(HIP_MOTOR);
+	twai_read_alerts(&alerts, pdMS_TO_TICKS(5));
+    while (twai_receive(&msg_rx, pdMS_TO_TICKS(10)) == ESP_OK)  // Timeout after 1ms
+    {  
+        unpack_reply(msg_rx, &hip_motor_fb, RMD_X4_10);
+		// ESP_LOGI("CAN", "ID %d Position: %.3f", hip_motor_fb.id, hip_motor_fb.position);
+		// ESP_LOGI("CAN", "ID %d Velocity: %.3f", hip_motor_fb.id, hip_motor_fb.velocity);
+		// ESP_LOGI("CAN", "ID %d Torque: %.3f", hip_motor_fb.id, hip_motor_fb.torque);
+		// ESP_LOGI("CAN", "ID %d Voltage: %.3f", hip_motor_fb.id, hip_motor_fb.voltage);
+		// ESP_LOGI("CAN", "ID %d Current: %.3f", hip_motor_fb.id, hip_motor_fb.current);
+		// ESP_LOGI("CAN", "ID %d Temperature: %d", hip_motor_fb.id, hip_motor_fb.temperature);
+    }
+
+
 
 #ifdef USED_LIMIT_SWITCHES
 	green_sw_state 	= gpio_get_level(GREEN_SW);
@@ -65,6 +89,8 @@ void loop()
 
 	if (green_sw_state == 0 && prev_green_sw_state == 1) 
 	{
+		started = true;
+		i=0;
 	}
 
 	if (blue_sw_state == 0 && prev_blue_sw_state == 1) 
@@ -76,8 +102,14 @@ void loop()
 #endif
 
 #ifdef USED_DYNAMIXEL
+
+	if (started)
+		i++;
+	if (i  >= num_points)
+		started = false;
+	ESP_LOGI("DYNAMIXEL", "%d", i);
 	goal_positions[0] = -1*(int32_t)(traj[i]/UNIT_TO_RAD);  // Set goal position 
-	goal_positions[1] += (int32_t)(0.174532925/UNIT_TO_RAD);  // Set goal position
+	// goal_positions[1] += (int32_t)(0.174532925/UNIT_TO_RAD);  // Set goal position
 	set_goal_position(motor_ids, goal_positions, sizeof(motor_ids) / sizeof(motor_ids[0]));
 
 	EXECUTE_EVERY_N_MS(10, get_present_positions(port_num, motor_ids, sizeof(motor_ids) / sizeof(motor_ids[0]), present_positions));

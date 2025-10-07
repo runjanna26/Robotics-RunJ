@@ -69,8 +69,8 @@ void publish_clamp_wheel_module_feedback()
 {
     clamp_wheel_module_state_msg.data.data[0] = (float)goal_positions[0] * UNIT_TO_RAD;
     clamp_wheel_module_state_msg.data.data[1] = (float)present_positions[0] * UNIT_TO_RAD;
-    clamp_wheel_module_state_msg.data.data[2] = (float)encoder_angle;
-    clamp_wheel_module_state_msg.data.data[3] = 4.0;
+    clamp_wheel_module_state_msg.data.data[2] = (float)goal_positions[1] * UNIT_TO_RAD;
+    clamp_wheel_module_state_msg.data.data[3] = (float)encoder_angle;
     clamp_wheel_module_state_msg.data.data[4] = 5.0;
     clamp_wheel_module_state_msg.data.data[5] = 6.0;
     clamp_wheel_module_state_msg.data.data[6] = 7.0;

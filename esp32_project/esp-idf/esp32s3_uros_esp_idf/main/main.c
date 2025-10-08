@@ -68,17 +68,20 @@ void loop()
 	
 	// send_mit_force_command(HIP_MOTOR, RMD_X4_10, 0.0, 0.0f, 5.0f, 1.0f, 0.0f);
 
-	// motor_update(HIP_MOTOR);
+	motor_update(HIP_MOTOR);
 	twai_read_alerts(&alerts, pdMS_TO_TICKS(5));
     while (twai_receive(&msg_rx, pdMS_TO_TICKS(10)) == ESP_OK)  // Timeout after 1ms
     {  
         unpack_reply(msg_rx, &hip_motor_fb, RMD_X4_10);
 		// ESP_LOGI("CAN", "ID %d Position: %.3f", hip_motor_fb.id, hip_motor_fb.position);
 		// ESP_LOGI("CAN", "ID %d Velocity: %.3f", hip_motor_fb.id, hip_motor_fb.velocity);
-		// ESP_LOGI("CAN", "ID %d Torque: %.3f", hip_motor_fb.id, hip_motor_fb.torque);
+		// ESP_LOGI("CAN", "ID %d Torque: %.3f", hip_motor_fb.id, 	hip_motor_fb.torque);
+
 		// ESP_LOGI("CAN", "ID %d Voltage: %.3f", hip_motor_fb.id, hip_motor_fb.voltage);
 		// ESP_LOGI("CAN", "ID %d Current: %.3f", hip_motor_fb.id, hip_motor_fb.current);
 		// ESP_LOGI("CAN", "ID %d Temperature: %d", hip_motor_fb.id, hip_motor_fb.temperature);
+		
+		// ESP_LOGI("CAN", "ID %d Temperature: %d", hip_motor_fb.id, hip_motor_fb.error);
     }
 
 
@@ -145,6 +148,7 @@ void app_main(void)
 	while(true)
 	{
 		loop();
+		vTaskDelay(1);
 	}
 #ifdef USED_DYNAMIXEL
 	closePort(port_num);

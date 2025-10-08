@@ -3,31 +3,40 @@
 #include <config.h>
 
 #include <uros_network_interfaces.h>
-#include <rcl/rcl.h>		// if cannot find this file, please check ROS_DISTRO (humble)
+#include <rcl/rcl.h>		                // if cannot find this file, please check ROS_DISTRO (humble)
 #include <rcl/error_handling.h>
-#include <std_msgs/msg/int32.h>
 #include <rclc/rclc.h>
 #include <rclc/executor.h>
 
 #include <rmw_microros/rmw_microros.h>
 #include <rmw/qos_profiles.h>
 
-#include <std_msgs/msg/int32.h>
+
 #include <std_msgs/msg/multi_array_dimension.h>
-#include <std_msgs/msg/int16_multi_array.h>
-#include <std_msgs/msg/u_int8_multi_array.h>
-#include <std_msgs/msg/int8.h>
-#include <std_msgs/msg/u_int8.h>
+
 #include <std_msgs/msg/bool.h>
+
+#include <std_msgs/msg/int32.h>
+
+#include <std_msgs/msg/int8.h>
+#include <std_msgs/msg/int8_multi_array.h>
+
+#include <std_msgs/msg/u_int16_multi_array.h>
+
+#include <std_msgs/msg/u_int8.h>
+#include <std_msgs/msg/u_int8_multi_array.h>
+
 #include <std_msgs/msg/float32.h>
 #include <std_msgs/msg/float32_multi_array.h>
-#include <std_msgs/msg/int8_multi_array.h>
-#include <sensor_msgs/msg/imu.h>
+
 #include <geometry_msgs/msg/twist.h>
+
+#include <sensor_msgs/msg/imu.h>
+#include <sensor_msgs/msg/joint_state.h>
 #include <sensor_msgs/msg/joy.h>
 
 
-#define RCCHECK(fn) { rcl_ret_t temp_rc = fn; if((temp_rc != RCL_RET_OK)){printf("Failed status on line %d: %d. Aborting.\n",__LINE__,(int)temp_rc);}}
+#define RCCHECK(fn)     { rcl_ret_t temp_rc = fn; if((temp_rc != RCL_RET_OK)){printf("Failed status on line %d: %d. Aborting.\n",__LINE__,(int)temp_rc);}}
 #define RCSOFTCHECK(fn) { rcl_ret_t temp_rc = fn; if((temp_rc != RCL_RET_OK)){printf("Failed status on line %d: %d. Continuing.\n",__LINE__,(int)temp_rc);}}
 
 
@@ -39,17 +48,35 @@ rclc_executor_t executor;
 
 rmw_qos_profile_t custom_qos = rmw_qos_profile_default;
 
-rcl_publisher_t module_publisher;
-rcl_publisher_t imu_publisher;
+// module feedback
+// rcl_publisher_t module_publisher;
+// std_msgs__msg__Float32MultiArray module_feedback_msg;
+
+// board connection
 rcl_publisher_t board_connection_publisher;
+std_msgs__msg__Bool connection_publisher_msg;
 
-
+// command
 rcl_subscription_t command_subscriber;
-
-std_msgs__msg__Float32MultiArray module_feedback_msg;
 std_msgs__msg__Float32MultiArray command_recv_msg;
 
-std_msgs__msg__Bool connection_publisher_msg;
+// joint state
+rcl_publisher_t joint_state_publisher;
+sensor_msgs__msg__JointState joint_state_msg;
+
+// joint electrical state
+rcl_publisher_t joint_electrical_state_publisher;
+std_msgs__msg__Float32MultiArray joint_electrical_state_msg;
+
+// joint electrical state
+rcl_publisher_t joint_error_state_publisher;
+std_msgs__msg__UInt16MultiArray joint_error_state_msg;
+
+
+
+
+
+
 
 
 
@@ -67,13 +94,18 @@ void command_subscription_callback(const void * msgin)
 
 void publish_module_feedback()
 {
-    module_feedback_msg.data.data[0] = (float)hip_motor_fb.position;
-    module_feedback_msg.data.data[1] = (float)hip_motor_fb.velocity;
-    module_feedback_msg.data.data[2] = (float)hip_motor_fb.torque;
-    module_feedback_msg.data.data[3] = (float)hip_motor_fb.voltage;
-    module_feedback_msg.data.data[4] = (float)hip_motor_fb.current;
-    module_feedback_msg.data.data[5] = (float)hip_motor_fb.temperature;
-    RCSOFTCHECK(rcl_publish(&module_publisher, &module_feedback_msg, NULL));
+    joint_state_msg.position.data[0] = (float)hip_motor_fb.position;
+    joint_state_msg.velocity.data[0] = (float)hip_motor_fb.velocity;
+    joint_state_msg.effort.data[0]   = (float)hip_motor_fb.torque;
+    RCSOFTCHECK(rcl_publish(&joint_state_publisher, &joint_state_msg, NULL));
+
+    joint_electrical_state_msg.data.data[0] = (float)hip_motor_fb.voltage;
+    joint_electrical_state_msg.data.data[1] = (float)hip_motor_fb.current;
+    joint_electrical_state_msg.data.data[2] = (float)hip_motor_fb.temperature;
+    RCSOFTCHECK(rcl_publish(&joint_electrical_state_publisher, &joint_electrical_state_msg, NULL));
+
+    joint_error_state_msg.data.data[0] = (uint16_t)hip_motor_fb.error;
+    RCSOFTCHECK(rcl_publish(&joint_error_state_publisher, &joint_error_state_msg, NULL));
 }
 
 void publisher_callback(rcl_timer_t * timer, int64_t last_call_time)
@@ -84,7 +116,6 @@ void publisher_callback(rcl_timer_t * timer, int64_t last_call_time)
     {
         publish_module_feedback();
         RCSOFTCHECK(rcl_publish(&board_connection_publisher, &connection_publisher_msg, NULL));
-
 	}
 }
 
@@ -111,28 +142,41 @@ esp_err_t create_entities()
 
 
     // ========== Create publishers ==========
+    custom_qos.history      = RMW_QOS_POLICY_HISTORY_KEEP_LAST;
+    custom_qos.depth        = 5;  
+    custom_qos.reliability  = RMW_QOS_POLICY_RELIABILITY_BEST_EFFORT;
+
     char topic_name[64];
-    custom_qos.history = RMW_QOS_POLICY_HISTORY_KEEP_LAST;
-    custom_qos.depth = 5;  
-    custom_qos.reliability = RMW_QOS_POLICY_RELIABILITY_BEST_EFFORT;
 
-    snprintf(topic_name, sizeof(topic_name), "%s%smodule_feedback", PROJECT_NAME, MODULE_NAME);
+    snprintf(topic_name, sizeof(topic_name), "%s%sjoint_states", PROJECT_NAME, MODULE_NAME);
 	RCCHECK(rclc_publisher_init(
-		&module_publisher,
+		&joint_state_publisher,
+		&node,
+		ROSIDL_GET_MSG_TYPE_SUPPORT(sensor_msgs, msg, JointState),
+		topic_name,
+        &custom_qos));
+    ESP_LOGI("uROS", "init publisher: %s", topic_name);
+
+    snprintf(topic_name, sizeof(topic_name), "%s%sjoint_electrical_states", PROJECT_NAME, MODULE_NAME);
+	RCCHECK(rclc_publisher_init(
+		&joint_electrical_state_publisher,
 		&node,
 		ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Float32MultiArray),
 		topic_name,
         &custom_qos));
     ESP_LOGI("uROS", "init publisher: %s", topic_name);
 
-    snprintf(topic_name, sizeof(topic_name), "%s%simu_feedback", PROJECT_NAME, MODULE_NAME);
+    snprintf(topic_name, sizeof(topic_name), "%s%sjoint_error_states", PROJECT_NAME, MODULE_NAME);
 	RCCHECK(rclc_publisher_init(
-		&imu_publisher,
+		&joint_error_state_publisher,
 		&node,
-		ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Float32MultiArray),
+		ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, UInt16MultiArray),
 		topic_name,
         &custom_qos));
     ESP_LOGI("uROS", "init publisher: %s", topic_name);
+
+
+
 
     snprintf(topic_name, sizeof(topic_name), "%s%scontroller_connection", PROJECT_NAME, MODULE_NAME);
     RCCHECK(rclc_publisher_init_best_effort(
@@ -175,11 +219,12 @@ esp_err_t create_entities()
 
 void destroy_entities()
 {
-      rmw_context_t *rmw_context = rcl_context_get_rmw_context(&support.context);
-  (void)rmw_uros_set_context_entity_destroy_session_timeout(rmw_context, 0);
+    rmw_context_t *rmw_context = rcl_context_get_rmw_context(&support.context);
+    (void)rmw_uros_set_context_entity_destroy_session_timeout(rmw_context, 0);
 
-	RCSOFTCHECK(rcl_publisher_fini(&module_publisher, &node));
-	RCSOFTCHECK(rcl_publisher_fini(&imu_publisher, &node));
+	RCSOFTCHECK(rcl_publisher_fini(&joint_state_publisher, &node));
+	RCSOFTCHECK(rcl_publisher_fini(&joint_electrical_state_publisher, &node));
+	RCSOFTCHECK(rcl_publisher_fini(&joint_error_state_publisher, &node));
 
 	RCSOFTCHECK(rcl_subscription_fini(&command_subscriber, &node));
 
@@ -192,35 +237,32 @@ void destroy_entities()
 esp_err_t setup_multiarray_publisher_msg()
 {
     size_t data_len;
-    data_len = 6;
-    module_feedback_msg.data.data = (float_t *)malloc(sizeof(float) * data_len);
-    module_feedback_msg.data.size = data_len;
-    module_feedback_msg.data.capacity = data_len;
 
-    // data_len = 3;
-    // motor_temperature_msg.data.data = (uint8_t *)malloc(sizeof(uint8_t) * data_len);
-    // motor_temperature_msg.data.size = data_len;
-    // motor_temperature_msg.data.capacity = data_len;
+    data_len = 1;
 
-    // data_len = 3;
-    // motor_connection_msg.data.data = (uint8_t *)malloc(sizeof(uint8_t) * data_len);
-    // motor_connection_msg.data.size = data_len;
-    // motor_connection_msg.data.capacity = data_len;
+    joint_state_msg.position.data   = (double *)malloc(sizeof(double) * data_len);
+    joint_state_msg.velocity.data   = (double *)malloc(sizeof(double) * data_len);
+    joint_state_msg.effort.data     = (double *)malloc(sizeof(double) * data_len);
 
-    // data_len = 3;
-    // imu_msg.data.data = (float_t *)malloc(sizeof(float) * data_len);
-    // imu_msg.data.size = data_len;
-    // imu_msg.data.capacity = data_len;
+    joint_state_msg.position.size   = data_len;
+    joint_state_msg.velocity.size   = data_len;
+    joint_state_msg.effort.size     = data_len;
 
-    // data_len = 3;
-    // force_sensors_msg.data.data = (float_t *)malloc(sizeof(float) * data_len);
-    // force_sensors_msg.data.size = data_len;
-    // force_sensors_msg.data.capacity = data_len;
+    joint_state_msg.position.capacity   = data_len;
+    joint_state_msg.velocity.capacity   = data_len;
+    joint_state_msg.effort.capacity     = data_len;
 
-    // data_len = 4;
-    // motor_current_msg.data.data = (float_t *)malloc(sizeof(float) * data_len);
-    // motor_current_msg.data.size = data_len;
-    // motor_current_msg.data.capacity = data_len;
+    data_len = 3;
+    joint_electrical_state_msg.data.data = (float_t *)malloc(sizeof(float) * data_len);
+    joint_electrical_state_msg.data.size = data_len;  
+    joint_electrical_state_msg.data.capacity = data_len;  
+
+    data_len = 1;
+    joint_error_state_msg.data.data = (uint16_t *)malloc(sizeof(uint16_t) * data_len);
+    joint_error_state_msg.data.size = data_len;
+    joint_error_state_msg.data.capacity = data_len;
+
+
 
     // ====================================================================
 

@@ -18,6 +18,7 @@ struct motor_feedback {
     float voltage;
     int temperature;
     uint16_t error;
+
     int64_t current_timestamp;
     uint8_t connection_status;
     uint8_t connection_error;

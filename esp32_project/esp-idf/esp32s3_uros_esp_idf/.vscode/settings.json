@@ -36,6 +36,11 @@
     "string": "c",
     "string_view": "c",
     "span": "c",
-    "akmotors.h": "c"
+    "akmotors.h": "c",
+    "vector": "c",
+    "battery_state.h": "c",
+    "int16_multi_array.h": "c",
+    "int8_multi_array.h": "c",
+    "u_int16_multi_array.h": "c"
   }
 }

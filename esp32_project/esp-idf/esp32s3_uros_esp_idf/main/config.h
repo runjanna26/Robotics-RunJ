@@ -121,7 +121,7 @@ WatchdogTimer watchdogtimer_restartESP;
 #include "AS5X47.h"
 spi_t enc;
 float encoder_angle;
-float encoder_angle_offset = 5.19;  // radian
+float encoder_angle_offset = 0.0;  // radian
 
 void encoder_read()
 {
@@ -140,15 +140,13 @@ void encoder_read()
 twai_message_t msg_rx;
 uint32_t alerts;
 
-struct motor_feedback  hip_motor_fb       = {.id = HIP_MOTOR};
+struct motor_struct  hip_motor_st       = {.id = HIP_MOTOR};
 
 
-#define NUM_MOTORS 3
-
-int can_ids[NUM_MOTORS] = {HIP_MOTOR};
-int num_ids = sizeof(can_ids) / sizeof(can_ids[0]);
-
-#define MOTOR_CONNECTION_TIMEOUT 100000     // 10 sec
+// #define NUM_MOTORS 3
+// int can_ids[NUM_MOTORS] = {HIP_MOTOR};
+// int num_ids = sizeof(can_ids) / sizeof(can_ids[0]);
+// #define MOTOR_CONNECTION_TIMEOUT 100000     // 10 sec
 
 
 

@@ -94,11 +94,11 @@ esp_err_t CAN_Init()
     return ESP_OK;
 }
 
-void motor_reboot(uint32_t motor_id) 
+void motor_reboot(struct motor_struct *motor) 
 {
     twai_message_t message;
     
-    message.identifier = 0x140 + motor_id;
+    message.identifier = 0x140 + motor->id;
     message.extd = 0; // Extended Frame
     message.rtr = 0;  // Data Frame
     message.data_length_code = 8; 
@@ -119,16 +119,15 @@ void motor_reboot(uint32_t motor_id)
 }
 
 
-void motor_update(uint32_t motor_id)
+void motor_update(struct motor_struct *motor)
 {
-    request_motor_feedback(motor_id, READ_MULTI_TURN_OUTPUT_SHAFT_ANGLE_ID);
-    request_motor_feedback(motor_id, READ_MOTOR_STATUS_1_ID);
-    request_motor_feedback(motor_id, READ_MOTOR_STATUS_2_ID);
+    request_motor_struct(motor->id, READ_MULTI_TURN_OUTPUT_SHAFT_ANGLE_ID);
+    request_motor_struct(motor->id, READ_MOTOR_STATUS_1_ID);
+    request_motor_struct(motor->id, READ_MOTOR_STATUS_2_ID);
 }
 
 
-
-void request_motor_feedback(uint32_t motor_id, uint16_t request_id)
+void request_motor_struct(uint32_t motor_id, uint16_t request_id)
 {
     twai_message_t message;
     
@@ -152,12 +151,12 @@ void request_motor_feedback(uint32_t motor_id, uint16_t request_id)
         // ESP_LOGE("CAN", "Failed to send feedback request"); 
 }
 
-void send_mit_force_command(uint32_t motor_id, motor_config_t motor_config, 
+void send_mit_force_command(struct motor_struct *motor, motor_config_t motor_config, 
     float p_des, float v_des, float kp, float kd, float t_ff)
 {
     twai_message_t message;
 
-    message.identifier = 0x400 + motor_id;
+    message.identifier = 0x400 + motor->id;
     message.extd = 0; // Extended Frame
     message.rtr = 0;  // Data Frame
     message.data_length_code = 8; // 4 bytes for speed data
@@ -167,6 +166,11 @@ void send_mit_force_command(uint32_t motor_id, motor_config_t motor_config,
     kp      = fminf(fmaxf(motor_config.Kp_MIN,  kp),        motor_config.Kp_MAX);
     kd      = fminf(fmaxf(motor_config.Kd_MIN,  kd),        motor_config.Kd_MAX);
     t_ff    = fminf(fmaxf(motor_config.T_MIN,   t_ff),      motor_config.T_MAX);
+
+    motor->kp = kp;
+    motor->kd = kd;
+    motor->tff = t_ff;
+
 
     /// convert floats to unsigned ints ///
     uint16_t p_int   = float_to_uint(p_des, motor_config.P_MIN, motor_config.P_MAX, 16);
@@ -188,7 +192,7 @@ void send_mit_force_command(uint32_t motor_id, motor_config_t motor_config,
 
     // Send the TWAI (CAN) message
     if (twai_transmit(&message, pdMS_TO_TICKS(1)) != ESP_OK)  
-        ESP_LOGE("CAN", "Motor ID: %ld is failed to send command", motor_id);
+        ESP_LOGE("CAN", "Motor ID: %ld is failed to send command", motor->id);
 }
 
 
@@ -202,17 +206,17 @@ void send_mit_force_command(uint32_t motor_id, motor_config_t motor_config,
 6 indicating MOSFET over-temperature fault
 7 indicatingmotor lock-up.
 */
-void unpack_reply(twai_message_t rx_message, struct motor_feedback *feedback,  motor_config_t motor_config)
+void unpack_reply(twai_message_t rx_message, struct motor_struct *motor,  motor_config_t motor_config)
 {
 
-    if (rx_message.identifier == RECEIVE_ID + feedback->id)
+    if (rx_message.identifier == RECEIVE_ID + motor->id)
     {
         if (rx_message.data[0] == READ_MULTI_TURN_OUTPUT_SHAFT_ANGLE_ID)
         {
             int32_t raw = (rx_message.data[7] << 24 | rx_message.data[6] << 16 | rx_message.data[5] << 8 | rx_message.data[4]);
             if (raw & 0x80000000)
                 raw -= 0x100000000;
-            feedback->position = (float)(raw * (2.0 * _PI) / (262144.0));
+            motor->position = (float)(raw * (2.0 * _PI) / (262144.0));
         }
         if (rx_message.data[0] == READ_MOTOR_STATUS_2_ID)
         {
@@ -227,19 +231,21 @@ void unpack_reply(twai_message_t rx_message, struct motor_feedback *feedback,  m
             if (position & 0x8000)
                 position -= 0x10000;
 
-            feedback->temperature   = (float)(temperature);                             // Celsius
-            feedback->current       = torque_current_motor * 0.01;                      // Amperes
-            feedback->torque        = torque_current_motor * 0.01 * motor_config.Kt;    // Nm
-            feedback->velocity      = velocity * _PI / 180.0;                           // rad/s
+            motor->temperature   = (float)(temperature);                             // Celsius
+            motor->current       = torque_current_motor * 0.01;                      // Amperes
+            motor->torque        = torque_current_motor * 0.01 * motor_config.Kt;    // Nm
+            motor->velocity      = velocity * _PI / 180.0;                           // rad/s
         }
         if (rx_message.data[0] == READ_MOTOR_STATUS_1_ID)
         {
             uint16_t voltage        = rx_message.data[4] | (rx_message.data[5] << 8);
             uint16_t error          = rx_message.data[6] | (rx_message.data[7] << 8);
 
-            feedback->voltage       = voltage * 0.1;    // Volts
-            feedback->error         = error;
+            motor->voltage       = voltage * 0.1;    // Volts
+            motor->error         = error;
         }
+
+   
 
 
 

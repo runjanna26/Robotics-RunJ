@@ -9,8 +9,9 @@
 
 #define _PI 3.14159265359
 
-struct motor_feedback {
+struct motor_struct {
     int id;
+    // Feedback
     float position;
     float velocity;
     float current;
@@ -18,6 +19,10 @@ struct motor_feedback {
     float voltage;
     int temperature;
     uint16_t error;
+    
+    float kp;
+    float kd;
+    float tff;
 
     int64_t current_timestamp;
     uint8_t connection_status;
@@ -74,13 +79,13 @@ esp_err_t CAN_Init();
 // void send_motor_position( uint32_t motor_id, float position);
 // void send_motor_position_velocity(uint32_t motor_id, float position, int16_t velocity_erpm, int16_t acceleration_erpmps2);
 
-void motor_reboot(uint32_t motor_id);
-void request_motor_feedback(uint32_t motor_id, uint16_t request_id);
-void motor_update(uint32_t motor_id);
+void motor_reboot(struct motor_struct *motor);
+void request_motor_struct(uint32_t motor_id, uint16_t request_id);
+void motor_update(struct motor_struct *motor);
 
 // MIT Mode
-void send_mit_force_command(uint32_t motor_id, motor_config_t motor_config,float p_des, float v_des, float kp, float kd, float t_ff);
-void unpack_reply(twai_message_t rx_message, struct motor_feedback *feedback,  motor_config_t motor_config);
+void send_mit_force_command(struct motor_struct *motor, motor_config_t motor_config, float p_des, float v_des, float kp, float kd, float t_ff);
+void unpack_reply(twai_message_t rx_message, struct motor_struct *feedback,  motor_config_t motor_config);
 
 
 uint16_t float_to_uint(float x, float x_min, float x_max, unsigned int bits);

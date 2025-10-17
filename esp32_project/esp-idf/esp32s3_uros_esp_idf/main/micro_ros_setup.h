@@ -7,7 +7,6 @@
 #include <rcl/error_handling.h>
 #include <rclc/rclc.h>
 #include <rclc/executor.h>
-
 #include <rmw_microros/rmw_microros.h>
 #include <rmw/qos_profiles.h>
 
@@ -48,9 +47,6 @@ rclc_executor_t executor;
 
 rmw_qos_profile_t custom_qos = rmw_qos_profile_default;
 
-// module feedback
-// rcl_publisher_t module_publisher;
-// std_msgs__msg__Float32MultiArray module_feedback_msg;
 
 // board connection
 rcl_publisher_t board_connection_publisher;
@@ -72,8 +68,9 @@ std_msgs__msg__Float32MultiArray joint_electrical_state_msg;
 rcl_publisher_t joint_error_state_publisher;
 std_msgs__msg__UInt16MultiArray joint_error_state_msg;
 
-
-
+// joint impedance state
+rcl_publisher_t joint_impedance_state_publisher;
+std_msgs__msg__Float32MultiArray joint_impedance_state_msg;
 
 
 
@@ -94,18 +91,23 @@ void command_subscription_callback(const void * msgin)
 
 void publish_module_feedback()
 {
-    joint_state_msg.position.data[0] = (float)hip_motor_fb.position;
-    joint_state_msg.velocity.data[0] = (float)hip_motor_fb.velocity;
-    joint_state_msg.effort.data[0]   = (float)hip_motor_fb.torque;
+    joint_state_msg.position.data[0] = (float)hip_motor_st.position;
+    joint_state_msg.velocity.data[0] = (float)hip_motor_st.velocity;
+    joint_state_msg.effort.data[0]   = (float)hip_motor_st.torque;
     RCSOFTCHECK(rcl_publish(&joint_state_publisher, &joint_state_msg, NULL));
 
-    joint_electrical_state_msg.data.data[0] = (float)hip_motor_fb.voltage;
-    joint_electrical_state_msg.data.data[1] = (float)hip_motor_fb.current;
-    joint_electrical_state_msg.data.data[2] = (float)hip_motor_fb.temperature;
+    joint_electrical_state_msg.data.data[0] = (float)hip_motor_st.voltage;
+    joint_electrical_state_msg.data.data[1] = (float)hip_motor_st.current;
+    joint_electrical_state_msg.data.data[2] = (float)hip_motor_st.temperature;
     RCSOFTCHECK(rcl_publish(&joint_electrical_state_publisher, &joint_electrical_state_msg, NULL));
 
-    joint_error_state_msg.data.data[0] = (uint16_t)hip_motor_fb.error;
+    joint_error_state_msg.data.data[0] = (uint16_t)hip_motor_st.error;
     RCSOFTCHECK(rcl_publish(&joint_error_state_publisher, &joint_error_state_msg, NULL));
+
+    joint_impedance_state_msg.data.data[0] = (float)hip_motor_st.kp;
+    joint_impedance_state_msg.data.data[1] = (float)hip_motor_st.kd;
+    joint_impedance_state_msg.data.data[2] = (float)hip_motor_st.tff;
+    RCSOFTCHECK(rcl_publish(&joint_impedance_state_publisher, &joint_impedance_state_msg, NULL));
 }
 
 void publisher_callback(rcl_timer_t * timer, int64_t last_call_time)
@@ -175,7 +177,14 @@ esp_err_t create_entities()
         &custom_qos));
     ESP_LOGI("uROS", "init publisher: %s", topic_name);
 
-
+    snprintf(topic_name, sizeof(topic_name), "%s%sjoint_impedance_states", PROJECT_NAME, MODULE_NAME);
+	RCCHECK(rclc_publisher_init(
+		&joint_impedance_state_publisher,
+		&node,
+		ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Float32MultiArray),
+		topic_name,
+        &custom_qos));
+    ESP_LOGI("uROS", "init publisher: %s", topic_name);
 
 
     snprintf(topic_name, sizeof(topic_name), "%s%scontroller_connection", PROJECT_NAME, MODULE_NAME);
@@ -225,6 +234,8 @@ void destroy_entities()
 	RCSOFTCHECK(rcl_publisher_fini(&joint_state_publisher, &node));
 	RCSOFTCHECK(rcl_publisher_fini(&joint_electrical_state_publisher, &node));
 	RCSOFTCHECK(rcl_publisher_fini(&joint_error_state_publisher, &node));
+    RCSOFTCHECK(rcl_publisher_fini(&joint_impedance_state_publisher, &node));
+    RCSOFTCHECK(rcl_publisher_fini(&board_connection_publisher, &node));    
 
 	RCSOFTCHECK(rcl_subscription_fini(&command_subscriber, &node));
 
@@ -232,6 +243,14 @@ void destroy_entities()
     RCSOFTCHECK(rcl_node_fini(&node));
     RCSOFTCHECK(rclc_executor_fini(&executor));
     RCSOFTCHECK(rclc_support_fini(&support));
+
+    free(joint_state_msg.position.data);
+    free(joint_state_msg.velocity.data);
+    free(joint_state_msg.effort.data);
+    free(joint_electrical_state_msg.data.data);
+    free(joint_error_state_msg.data.data);
+    free(joint_impedance_state_msg.data.data);
+    free(command_recv_msg.data.data);
 }
 
 esp_err_t setup_multiarray_publisher_msg()
@@ -253,15 +272,19 @@ esp_err_t setup_multiarray_publisher_msg()
     joint_state_msg.effort.capacity     = data_len;
 
     data_len = 3;
-    joint_electrical_state_msg.data.data = (float_t *)malloc(sizeof(float) * data_len);
-    joint_electrical_state_msg.data.size = data_len;  
-    joint_electrical_state_msg.data.capacity = data_len;  
+    joint_electrical_state_msg.data.data        = (float_t *)malloc(sizeof(float) * data_len);
+    joint_electrical_state_msg.data.size        = data_len;  
+    joint_electrical_state_msg.data.capacity    = data_len;  
 
     data_len = 1;
-    joint_error_state_msg.data.data = (uint16_t *)malloc(sizeof(uint16_t) * data_len);
-    joint_error_state_msg.data.size = data_len;
-    joint_error_state_msg.data.capacity = data_len;
+    joint_error_state_msg.data.data             = (uint16_t *)malloc(sizeof(uint16_t) * data_len);
+    joint_error_state_msg.data.size             = data_len;
+    joint_error_state_msg.data.capacity         = data_len;
 
+    data_len = 3;
+    joint_impedance_state_msg.data.data         = (float_t *)malloc(sizeof(float) * data_len);
+    joint_impedance_state_msg.data.size         = data_len;
+    joint_impedance_state_msg.data.capacity     = data_len;
 
 
     // ====================================================================

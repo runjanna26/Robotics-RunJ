@@ -5,14 +5,15 @@
  * [/] RS485 with Dynamixel motors 
  * [/] CAN BUS with motors
  * [/] Encoder
+ * [ ] Muscle Model
+ * [ ] Receive Center Command
  * [ ] IMU
  * [ ] Camera read
  * [ ] Force Sensors
- * [ ] Current Sensors
  */
 
 #define USED_UROS 
-// #define USED_CONNECTION_CHECK แไแ
+// #define USED_CONNECTION_CHECK 
 // #define USED_DYNAMIXEL 
 #define USED_ENCODER 
 // #define USED_LIMIT_SWITCHES
@@ -55,7 +56,7 @@ void setup()
 
 #ifdef USED_RMD_MOTOR
     ESP_ERROR_CHECK_WITHOUT_ABORT(CAN_Init());                	// CAN Initialization
-	motor_reboot(HIP_MOTOR);  										// Reboot motor with ID 1
+	motor_reboot(&hip_motor_st);  										// Reboot motor with ID 1
 #endif
 	// num_points = generate_sine_trajectory(_PI/6, 0.0, 5000, &traj);  // radians 7.85
 }
@@ -66,22 +67,24 @@ bool runned = false;
 void loop()
 {
 	
-	// send_mit_force_command(HIP_MOTOR, RMD_X4_10, 0.0, 0.0f, 5.0f, 1.0f, 0.0f);
+	send_mit_force_command(&hip_motor_st, RMD_X4_10, 0.0, 0.0f, 5.0f, 1.0f, 0.0f);
 
-	motor_update(HIP_MOTOR);
+
+
+	motor_update(&hip_motor_st);
 	twai_read_alerts(&alerts, pdMS_TO_TICKS(5));
     while (twai_receive(&msg_rx, pdMS_TO_TICKS(10)) == ESP_OK)  // Timeout after 1ms
     {  
-        unpack_reply(msg_rx, &hip_motor_fb, RMD_X4_10);
-		// ESP_LOGI("CAN", "ID %d Position: %.3f", hip_motor_fb.id, hip_motor_fb.position);
-		// ESP_LOGI("CAN", "ID %d Velocity: %.3f", hip_motor_fb.id, hip_motor_fb.velocity);
-		// ESP_LOGI("CAN", "ID %d Torque: %.3f", hip_motor_fb.id, 	hip_motor_fb.torque);
+        unpack_reply(msg_rx, &hip_motor_st, RMD_X4_10);
+		// ESP_LOGI("CAN", "ID %d Position: %.3f", hip_motor_st.id, hip_motor_st.position);
+		// ESP_LOGI("CAN", "ID %d Velocity: %.3f", hip_motor_st.id, hip_motor_st.velocity);
+		// ESP_LOGI("CAN", "ID %d Torque: %.3f", hip_motor_st.id, 	hip_motor_st.torque);
 
-		// ESP_LOGI("CAN", "ID %d Voltage: %.3f", hip_motor_fb.id, hip_motor_fb.voltage);
-		// ESP_LOGI("CAN", "ID %d Current: %.3f", hip_motor_fb.id, hip_motor_fb.current);
-		// ESP_LOGI("CAN", "ID %d Temperature: %d", hip_motor_fb.id, hip_motor_fb.temperature);
+		// ESP_LOGI("CAN", "ID %d Voltage: %.3f", hip_motor_st.id, hip_motor_st.voltage);
+		// ESP_LOGI("CAN", "ID %d Current: %.3f", hip_motor_st.id, hip_motor_st.current);
+		// ESP_LOGI("CAN", "ID %d Temperature: %d", hip_motor_st.id, hip_motor_st.temperature);
 		
-		// ESP_LOGI("CAN", "ID %d Temperature: %d", hip_motor_fb.id, hip_motor_fb.error);
+		// ESP_LOGI("CAN", "ID %d Temperature: %d", hip_motor_st.id, hip_motor_st.error);
     }
 
 

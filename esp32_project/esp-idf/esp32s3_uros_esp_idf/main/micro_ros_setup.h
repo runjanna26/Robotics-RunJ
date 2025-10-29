@@ -58,7 +58,8 @@ std_msgs__msg__Float32MultiArray command_recv_msg;
 
 // joint state
 rcl_publisher_t joint_state_publisher;
-sensor_msgs__msg__JointState joint_state_msg;
+std_msgs__msg__Float32MultiArray joint_state_msg;
+// sensor_msgs__msg__JointState joint_state_msg;
 
 // joint electrical state
 rcl_publisher_t joint_electrical_state_publisher;
@@ -80,7 +81,13 @@ std_msgs__msg__Float32MultiArray joint_impedance_state_msg;
 void command_subscription_callback(const void * msgin)
 {
 	const std_msgs__msg__Float32MultiArray * msg = (const std_msgs__msg__Float32MultiArray *)msgin;
-	// printf("Command messages are received:\n");
+	
+    pos_des = (float)msg->data.data[0];
+    vel_des = (float)msg->data.data[1];
+    tau_des = (float)Muscle_1.tau;
+
+
+
 
     #ifdef USED_CONNECTION_CHECK
         watchdog_timer_restart(&watchdogtimer);
@@ -91,9 +98,14 @@ void command_subscription_callback(const void * msgin)
 
 void publish_module_feedback()
 {
-    joint_state_msg.position.data[0] = (float)hip_motor_st.position;
-    joint_state_msg.velocity.data[0] = (float)hip_motor_st.velocity;
-    joint_state_msg.effort.data[0]   = (float)hip_motor_st.torque;
+    // joint_state_msg.position.data[0] = (float)hip_motor_st.position;
+    // joint_state_msg.velocity.data[0] = (float)hip_motor_st.velocity;
+    // joint_state_msg.effort.data[0]   = (float)hip_motor_st.torque;
+
+    joint_state_msg.data.data[0] = (float)hip_motor_st.position;
+    joint_state_msg.data.data[1] = (float)hip_motor_st.velocity;
+    joint_state_msg.data.data[2] = (float)hip_motor_st.torque;
+    joint_state_msg.data.data[3] = (float)tau_des;
     RCSOFTCHECK(rcl_publish(&joint_state_publisher, &joint_state_msg, NULL));
 
     joint_electrical_state_msg.data.data[0] = (float)hip_motor_st.voltage;
@@ -104,9 +116,11 @@ void publish_module_feedback()
     joint_error_state_msg.data.data[0] = (uint16_t)hip_motor_st.error;
     RCSOFTCHECK(rcl_publish(&joint_error_state_publisher, &joint_error_state_msg, NULL));
 
+
     joint_impedance_state_msg.data.data[0] = (float)hip_motor_st.kp;
     joint_impedance_state_msg.data.data[1] = (float)hip_motor_st.kd;
     joint_impedance_state_msg.data.data[2] = (float)hip_motor_st.tff;
+    
     RCSOFTCHECK(rcl_publish(&joint_impedance_state_publisher, &joint_impedance_state_msg, NULL));
 }
 
@@ -154,7 +168,7 @@ esp_err_t create_entities()
 	RCCHECK(rclc_publisher_init(
 		&joint_state_publisher,
 		&node,
-		ROSIDL_GET_MSG_TYPE_SUPPORT(sensor_msgs, msg, JointState),
+		ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Float32MultiArray),
 		topic_name,
         &custom_qos));
     ESP_LOGI("uROS", "init publisher: %s", topic_name);
@@ -244,9 +258,9 @@ void destroy_entities()
     RCSOFTCHECK(rclc_executor_fini(&executor));
     RCSOFTCHECK(rclc_support_fini(&support));
 
-    free(joint_state_msg.position.data);
-    free(joint_state_msg.velocity.data);
-    free(joint_state_msg.effort.data);
+    // free(joint_state_msg.position.data);
+    // free(joint_state_msg.velocity.data);
+    // free(joint_state_msg.effort.data);
     free(joint_electrical_state_msg.data.data);
     free(joint_error_state_msg.data.data);
     free(joint_impedance_state_msg.data.data);
@@ -257,19 +271,24 @@ esp_err_t setup_multiarray_publisher_msg()
 {
     size_t data_len;
 
+    data_len = 4;
+    joint_state_msg.data.data        = (float_t *)malloc(sizeof(float) * data_len);
+    joint_state_msg.data.size        = data_len;  
+    joint_state_msg.data.capacity    = data_len;  
+
+    
     data_len = 1;
+    // joint_state_msg.position.data   = (double *)malloc(sizeof(double) * data_len);
+    // joint_state_msg.velocity.data   = (double *)malloc(sizeof(double) * data_len);
+    // joint_state_msg.effort.data     = (double *)malloc(sizeof(double) * data_len);
 
-    joint_state_msg.position.data   = (double *)malloc(sizeof(double) * data_len);
-    joint_state_msg.velocity.data   = (double *)malloc(sizeof(double) * data_len);
-    joint_state_msg.effort.data     = (double *)malloc(sizeof(double) * data_len);
+    // joint_state_msg.position.size   = data_len;
+    // joint_state_msg.velocity.size   = data_len;
+    // joint_state_msg.effort.size     = data_len;
 
-    joint_state_msg.position.size   = data_len;
-    joint_state_msg.velocity.size   = data_len;
-    joint_state_msg.effort.size     = data_len;
-
-    joint_state_msg.position.capacity   = data_len;
-    joint_state_msg.velocity.capacity   = data_len;
-    joint_state_msg.effort.capacity     = data_len;
+    // joint_state_msg.position.capacity   = data_len;
+    // joint_state_msg.velocity.capacity   = data_len;
+    // joint_state_msg.effort.capacity     = data_len;
 
     data_len = 3;
     joint_electrical_state_msg.data.data        = (float_t *)malloc(sizeof(float) * data_len);
@@ -281,7 +300,7 @@ esp_err_t setup_multiarray_publisher_msg()
     joint_error_state_msg.data.size             = data_len;
     joint_error_state_msg.data.capacity         = data_len;
 
-    data_len = 3;
+    data_len = 4;
     joint_impedance_state_msg.data.data         = (float_t *)malloc(sizeof(float) * data_len);
     joint_impedance_state_msg.data.size         = data_len;
     joint_impedance_state_msg.data.capacity     = data_len;

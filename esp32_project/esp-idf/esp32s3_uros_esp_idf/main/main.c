@@ -5,8 +5,9 @@
  * [/] RS485 with Dynamixel motors 
  * [/] CAN BUS with motors
  * [/] Encoder
- * [ ] Muscle Model
- * [ ] Receive Center Command
+ * [/] Muscle Model
+ * [/] Receive Center Command
+ * [ ] CPG-RBF
  * [ ] IMU
  * [ ] Camera read
  * [ ] Force Sensors
@@ -15,9 +16,11 @@
 #define USED_UROS 
 // #define USED_CONNECTION_CHECK 
 // #define USED_DYNAMIXEL 
-#define USED_ENCODER 
+// #define USED_ENCODER 
 // #define USED_LIMIT_SWITCHES
 #define USED_RMD_MOTOR
+#define USED_MUSCLE_MODEL
+
 
 #include <config.h>
 #include <micro_ros_setup.h>
@@ -58,34 +61,38 @@ void setup()
     ESP_ERROR_CHECK_WITHOUT_ABORT(CAN_Init());                	// CAN Initialization
 	motor_reboot(&hip_motor_st);  										// Reboot motor with ID 1
 #endif
-	// num_points = generate_sine_trajectory(_PI/6, 0.0, 5000, &traj);  // radians 7.85
+
+#ifdef USED_MUSCLE_MODEL
+	MuscleModel_init(&Muscle_1, 0.5, 10.0, 0.05);
+#endif
+
+	// num_points = generate_sine_trajectory(_PI/6, 0.0, 1000, &traj);  // radians 7.85
 }
 
 int i = 0;
 bool started = false;
 bool runned = false;
+
+
+void run_motor()
+{
+
+
+	MuscleModel_calculate(&Muscle_1, pos_des, vel_des, hip_motor_st.position, hip_motor_st.velocity);
+	send_mit_force_command(&hip_motor_st, RMD_X4_10, pos_des, vel_des, Muscle_1.K, Muscle_1.D, -Muscle_1.F);
+	
+	motor_update(&hip_motor_st);
+    while (twai_receive(&msg_rx, pdMS_TO_TICKS(5)) == ESP_OK)  
+    {  
+        unpack_reply(msg_rx, &hip_motor_st, RMD_X4_10);
+    }
+}
+
 void loop()
 {
 	
-	send_mit_force_command(&hip_motor_st, RMD_X4_10, 0.0, 0.0f, 5.0f, 1.0f, 0.0f);
+	EXECUTE_EVERY_N_MS(1, run_motor()); 
 
-
-
-	motor_update(&hip_motor_st);
-	twai_read_alerts(&alerts, pdMS_TO_TICKS(5));
-    while (twai_receive(&msg_rx, pdMS_TO_TICKS(10)) == ESP_OK)  // Timeout after 1ms
-    {  
-        unpack_reply(msg_rx, &hip_motor_st, RMD_X4_10);
-		// ESP_LOGI("CAN", "ID %d Position: %.3f", hip_motor_st.id, hip_motor_st.position);
-		// ESP_LOGI("CAN", "ID %d Velocity: %.3f", hip_motor_st.id, hip_motor_st.velocity);
-		// ESP_LOGI("CAN", "ID %d Torque: %.3f", hip_motor_st.id, 	hip_motor_st.torque);
-
-		// ESP_LOGI("CAN", "ID %d Voltage: %.3f", hip_motor_st.id, hip_motor_st.voltage);
-		// ESP_LOGI("CAN", "ID %d Current: %.3f", hip_motor_st.id, hip_motor_st.current);
-		// ESP_LOGI("CAN", "ID %d Temperature: %d", hip_motor_st.id, hip_motor_st.temperature);
-		
-		// ESP_LOGI("CAN", "ID %d Temperature: %d", hip_motor_st.id, hip_motor_st.error);
-    }
 
 
 
@@ -108,6 +115,13 @@ void loop()
 #endif
 
 #ifdef USED_DYNAMIXEL
+
+	// if (i  >= num_points)
+	// 	i=0;
+
+	// pos_des = traj[i];  // Set goal position 
+	// i++;
+
 
 	if (started)
 		i++;
@@ -151,7 +165,7 @@ void app_main(void)
 	while(true)
 	{
 		loop();
-		vTaskDelay(1);
+		// vTaskDelay(1);
 	}
 #ifdef USED_DYNAMIXEL
 	closePort(port_num);

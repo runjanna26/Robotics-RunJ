@@ -79,7 +79,7 @@ esp_err_t init_gpio_inputs()
 
 /**
  * ====================================
- *        	  UROS Setup
+ *        	   UROS Setup
  * ====================================
  */
 
@@ -87,7 +87,7 @@ esp_err_t init_gpio_inputs()
 #define PROJECT_NAME ""
 #define MODULE_NAME ""
 
-#define MICRO_ROS_AGENT_IP "10.10.0.2"
+#define MICRO_ROS_AGENT_IP "10.10.0.167"
 #define MICRO_ROS_AGENT_PORT "8888"
 #define EXECUTOR_HANDLE_NUMBER 10
 
@@ -148,8 +148,17 @@ struct motor_struct  hip_motor_st       = {.id = HIP_MOTOR};
 // int num_ids = sizeof(can_ids) / sizeof(can_ids[0]);
 // #define MOTOR_CONNECTION_TIMEOUT 100000     // 10 sec
 
+/**
+ * ========================================================================
+ *                Online Adaptive Impedance Control (OAIC)
+ * ========================================================================
+ */
+#include <OAIC.h>
+MuscleModel Muscle_1;
 
-
+float pos_des;
+float vel_des;
+float tau_des;
 
 /**
  * ====================================
@@ -474,7 +483,9 @@ int get_present_currents(int port_num, int* dxl_ids, int num_motors, uint32_t* t
 
 
 float* traj;
+float* traj_2;
 int num_points;
+int num_points_2;
 #define PI 3.14159265358979323846
 
 int generate_symmetric_trajectory(float start, float end, int steps, float** trajectory_out)

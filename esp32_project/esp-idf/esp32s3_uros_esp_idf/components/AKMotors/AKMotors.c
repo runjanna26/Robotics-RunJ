@@ -244,36 +244,39 @@ void unpack_reply(twai_message_t rx_message, struct motor_struct *motor,  motor_
             motor->voltage       = voltage * 0.1;    // Volts
             motor->error         = error;
         }
-
-   
-
-
-
     }
-
-
-
-
-
-    // int16_t pos_int = ((int16_t)rx_message.data[0] << 8) | (rx_message.data[1]);
-    // int16_t spd_int = ((int16_t)rx_message.data[2] << 8) | (rx_message.data[3]);
-    // int16_t cur_int = ((int16_t)rx_message.data[4] << 8) | (rx_message.data[5]);
-
-    // /// convert ints to floats ///
-    // float p = (float)(pos_int * 0.1f) * 0.0174532925f;  // rad
-    // float v = (float)(spd_int * 10.0f) * 0.1047f;       // rad/s
-    // float i = (float)(cur_int * 0.01f);                 // Ampere
-    // int temp = rx_message.data[6];
-    // int error = rx_message.data[7];
-
-    // feedback->id            = id;
-    // feedback->position      = p;
-    // feedback->velocity      = v;
-    // feedback->current       = i;
-    // feedback->torque        = i * 0.135;
-    // feedback->temperature   = temp;
-    // feedback->error         = error;
 }
+
+
+// Static function
+uint16_t float_to_uint(float x, float x_min, float x_max, unsigned int bits)
+{
+    /// Converts a float to an unsigned int, given range and number of bits ///
+    float span = x_max - x_min;
+    if(x < x_min) x = x_min;
+    else if(x > x_max) x = x_max;
+    return (uint16_t) ((x- x_min)*((float)((1<<bits)/span)));
+}
+float uint_to_float(int x_int, float x_min, float x_max, int bits){
+    /// converts unsigned int to float, given range and number of bits ///
+    float span = x_max - x_min;
+    float offset = x_min;
+    return ((float)x_int)*span/((float)((1<<bits)-1)) + offset;
+}
+void buffer_append_int32(uint8_t* buffer, int32_t number, int32_t *index) 
+{
+    buffer[(*index)++] = number >> 24;
+    buffer[(*index)++] = number >> 16;
+    buffer[(*index)++] = number >> 8;
+    buffer[(*index)++] = number;
+}
+void buffer_append_int16(uint8_t* buffer, int16_t number, int16_t *index) 
+{
+    buffer[(*index)++] = number >> 8;
+    buffer[(*index)++] = number;
+}
+
+
 
 
 // /**
@@ -464,35 +467,3 @@ void unpack_reply(twai_message_t rx_message, struct motor_struct *motor,  motor_
 //     if (twai_transmit(&message, pdMS_TO_TICKS(1000)) != ESP_OK)  ESP_LOGE("CAN", "Motor ID: %ld is failed to send command", motor_id);
 
 // }
-
-
-
-
-
-// Static function
-uint16_t float_to_uint(float x, float x_min, float x_max, unsigned int bits)
-{
-    /// Converts a float to an unsigned int, given range and number of bits ///
-    float span = x_max - x_min;
-    if(x < x_min) x = x_min;
-    else if(x > x_max) x = x_max;
-    return (uint16_t) ((x- x_min)*((float)((1<<bits)/span)));
-}
-float uint_to_float(int x_int, float x_min, float x_max, int bits){
-    /// converts unsigned int to float, given range and number of bits ///
-    float span = x_max - x_min;
-    float offset = x_min;
-    return ((float)x_int)*span/((float)((1<<bits)-1)) + offset;
-}
-void buffer_append_int32(uint8_t* buffer, int32_t number, int32_t *index) 
-{
-    buffer[(*index)++] = number >> 24;
-    buffer[(*index)++] = number >> 16;
-    buffer[(*index)++] = number >> 8;
-    buffer[(*index)++] = number;
-}
-void buffer_append_int16(uint8_t* buffer, int16_t number, int16_t *index) 
-{
-    buffer[(*index)++] = number >> 8;
-    buffer[(*index)++] = number;
-}

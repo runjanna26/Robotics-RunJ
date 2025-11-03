@@ -86,6 +86,11 @@ void command_subscription_callback(const void * msgin)
     vel_des = (float)msg->data.data[1];
     tau_des = (float)Muscle_1.tau;
 
+    cpg_phi     = (float)msg->data.data[2];
+    cpg_pause   = (float)msg->data.data[3];
+    cpg_rewind  = (float)msg->data.data[4];
+
+    // ESP_LOGE("CPG_sub","%f, %f, %f", cpg_phi, cpg_pause, cpg_rewind);
 
 
 
@@ -120,7 +125,10 @@ void publish_module_feedback()
     joint_impedance_state_msg.data.data[0] = (float)hip_motor_st.kp;
     joint_impedance_state_msg.data.data[1] = (float)hip_motor_st.kd;
     joint_impedance_state_msg.data.data[2] = (float)hip_motor_st.tff;
-    
+
+    joint_impedance_state_msg.data.data[3] = (float)cpg.out0_t;
+    joint_impedance_state_msg.data.data[4] = (float)cpg.out1_t;
+
     RCSOFTCHECK(rcl_publish(&joint_impedance_state_publisher, &joint_impedance_state_msg, NULL));
 }
 
@@ -240,7 +248,7 @@ esp_err_t create_entities()
     return ESP_OK;
 }
 
-void destroy_entities()
+esp_err_t destroy_entities()
 {
     rmw_context_t *rmw_context = rcl_context_get_rmw_context(&support.context);
     (void)rmw_uros_set_context_entity_destroy_session_timeout(rmw_context, 0);
@@ -250,6 +258,7 @@ void destroy_entities()
 	RCSOFTCHECK(rcl_publisher_fini(&joint_error_state_publisher, &node));
     RCSOFTCHECK(rcl_publisher_fini(&joint_impedance_state_publisher, &node));
     RCSOFTCHECK(rcl_publisher_fini(&board_connection_publisher, &node));    
+    
 
 	RCSOFTCHECK(rcl_subscription_fini(&command_subscriber, &node));
 
@@ -260,11 +269,14 @@ void destroy_entities()
 
     // free(joint_state_msg.position.data);
     // free(joint_state_msg.velocity.data);
-    // free(joint_state_msg.effort.data);
+    // free(joint_state_msg.effort.data);  
+
+    free(joint_state_msg.data.data);
     free(joint_electrical_state_msg.data.data);
     free(joint_error_state_msg.data.data);
     free(joint_impedance_state_msg.data.data);
     free(command_recv_msg.data.data);
+    return ESP_OK;
 }
 
 esp_err_t setup_multiarray_publisher_msg()
@@ -300,7 +312,7 @@ esp_err_t setup_multiarray_publisher_msg()
     joint_error_state_msg.data.size             = data_len;
     joint_error_state_msg.data.capacity         = data_len;
 
-    data_len = 4;
+    data_len = 5;
     joint_impedance_state_msg.data.data         = (float_t *)malloc(sizeof(float) * data_len);
     joint_impedance_state_msg.data.size         = data_len;
     joint_impedance_state_msg.data.capacity     = data_len;
@@ -308,9 +320,9 @@ esp_err_t setup_multiarray_publisher_msg()
 
     // ====================================================================
 
-    data_len = 3;
+    data_len = 5;
     command_recv_msg.data.capacity = data_len;  // set according to expected max size
-    command_recv_msg.data.size = 0;
+    command_recv_msg.data.size = data_len;
     command_recv_msg.data.data = (float_t *)malloc(sizeof(float) * command_recv_msg.data.capacity);
     
     return ESP_OK;
@@ -336,8 +348,11 @@ void connectionCheck()
 {
   if (watchdog_timer_check_timeout(&watchdogtimer))
   {
-    // ESP_LOGW("uROS","connection timeout : Robot will stop ");
+    ESP_LOGW("uROS","connection timeout : Robot will stop ");
     // Robot stop and show some status
+#ifdef USED_RMD_MOTOR
+    motor_all_stop();
+#endif
   }
 
   if (watchdog_timer_check_timeout(&watchdogtimer_restartESP))

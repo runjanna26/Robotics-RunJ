@@ -18,7 +18,7 @@
 // #define USED_DYNAMIXEL 
 // #define USED_ENCODER 
 // #define USED_LIMIT_SWITCHES
-#define USED_RMD_MOTOR
+// #define USED_RMD_MOTOR
 #define USED_MUSCLE_MODEL
 
 
@@ -29,6 +29,7 @@
 void setup()
 {
     #ifdef USED_UROS
+		ESP_ERROR_CHECK_WITHOUT_ABORT(destroy_entities());
 		ESP_ERROR_CHECK_WITHOUT_ABORT(uros_network_interface_initialize());
 		ESP_ERROR_CHECK_WITHOUT_ABORT(create_entities());
 		ESP_ERROR_CHECK_WITHOUT_ABORT(setup_multiarray_publisher_msg());
@@ -59,12 +60,23 @@ void setup()
 
 #ifdef USED_RMD_MOTOR
     ESP_ERROR_CHECK_WITHOUT_ABORT(CAN_Init());                	// CAN Initialization
-	motor_reboot(&hip_motor_st);  										// Reboot motor with ID 1
+	motor_reboot(&hip_motor_st);  								// Reboot motor
 #endif
 
 #ifdef USED_MUSCLE_MODEL
 	MuscleModel_init(&Muscle_1, 0.5, 10.0, 0.05);
 #endif
+
+
+	cpg_so2_init(&cpg, 0.141f, 0.141f, cpg_phi, 1.01f);
+	esp_timer_handle_t periodic_timer;
+	const esp_timer_create_args_t periodic_timer_args = {
+			.callback = &cpg_update_callback,
+			.name = "cpg_update_callback"
+	};
+	ESP_ERROR_CHECK(esp_timer_create(&periodic_timer_args, &periodic_timer));
+	ESP_ERROR_CHECK(esp_timer_start_periodic(periodic_timer, 10000)); // The timer period is 20000 us (20 ms) for 50 Hz
+
 
 	// num_points = generate_sine_trajectory(_PI/6, 0.0, 1000, &traj);  // radians 7.85
 }
@@ -76,8 +88,6 @@ bool runned = false;
 
 void run_motor()
 {
-
-
 	MuscleModel_calculate(&Muscle_1, pos_des, vel_des, hip_motor_st.position, hip_motor_st.velocity);
 	send_mit_force_command(&hip_motor_st, RMD_X4_10, pos_des, vel_des, Muscle_1.K, Muscle_1.D, -Muscle_1.F);
 	
@@ -90,11 +100,9 @@ void run_motor()
 
 void loop()
 {
-	
+#ifdef USED_RMD_MOTOR
 	EXECUTE_EVERY_N_MS(1, run_motor()); 
-
-
-
+#endif
 
 #ifdef USED_LIMIT_SWITCHES
 	green_sw_state 	= gpio_get_level(GREEN_SW);
@@ -165,7 +173,7 @@ void app_main(void)
 	while(true)
 	{
 		loop();
-		// vTaskDelay(1);
+		vTaskDelay(1);
 	}
 #ifdef USED_DYNAMIXEL
 	closePort(port_num);

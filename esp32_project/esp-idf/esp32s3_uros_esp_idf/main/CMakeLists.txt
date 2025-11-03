@@ -8,6 +8,7 @@ idf_component_register(SRCS "main.c" "config.h" "micro_ros_setup.h"
                     REQUIRES AS5X47
                     REQUIRES AKMotors
                     REQUIRES OAIC
+                    REQUIRES CPGRBF
 
                     REQUIRES DynamixelSDK-c
                     )

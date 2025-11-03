@@ -94,6 +94,32 @@ esp_err_t CAN_Init()
     return ESP_OK;
 }
 
+
+// self.send_can_msg(0x280, [STOP_MOTOR_ID, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]) 
+void motor_all_stop()
+{
+    twai_message_t message;
+    
+    message.identifier = 0x280;
+    message.extd = 0; // Extended Frame
+    message.rtr = 0;  // Data Frame
+    message.data_length_code = 8; 
+
+    // can transmitt
+    message.data[0] = 0x81;
+    message.data[1] = 0x00;
+    message.data[2] = 0x00;
+    message.data[3] = 0x00;
+    message.data[4] = 0x00;
+    message.data[5] = 0x00;
+    message.data[6] = 0x00;
+    message.data[7] = 0x00;
+
+    // Send the TWAI (CAN) message
+    if (twai_transmit(&message, pdMS_TO_TICKS(1)) != ESP_OK){}
+        // ESP_LOGE("CAN", "Motor ID: %ld is failed to send command", motor_id); 
+}
+
 void motor_reboot(struct motor_struct *motor) 
 {
     twai_message_t message;

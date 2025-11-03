@@ -43,6 +43,7 @@
     "int8_multi_array.h": "c",
     "u_int16_multi_array.h": "c",
     "oaic.h": "c",
-    "esp_timer.h": "c"
+    "esp_timer.h": "c",
+    "random": "c"
   }
 }

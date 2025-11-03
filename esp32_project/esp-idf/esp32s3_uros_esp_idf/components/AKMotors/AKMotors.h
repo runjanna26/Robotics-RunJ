@@ -79,6 +79,8 @@ esp_err_t CAN_Init();
 // void send_motor_position( uint32_t motor_id, float position);
 // void send_motor_position_velocity(uint32_t motor_id, float position, int16_t velocity_erpm, int16_t acceleration_erpmps2);
 
+void motor_all_stop();
+
 void motor_reboot(struct motor_struct *motor);
 void request_motor_struct(uint32_t motor_id, uint16_t request_id);
 void motor_update(struct motor_struct *motor);

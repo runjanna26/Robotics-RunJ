@@ -87,9 +87,9 @@ esp_err_t init_gpio_inputs()
 #define PROJECT_NAME ""
 #define MODULE_NAME ""
 
-#define MICRO_ROS_AGENT_IP "10.10.0.167"
+#define MICRO_ROS_AGENT_IP "192.168.0.4"
 #define MICRO_ROS_AGENT_PORT "8888"
-#define EXECUTOR_HANDLE_NUMBER 10
+#define EXECUTOR_HANDLE_NUMBER 16
 
 #define EXECUTE_EVERY_N_MS(MS, X) do { static volatile int64_t init = -1; if (init == -1) { init = uxr_millis(); } if (uxr_millis() - init > MS) { X; init = uxr_millis(); } } while (0)
 
@@ -159,6 +159,22 @@ MuscleModel Muscle_1;
 float pos_des;
 float vel_des;
 float tau_des;
+
+/**
+ * ========================================================================
+ *     Central Pattern Generator and Radial Basis Function (CPG-RBF)
+ * ========================================================================
+ */
+#include <CPGRBF.h>
+cpg_so2_t cpg;
+float cpg_phi     = 0.0f;
+float cpg_pause   = 0.0f;
+float cpg_rewind  = 0.0f;
+
+void cpg_update_callback(void* arg)
+{
+    cpg_so2_update(&cpg, cpg_phi, cpg_pause, cpg_rewind);
+}
 
 /**
  * ====================================
